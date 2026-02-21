@@ -81,6 +81,7 @@ export default function LoginScreen({ navigation }) {
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
+              editable={!loading}
             />
             <TextInput
               style={styles.input}
@@ -89,6 +90,7 @@ export default function LoginScreen({ navigation }) {
               value={password}
               onChangeText={setPassword}
               secureTextEntry
+              editable={!loading}
             />
 
             <TouchableOpacity onPress={handleForgotPassword} activeOpacity={0.7}>

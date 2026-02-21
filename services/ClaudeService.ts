@@ -1,9 +1,6 @@
-import Constants from 'expo-constants';
 import { httpsCallable } from 'firebase/functions';
 import { functions } from './FirebaseConfig';
 
-const API_URL = 'https://api.anthropic.com/v1/messages';
-const REQUEST_TIMEOUT_MS = 15000;
 const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 
 interface ClaudeMessage {
@@ -24,14 +21,6 @@ interface ChatWithUllyResponse {
 }
 
 class ClaudeService {
-  private apiKey: string | null;
-  private useFirebase: boolean;
-
-  constructor() {
-    this.apiKey = (Constants.expoConfig?.extra?.claudeApiKey as string) || null;
-    // Default to Firebase in production if configured
-    this.useFirebase = !!Constants.expoConfig?.extra?.firebaseProjectId;
-  }
 
   /**
    * Validates that a base64 image string doesn't exceed the size cap.

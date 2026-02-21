@@ -9,7 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthColors, Fonts, Colors } from '../utils/constants';
 
-const LAST_UPDATED = 'February 15, 2026';
+const LAST_UPDATED = 'February 21, 2026';
 
 function Section({ title, children }) {
   return (
@@ -155,18 +155,39 @@ export default function PrivacyPolicyScreen({ navigation, route }) {
             Chat history is stored locally on your device using encrypted
             device storage and is never transmitted to our servers.
           </BulletItem>
-          <BulletItem>
-            Your session automatically expires after 15 minutes of inactivity
-            for security.
-          </BulletItem>
         </Section>
 
         <Section title="Your Rights">
           <Paragraph>You have the right to:</Paragraph>
           <BulletItem>Access your personal data through the app's Profile section</BulletItem>
           <BulletItem>Edit or update your profile information at any time</BulletItem>
-          <BulletItem>Delete your account and all associated data by contacting us</BulletItem>
+          <BulletItem>Delete your account and all associated data directly within the app</BulletItem>
           <BulletItem>Clear your local chat history at any time through the app</BulletItem>
+          <BulletItem>Contact us at support@ullycoffee.com to request data deletion if you are unable to access the app</BulletItem>
+        </Section>
+
+        <Section title="Account Deletion">
+          <Paragraph>
+            You can permanently delete your account at any time from within the
+            app. To delete your account:
+          </Paragraph>
+          <BulletItem>Open the app and go to the Profile tab</BulletItem>
+          <BulletItem>Scroll to the bottom and tap "Delete Account"</BulletItem>
+          <BulletItem>Enter your password to confirm your identity</BulletItem>
+          <BulletItem>Tap Delete to permanently remove your account</BulletItem>
+          <Paragraph>
+            When you delete your account, the following data is permanently and
+            immediately removed:
+          </Paragraph>
+          <BulletItem>Your Firebase Authentication account and login credentials</BulletItem>
+          <BulletItem>Your profile, equipment list, recipes, and saved cafes stored on our servers</BulletItem>
+          <BulletItem>Any media files you uploaded, stored in Firebase Storage</BulletItem>
+          <BulletItem>Your local chat history and all app data stored on your device</BulletItem>
+          <Paragraph>
+            Account deletion is permanent and cannot be undone. If you cannot
+            access the app, you may request deletion by emailing
+            support@ullycoffee.com. We will process your request within 30 days.
+          </Paragraph>
         </Section>
 
         <Section title="Changes to This Policy">

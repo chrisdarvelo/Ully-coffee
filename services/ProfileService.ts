@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { auth } from './FirebaseConfig';
 import { UserProfile } from '../types';
 
 const KEY_PREFIX = '@ully_profile_';
@@ -18,13 +19,13 @@ export async function getProfile(uid: string): Promise<UserProfile | null> {
 
 export async function saveProfile(uid: string, data: Partial<UserProfile>): Promise<UserProfile> {
   const existing = await getProfile(uid);
-  const profile: UserProfile = { 
+  const profile: UserProfile = {
     uid,
-    email: null, // Fallback if not existing
-    onboarded: true, 
-    ...existing, 
-    ...data, 
-    onboarded: true 
+    email: auth.currentUser?.email ?? existing?.email ?? null,
+    onboarded: true,
+    ...existing,
+    ...data,
+    onboarded: true,
   };
   await AsyncStorage.setItem(profileKey(uid), JSON.stringify(profile));
   return profile;

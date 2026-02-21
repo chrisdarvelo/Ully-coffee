@@ -103,17 +103,19 @@ export default function HomeScreen() {
   });
 
   const onRefresh = async () => {
-    queryClient.invalidateQueries();
+    queryClient.invalidateQueries({ queryKey: ['news'] });
+    queryClient.invalidateQueries({ queryKey: ['recipes', uid] });
+    queryClient.invalidateQueries({ queryKey: ['baristas', uid] });
+    queryClient.invalidateQueries({ queryKey: ['cafes', uid] });
+    queryClient.invalidateQueries({ queryKey: ['blogs', uid] });
   };
 
   const handleDrawerNavigate = (key: string) => {
     setDrawerOpen(false);
-    if (key === 'ai') {
+    if (key === 'ai' || key === 'resources') {
       navigation.navigate('AI');
     } else if (key === 'editProfile' || key === 'settings') {
       navigation.navigate('Profile');
-    } else if (key === 'resources') {
-      navigation.navigate('AI');
     }
   };
 

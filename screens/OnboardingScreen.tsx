@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from 'react-native';
 import { auth } from '../services/FirebaseConfig';
 import { saveProfile } from '../services/ProfileService';
@@ -165,6 +166,7 @@ export default function OnboardingScreen({ navigation }: { navigation: any }) {
       navigation.replace('Tabs');
     } catch {
       setSaving(false);
+      Alert.alert('Error', 'Failed to save your profile. Please try again.');
     }
   };
 

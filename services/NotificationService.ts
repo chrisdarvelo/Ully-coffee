@@ -76,9 +76,9 @@ export async function scheduleDailyTip(): Promise<void> {
       body: 'Check out today\'s coffee news and tips.',
     },
     trigger: {
-      type: 'daily',
+      type: Notifications.SchedulableTriggerInputTypes.DAILY,
       hour: 8,
       minute: 0,
-    } as any, // Expo types can be tricky with daily trigger
+    } satisfies Notifications.DailyTriggerInput,
   });
 }

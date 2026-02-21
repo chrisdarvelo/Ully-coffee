@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { Alert } from 'react-native';
+import { Alert, Linking } from 'react-native';
 import { useCameraPermissions, CameraView, BarcodeScanningResult } from 'expo-camera';
 
 export type CameraMode = 'scan' | 'extraction' | null;
@@ -20,6 +20,15 @@ export function useCamera() {
         if (result.granted) {
           setCameraMode(mode);
           setShowCamera(true);
+        } else {
+          Alert.alert(
+            'Camera Access Required',
+            'Ully needs camera access to scan equipment and analyze extractions. Enable it in Settings.',
+            [
+              { text: 'Not Now', style: 'cancel' },
+              { text: 'Open Settings', onPress: () => Linking.openSettings() },
+            ]
+          );
         }
       });
       return;

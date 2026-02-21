@@ -28,7 +28,7 @@ import { ScanIcon, PortafilterIcon } from '../components/DiagnosticIcons';
 // New Architecture Imports
 import { useUllyChat } from '../hooks/useUllyChat';
 import { useCamera, CameraMode } from '../hooks/useCamera';
-import { extractFrames } from '../utils/mediaUtils';
+import { extractFrames, validateImageSize } from '../utils/mediaUtils';
 import CameraModal from '../components/ai/CameraModal';
 import ChatHistory from '../components/ai/ChatHistory';
 import { ChatMessage } from '../types';
@@ -287,12 +287,20 @@ export default function AIScreen() {
       if (!result.canceled && result.assets?.[0]) {
         const asset = result.assets[0];
         if (asset.type === 'video') {
-           const frames = await extractFrames(asset.uri, 5, 10000);
-           const promptText = mode === 'scan' ? 'Identify part...' : 'Analyze extraction...';
-           await addMessage({ role: 'user', text: promptText, frames, imageUri: asset.uri });
+          const frames = await extractFrames(asset.uri, 5, 10000);
+          const promptText = mode === 'scan' ? 'Identify part...' : 'Analyze extraction...';
+          await addMessage({ role: 'user', text: promptText, frames, imageUri: asset.uri });
         } else {
-           const promptText = mode === 'scan' ? 'Identify part...' : 'Analyze extraction...';
-           await addMessage({ role: 'user', text: promptText, image: asset.base64 || undefined, imageUri: asset.uri });
+          if (asset.base64) {
+            try {
+              validateImageSize(asset.base64);
+            } catch {
+              Alert.alert('Image Too Large', 'Please choose an image under 5MB.');
+              return;
+            }
+          }
+          const promptText = mode === 'scan' ? 'Identify part...' : 'Analyze extraction...';
+          await addMessage({ role: 'user', text: promptText, image: asset.base64 || undefined, imageUri: asset.uri });
         }
       }
     } catch (error) {
@@ -334,31 +342,36 @@ export default function AIScreen() {
 
   // UI Helpers
   const ActionChips = ({ compact }: { compact?: boolean }) => (
-    <View style={compact ? styles.toolbarRow : styles.actionChipsRow}>
-      <TouchableOpacity
-        style={compact ? styles.chatChip : styles.actionChip}
-        onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            openCamera('extraction');
-        }}
-        onLongPress={() => pickMedia('extraction')}
-        activeOpacity={0.7}
-      >
-        <PortafilterIcon size={compact ? 16 : 20} color={compact ? Colors.primary : Colors.text} />
-        <Text style={compact ? styles.chatChipText : styles.actionChipText}>Dial-in</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={compact ? styles.chatChip : styles.actionChip}
-        onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            openCamera('scan');
-        }}
-        onLongPress={() => pickMedia('scan')}
-        activeOpacity={0.7}
-      >
-        <ScanIcon size={compact ? 16 : 20} color={compact ? Colors.primary : Colors.text} />
-        <Text style={compact ? styles.chatChipText : styles.actionChipText}>Troubleshoot</Text>
-      </TouchableOpacity>
+    <View style={styles.actionChipsWrapper}>
+      <View style={compact ? styles.toolbarRow : styles.actionChipsRow}>
+        <TouchableOpacity
+          style={compact ? styles.chatChip : styles.actionChip}
+          onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              openCamera('extraction');
+          }}
+          onLongPress={() => pickMedia('extraction')}
+          activeOpacity={0.7}
+        >
+          <PortafilterIcon size={compact ? 16 : 20} color={compact ? Colors.primary : Colors.text} />
+          <Text style={compact ? styles.chatChipText : styles.actionChipText}>Dial-in</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={compact ? styles.chatChip : styles.actionChip}
+          onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              openCamera('scan');
+          }}
+          onLongPress={() => pickMedia('scan')}
+          activeOpacity={0.7}
+        >
+          <ScanIcon size={compact ? 16 : 20} color={compact ? Colors.primary : Colors.text} />
+          <Text style={compact ? styles.chatChipText : styles.actionChipText}>Troubleshoot</Text>
+        </TouchableOpacity>
+      </View>
+      {!compact && (
+        <Text style={styles.chipHint}>Hold to pick from library</Text>
+      )}
     </View>
   );
 
@@ -606,10 +619,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 12,
   },
+  actionChipsWrapper: {
+    alignItems: 'center',
+  },
   actionChipsRow: {
     flexDirection: 'row',
     gap: 12,
     marginTop: 24,
+  },
+  chipHint: {
+    fontSize: 11,
+    color: Colors.tabInactive,
+    fontFamily: Fonts.mono,
+    marginTop: 8,
   },
   actionChip: {
     flexDirection: 'row',
