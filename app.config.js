@@ -9,6 +9,8 @@ export default {
     icon: './assets/icon.png',
     userInterfaceStyle: 'dark',
     splash: {
+      image: './assets/splash.png',
+      resizeMode: 'contain',
       backgroundColor: '#1A1614',
     },
     updates: {
@@ -36,7 +38,7 @@ export default {
       },
       package: 'com.ullycoffee.app',
       versionCode: 1,
-      permissions: ['CAMERA', 'READ_EXTERNAL_STORAGE', 'ACCESS_COARSE_LOCATION'],
+      permissions: ['CAMERA', 'ACCESS_COARSE_LOCATION'],
     },
     plugins: [
       'expo-secure-store',
