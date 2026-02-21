@@ -75,12 +75,20 @@ exports.wipeUserData = onCall(async (request) => {
   const uid = request.auth.uid;
   const db = getFirestore();
 
+  // Firestore batch deletes are capped at 500 ops — chunk to stay within the limit.
+  const deleteInBatches = async (docs) => {
+    const BATCH_SIZE = 500;
+    for (let i = 0; i < docs.length; i += BATCH_SIZE) {
+      const batch = db.batch();
+      docs.slice(i, i + BATCH_SIZE).forEach((doc) => batch.delete(doc.ref));
+      await batch.commit();
+    }
+  };
+
   const collections = ['recipes', 'cafes', 'profiles'];
   const deletePromises = collections.map(async (col) => {
     const snap = await db.collection(col).where('userId', '==', uid).get();
-    const batch = db.batch();
-    snap.docs.forEach((doc) => batch.delete(doc.ref));
-    if (!snap.empty) await batch.commit();
+    if (!snap.empty) await deleteInBatches(snap.docs);
   });
 
   // Also delete the profile document keyed directly by uid

@@ -15,11 +15,11 @@ import { useFocusEffect } from '@react-navigation/native';
 import {
   signOut,
   sendPasswordResetEmail,
-  deleteUser,
   reauthenticateWithCredential,
   EmailAuthProvider,
 } from 'firebase/auth';
 import { auth } from '../services/FirebaseConfig';
+import { deleteUserAccount } from '../services/AuthService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getProfile, saveProfile } from '../services/ProfileService';
 import {
@@ -109,13 +109,21 @@ export default function SettingsScreen({ navigation: tabNav }) {
                 try {
                   const credential = EmailAuthProvider.credential(user.email, password);
                   await reauthenticateWithCredential(user, credential);
-                  // Clear all user data from AsyncStorage
-                  const keys = await AsyncStorage.getAllKeys();
-                  const userKeys = keys.filter((k) => k.includes(user.uid) || k === '@ully_chat_history');
-                  if (userKeys.length > 0) {
-                    await AsyncStorage.multiRemove(userKeys);
+                  // Clear all local user data from AsyncStorage — must succeed before
+                  // deleting the Auth record, otherwise local data is orphaned.
+                  try {
+                    const keys = await AsyncStorage.getAllKeys();
+                    const userKeys = keys.filter((k) => k.includes(user.uid) || k === '@ully_chat_history');
+                    if (userKeys.length > 0) {
+                      await AsyncStorage.multiRemove(userKeys);
+                    }
+                  } catch {
+                    setLoading(false);
+                    Alert.alert('Error', 'Failed to clear local data. Please try again.');
+                    return;
                   }
-                  await deleteUser(user);
+                  // Wipe server-side data (Firestore + Storage) and delete Auth record
+                  await deleteUserAccount();
                 } catch (error) {
                   setLoading(false);
                   const msg =
