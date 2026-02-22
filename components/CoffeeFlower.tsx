@@ -51,8 +51,8 @@ export default function CoffeeFlower({
   const strokeColor = dark ? '#3C3228' : '#FFFFFF';
   const gold = Colors.primary;
 
-  // Wide, rounded coffee-blossom petal — matches the splash.png silhouette
-  const petalPath = "M100,100 C130,83 148,58 100,40 C52,58 70,83 100,100 Z";
+  // Narrowed 30% horizontally — avoids hexagram silhouette at small sizes
+  const petalPath = "M100,100 C121,83 134,58 100,40 C66,58 79,83 100,100 Z";
   const veinPath = "M100,100 L100,40"; // Vein extends to petal tip
   
   return (
