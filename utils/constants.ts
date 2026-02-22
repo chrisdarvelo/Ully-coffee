@@ -13,10 +13,7 @@ export const Colors = {
   card: '#1A1614',              // slightly lighter warm brown
   text: '#FFFFFF',              // white
   textSecondary: '#A09888',     // warm gray
-  success: '#6BCB77',
   danger: '#E74C3C',
-  warning: '#F0A830',
-  info: '#5DADE2',
   border: '#2A2218',            // warm dark border
   tabBar: '#0E0C0A',
   tabInactive: '#6B5E52',       // muted warm brown

@@ -363,7 +363,7 @@ The Claude API key is **not** in `.env` — it lives exclusively in Firebase Sec
 - [x] Weather + location AI context live
 - [ ] Apple Developer Program enrollment
 - [ ] Google Play Console account + Service Account JSON
-- [ ] `firebase deploy --only firestore:rules,storage,functions` run against production
+- [x] `firebase deploy --only firestore:rules,storage,functions` run against production
 - [ ] TestFlight pilot build (iOS)
 - [ ] Play Store internal track build (Android)
 

@@ -8,7 +8,6 @@ interface CoffeeFlowerProps {
   spinning?: boolean;
   bold?: boolean;
   dark?: boolean;
-  color?: string;
   opacity?: number;
 }
 
@@ -16,12 +15,11 @@ interface CoffeeFlowerProps {
  * Premium "Signature" Coffee Blossom
  * Features layered petals with center-vein detail and a high-end gold cluster center.
  */
-export default function CoffeeFlower({ 
-  size = 150, 
-  spinning = false, 
-  bold = false, 
+export default function CoffeeFlower({
+  size = 150,
+  spinning = false,
+  bold = false,
   dark = false,
-  color,
   opacity = 1
 }: CoffeeFlowerProps) {
   const spinAnim = useRef(new Animated.Value(0)).current;
@@ -50,12 +48,12 @@ export default function CoffeeFlower({
     outputRange: ['0deg', '360deg'],
   });
 
-  const strokeColor = color || (dark ? '#3C3228' : '#FFFFFF');
+  const strokeColor = dark ? '#3C3228' : '#FFFFFF';
   const gold = Colors.primary;
-  
-  // High-end organic petal with a "crease" detail
-  const petalPath = "M100,100 C115,80 140,65 100,15 C60,65 85,80 100,100 Z";
-  const veinPath = "M100,100 L100,45"; // Delicate center line
+
+  // Wide, rounded coffee-blossom petal — matches the splash.png silhouette
+  const petalPath = "M100,100 C130,83 148,58 100,40 C52,58 70,83 100,100 Z";
+  const veinPath = "M100,100 L100,40"; // Vein extends to petal tip
   
   return (
     <View style={[styles.container, { width: size, height: size, opacity }]}>
@@ -76,42 +74,42 @@ export default function CoffeeFlower({
           {/* 6 Layered Petals */}
           {[0, 60, 120, 180, 240, 300].map((angle) => (
             <G transform={`rotate(${angle}, 100, 100)`} key={angle}>
-              {/* Petal Shadow/Glow */}
+              {/* Petal */}
               <Path
                 d={petalPath}
                 fill="url(#petalGrad)"
                 stroke={gold}
-                strokeWidth={bold ? 1.5 : 0.8}
-                strokeOpacity={0.4}
+                strokeWidth={bold ? 2.0 : 1.2}
+                strokeOpacity={0.65}
               />
               {/* Petal Vein */}
               <Path
                 d={veinPath}
                 stroke={gold}
-                strokeWidth={0.5}
-                strokeOpacity={0.6}
+                strokeWidth={0.7}
+                strokeOpacity={0.75}
                 strokeLinecap="round"
               />
             </G>
           ))}
           
-          {/* Detailed Gold Cluster Center */}
-          <Circle cx="100" cy="100" r="14" fill={gold} fillOpacity={0.15} />
+          {/* Gold Cluster Center */}
+          <Circle cx="100" cy="100" r="14" fill={gold} fillOpacity={0.2} />
           <Circle cx="100" cy="100" r="8" fill={gold} />
-          
-          {/* Premium Stamen Dots */}
+
+          {/* Stamen Dots */}
           {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
             <Circle
               key={`stamen-${angle}`}
-              cx={100 + 16 * Math.cos((angle * Math.PI) / 180)}
-              cy={100 + 16 * Math.sin((angle * Math.PI) / 180)}
-              r="2.2"
+              cx={100 + 15 * Math.cos((angle * Math.PI) / 180)}
+              cy={100 + 15 * Math.sin((angle * Math.PI) / 180)}
+              r="2.5"
               fill={gold}
             />
           ))}
 
-          {/* Inner Light Core */}
-          <Circle cx="100" cy="100" r="3" fill={dark ? Colors.background : "#FFF"} />
+          {/* Dark center core — matches splash.png */}
+          <Circle cx="100" cy="100" r="3.5" fill={Colors.background} />
         </Svg>
       </Animated.View>
     </View>

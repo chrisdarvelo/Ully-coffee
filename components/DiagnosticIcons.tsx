@@ -48,22 +48,3 @@ export function PortafilterIcon({ size = 28, color = '#1a1a1a' }: IconProps) {
   );
 }
 
-export function SearchIcon({ size = 28, color = '#1a1a1a' }: IconProps) {
-  return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <Circle
-        cx="10.5"
-        cy="10.5"
-        r="6.5"
-        stroke={color}
-        strokeWidth={1.8}
-      />
-      <Path
-        d="M15.5 15.5L21 21"
-        stroke={color}
-        strokeWidth={2}
-        strokeLinecap="round"
-      />
-    </Svg>
-  );
-}
