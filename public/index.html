@@ -13,51 +13,8 @@
 </head>
 <body>
 
-  <!-- DRAWER OVERLAY -->
-  <div class="drawer-overlay" id="drawerOverlay">
-    <div class="drawer" id="drawer">
-
-      <div class="drawer-header">
-        <span class="drawer-brand">ULLY AI</span>
-        <button class="drawer-close" id="drawerClose" aria-label="Close menu">✕</button>
-      </div>
-
-      <div class="drawer-body">
-
-        <div>
-          <p class="drawer-section-label">Who We Are</p>
-          <p class="drawer-about">
-            Ully AI was built for people who take coffee seriously. Whether you're dialing in your
-            first espresso or running a café, Ully gives you AI-powered expertise on demand —
-            technique, equipment, recipes, and more. Powered by Claude.
-          </p>
-        </div>
-
-        <div>
-          <p class="drawer-section-label">Navigate</p>
-          <nav class="drawer-nav">
-            <a href="#features">Features</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Use</a>
-            <a href="data.html">Data Usage</a>
-            <a href="delete-account.html">Delete Account</a>
-            <a href="support.html">Support</a>
-          </nav>
-        </div>
-
-      </div>
-
-
-    </div>
-  </div>
-
   <!-- NAV -->
   <nav>
-    <button class="nav-menu-btn" id="menuBtn" aria-label="Open menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
     <a href="/" class="nav-brand">ULLY</a>
     <ul class="nav-links">
       <li><a href="#features">Features</a></li>
@@ -208,20 +165,6 @@
   </footer>
 
   <script>
-    // Drawer
-    const overlay   = document.getElementById('drawerOverlay');
-    const menuBtn   = document.getElementById('menuBtn');
-    const closeBtn  = document.getElementById('drawerClose');
-
-    menuBtn.addEventListener('click', () => overlay.classList.add('open'));
-    closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) overlay.classList.remove('open');
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') overlay.classList.remove('open');
-    });
-
     // Scroll animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
