@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Animated, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { useFonts, PressStart2P_400Regular } from '@expo-google-fonts/press-start-2p';
 import { Colors, Fonts } from './utils/constants';
 import CoffeeFlower from './components/CoffeeFlower';
 import { AuthNavigator, AppNavigator } from './navigation/AppNavigator';
@@ -18,6 +19,7 @@ export default function App() {
   const { onboarded, fetchProfile } = useProfileStore();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [emailVerified, setEmailVerified] = useState(false);
+  const [fontsLoaded] = useFonts({ PressStart2P_400Regular });
 
   // Initialize Auth
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function App() {
     }
   }, [initializing, fadeAnim]);
 
-  if (initializing) {
+  if (initializing || !fontsLoaded) {
     return (
       <View style={styles.loading}>
         <CoffeeFlower size={80} spinning />

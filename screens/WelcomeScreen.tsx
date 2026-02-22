@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthColors, Fonts } from '../utils/constants';
-import CoffeeFlower from '../components/CoffeeFlower';
 import { GoldButton } from '../components/GoldGradient';
 
 export default function WelcomeScreen({ navigation }) {
@@ -15,12 +14,7 @@ export default function WelcomeScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.brandSection}>
-          <View style={styles.titleRow}>
-            <Text style={styles.title}>Ully Ai</Text>
-            <View style={styles.flowerWrap}>
-              <CoffeeFlower size={36} />
-            </View>
-          </View>
+          <Text style={styles.title}>ULLY AI</Text>
           <Text style={styles.subtitle}>your coffee companion</Text>
         </View>
 
@@ -59,27 +53,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   title: {
-    fontSize: 48,
-    fontWeight: '700',
-    color: AuthColors.text,
-    letterSpacing: 2,
-    fontFamily: Fonts.mono,
-  },
-  flowerWrap: {
-    marginLeft: 6,
-    marginTop: 12,
+    fontSize: 36,
+    color: '#C8923C',
+    fontFamily: Fonts.retro,
+    letterSpacing: 4,
+    textShadowColor: 'rgba(200, 146, 60, 0.85)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 16,
+    marginBottom: 4,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 11,
     color: AuthColors.textSecondary,
-    marginTop: 6,
+    marginTop: 14,
     fontFamily: Fonts.mono,
-    letterSpacing: 1,
+    letterSpacing: 2,
   },
   buttonSection: {
     gap: 12,

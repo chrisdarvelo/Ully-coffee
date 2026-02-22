@@ -16,6 +16,7 @@
     "e2e:recipe": "maestro test .maestro/flows/03_save_recipe.yaml"
   },
   "dependencies": {
+    "@expo-google-fonts/press-start-2p": "^0.4.1",
     "@expo/metro-runtime": "~6.1.2",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/bottom-tabs": "^7.13.0",

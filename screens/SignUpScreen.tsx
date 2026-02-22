@@ -124,6 +124,7 @@ export default function SignUpScreen({ navigation }) {
       >
         <View style={styles.content}>
           <View style={styles.header}>
+            <Text style={styles.wordmark}>ULLY AI</Text>
             <Text style={styles.title}>Create Account</Text>
             <Text style={styles.subtitle}>Join Ully AI</Text>
           </View>
@@ -250,16 +251,26 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 40,
   },
+  wordmark: {
+    fontSize: 20,
+    color: '#C8923C',
+    fontFamily: Fonts.retro,
+    letterSpacing: 3,
+    textShadowColor: 'rgba(200, 146, 60, 0.85)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 14,
+    marginBottom: 20,
+  },
   title: {
-    fontSize: 32,
+    fontSize: 26,
     fontWeight: '700',
     color: AuthColors.text,
     fontFamily: Fonts.mono,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 14,
     color: AuthColors.textSecondary,
-    marginTop: 8,
+    marginTop: 6,
     fontFamily: Fonts.mono,
   },
   form: {
