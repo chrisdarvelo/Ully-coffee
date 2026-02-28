@@ -34,10 +34,14 @@ export async function getWeatherAndLocation(): Promise<WeatherContext | null> {
     });
     const { latitude, longitude } = location.coords;
 
-    const response = await fetch(
+    const fetchPromise = fetch(
       `https://wttr.in/${latitude},${longitude}?format=j1`,
       { headers: { Accept: 'application/json' } }
     );
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('weather fetch timeout')), 5000)
+    );
+    const response = await Promise.race([fetchPromise, timeoutPromise]);
     if (!response.ok) return null;
 
     const data = await response.json();

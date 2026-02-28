@@ -10,6 +10,17 @@ const FEEDS = [
   { url: 'https://dailycoffeenews.com/feed/', source: 'Roast Magazine' },
 ];
 
+function decodeHtmlEntities(str: string): string {
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, code) => String.fromCharCode(parseInt(code, 16)));
+}
+
 function parseItems(xml: string, source: string): NewsArticle[] {
   const items: NewsArticle[] = [];
   const itemRegex = /<item>([\s\S]*?)<\/item>/g;
@@ -23,7 +34,7 @@ function parseItems(xml: string, source: string): NewsArticle[] {
     const pubDate = block.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] || '';
     if (title && link) {
       items.push({
-        title: title.trim(),
+        title: decodeHtmlEntities(title.trim()),
         link: link.trim(),
         date: pubDate ? new Date(pubDate).toISOString() : new Date().toISOString(),
         source,

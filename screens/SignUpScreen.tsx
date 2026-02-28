@@ -67,6 +67,12 @@ export default function SignUpScreen({ navigation }) {
       Alert.alert('Error', 'Please enter a valid date of birth.');
       return;
     }
+    // Reject impossible dates (Feb 30, Nov 31, etc.) — JS Date silently overflows these.
+    const parsed = new Date(year, month - 1, day);
+    if (parsed.getMonth() !== month - 1 || parsed.getDate() !== day) {
+      Alert.alert('Error', 'Please enter a valid date of birth.');
+      return;
+    }
 
     const age = getAge(year, month, day);
     if (age < MIN_AGE) {

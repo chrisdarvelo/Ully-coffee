@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { Alert, Linking } from 'react-native';
 import { useCameraPermissions, CameraView, BarcodeScanningResult } from 'expo-camera';
 
@@ -13,6 +13,13 @@ export function useCamera() {
   const cameraRef = useRef<CameraView>(null);
   const burstRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const burstFramesRef = useRef<string[]>([]);
+
+  // Clear burst interval on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (burstRef.current) clearInterval(burstRef.current);
+    };
+  }, []);
 
   const openCamera = useCallback((mode: CameraMode) => {
     if (!permission?.granted) {

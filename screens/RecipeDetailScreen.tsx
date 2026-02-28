@@ -34,7 +34,10 @@ export default function RecipeDetailScreen({ route, navigation }: any) {
 
   // Mutations
   const saveMutation = useMutation({
-    mutationFn: (data: Partial<Recipe>) => saveRecipe(uid!, data),
+    mutationFn: (data: Partial<Recipe>) => {
+      if (!uid) throw new Error('Not authenticated');
+      return saveRecipe(uid, data);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recipes', uid] });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -43,7 +46,10 @@ export default function RecipeDetailScreen({ route, navigation }: any) {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteRecipe(uid!, id),
+    mutationFn: (id: string) => {
+      if (!uid) throw new Error('Not authenticated');
+      return deleteRecipe(uid, id);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recipes', uid] });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);

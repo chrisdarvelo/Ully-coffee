@@ -24,7 +24,7 @@ export async function getCafes(uid: string): Promise<Cafe[]> {
         const migrated_cafes: Cafe[] = profile.shops
           .filter((name) => !shopNames.includes(name))
           .map((name, i) => ({
-            id: `migrated_${Date.now()}_${i}`,
+            id: `migrated_${Date.now()}_${i}_${Math.random().toString(36).slice(2, 7)}`,
             name,
             location: '',
             notes: '',

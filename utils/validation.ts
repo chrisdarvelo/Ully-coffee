@@ -22,7 +22,7 @@ export function validatePassword(password: string): { valid: boolean; message: s
  * Basic email format validation.
  */
 export function validateEmail(email: string): boolean {
-  if (!email) return false;
+  if (!email || email.length > 254) return false;
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
 

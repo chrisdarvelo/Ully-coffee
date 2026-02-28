@@ -24,7 +24,10 @@ export default function BaristaDetailScreen({ route, navigation }: any) {
   const uid = auth.currentUser?.uid;
 
   const followMutation = useMutation({
-    mutationFn: () => toggleFollow(uid!, barista.id),
+    mutationFn: () => {
+      if (!uid) throw new Error('Not authenticated');
+      return toggleFollow(uid, barista.id);
+    },
     onMutate: async () => {
       // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({ queryKey: ['baristas', uid] });

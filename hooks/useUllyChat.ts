@@ -2,9 +2,14 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ClaudeService from '../services/ClaudeService';
 import { getWeatherAndLocation, WeatherContext } from '../services/WeatherLocationService';
+import { auth } from '../services/FirebaseConfig';
 import { ChatMessage, ChatHistoryEntry } from '../types';
 
-const HISTORY_KEY = '@ully_chat_history';
+const MAX_HISTORY = 50;
+
+// Scoped per-user so history is never shared between accounts on the same device.
+const getHistoryKey = (): string | null =>
+  auth.currentUser ? `@ully_chat_history_${auth.currentUser.uid}` : null;
 
 const BASE_SYSTEM_PROMPT =
   'You are Ully, a coffee AI. You primarily answer coffee-related questions — espresso, equipment, grinders, water chemistry, roasting, brewing, latte art, origins, processing, café management, barista techniques, and coffee culture. You also have awareness of the user\'s current weather and location so you can give contextual coffee recommendations.\n\nRules:\n- Answer immediately. No preamble, no self-introduction.\n- Keep responses short and practical.\n- Don\'t explain your background or qualifications.\n- Don\'t repeat what the user said.\n- Don\'t narrate what you\'re about to do — just do it.\n- Use bullet points for multi-step answers.\n- You may answer weather or location questions ONLY when they relate directly to a coffee recommendation.\n- Non-coffee question with no weather/location angle? Say: "That\'s outside my expertise. Ask me anything about coffee."';
@@ -33,7 +38,7 @@ When relevant, use this context to:
 function buildApiMessages(messages: ChatMessage[]) {
   return messages.map((msg) => {
     const role: 'user' | 'assistant' = msg.role === 'ully' ? 'assistant' : 'user';
-    if (msg.frames && msg.frames.length > 0) {
+    if (msg.frames?.length) {
       const content: any[] = msg.frames.map((frame) => ({
         type: 'image',
         source: { type: 'base64', media_type: 'image/jpeg', data: frame },
@@ -72,10 +77,14 @@ export function useUllyChat() {
   }, []);
 
   const loadHistory = useCallback(async () => {
+    const key = getHistoryKey();
+    if (!key) return;
     try {
-      const data = await AsyncStorage.getItem(HISTORY_KEY);
+      const data = await AsyncStorage.getItem(key);
       if (data) setHistory(JSON.parse(data));
-    } catch (e) {}
+    } catch (e) {
+      console.warn('Chat history load failed:', e);
+    }
   }, []);
 
   useEffect(() => {
@@ -89,7 +98,7 @@ export function useUllyChat() {
     const entry: ChatHistoryEntry = {
       id: Date.now().toString(),
       preview: preview.length > 50 ? preview.slice(0, 50) + '...' : preview,
-      date: new Date().toLocaleDateString(),
+      date: new Date().toISOString().split('T')[0],
       messages: msgs.map((m) => ({
         role: m.role,
         text: m.text,
@@ -99,8 +108,11 @@ export function useUllyChat() {
     };
     
     setHistory((prev) => {
-      const updated = [entry, ...prev].slice(0, 50);
-      AsyncStorage.setItem(HISTORY_KEY, JSON.stringify(updated)).catch(() => {});
+      const updated = [entry, ...prev].slice(0, MAX_HISTORY);
+      const key = getHistoryKey();
+      if (key) AsyncStorage.setItem(key, JSON.stringify(updated)).catch((e) => {
+        console.warn('Chat history save failed:', e);
+      });
       return updated;
     });
   }, []);

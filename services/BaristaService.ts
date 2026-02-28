@@ -145,7 +145,7 @@ export async function getFollowedBlogPosts(uid: string): Promise<BlogPost[]> {
   const posts: BlogPost[] = [];
   for (const barista of CURATED_BARISTAS) {
     if (!followedSet.has(barista.id)) continue;
-    for (const blog of barista.blogs) {
+    for (const blog of (barista.blogs ?? [])) {
       posts.push({
         title: blog.title,
         url: blog.url,

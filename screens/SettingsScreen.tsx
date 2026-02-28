@@ -113,7 +113,7 @@ export default function SettingsScreen({ navigation: tabNav }) {
                   // deleting the Auth record, otherwise local data is orphaned.
                   try {
                     const keys = await AsyncStorage.getAllKeys();
-                    const userKeys = keys.filter((k) => k.includes(user.uid) || k === '@ully_chat_history');
+                    const userKeys = keys.filter((k) => k.includes(user.uid));
                     if (userKeys.length > 0) {
                       await AsyncStorage.multiRemove(userKeys);
                     }
@@ -155,11 +155,15 @@ export default function SettingsScreen({ navigation: tabNav }) {
   };
 
   const handleSaveProfile = async () => {
-    await saveProfile(user.uid, {
-      location: sanitizeText(location, 100),
-      shops: shops.map((s) => sanitizeText(s, 100)),
-    });
-    setEditing(false);
+    try {
+      await saveProfile(user.uid, {
+        location: sanitizeText(location, 100),
+        shops: shops.map((s) => sanitizeText(s, 100)),
+      });
+      setEditing(false);
+    } catch {
+      Alert.alert('Error', 'Failed to save profile. Please try again.');
+    }
   };
 
   const addShop = () => {

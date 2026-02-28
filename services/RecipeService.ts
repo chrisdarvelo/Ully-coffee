@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Recipe } from '../types';
 
 const KEY_PREFIX = '@ully_recipes_';
+const ART_STYLES = ['lam', 'rothko', 'picasso'] as const;
 
 function recipeKey(uid: string): string {
   return `${KEY_PREFIX}${uid}`;
@@ -77,7 +78,7 @@ export async function saveRecipe(uid: string, recipe: Partial<Recipe> & { id?: s
       method: recipe.method || 'Unknown',
       description: recipe.description || '',
       artSeed: recipe.artSeed || Math.floor(Math.random() * 10000),
-      artStyle: recipe.artStyle || ['lam', 'rothko', 'picasso'][Math.floor(Math.random() * 3)],
+      artStyle: recipe.artStyle || ART_STYLES[Math.floor(Math.random() * ART_STYLES.length)],
       createdAt: now,
       updatedAt: now,
     } as Recipe);

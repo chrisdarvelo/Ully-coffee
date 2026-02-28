@@ -157,11 +157,11 @@ export default function OnboardingScreen({ navigation }: { navigation: any }) {
       organization: 'free' 
     };
     try {
-      await saveProfile(user.uid, { 
-        username, 
-        role, 
-        tier: tierMap[role], 
-        ...answers as any // Partial profile data
+      await saveProfile(user.uid, {
+        username,
+        role,
+        tier: tierMap[role],
+        ...(answers as Partial<UserProfile>),
       });
       navigation.replace('Tabs');
     } catch {

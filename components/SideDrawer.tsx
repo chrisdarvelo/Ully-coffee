@@ -9,6 +9,7 @@ import {
   Animated,
   Dimensions,
 } from 'react-native';
+import Constants from 'expo-constants';
 import { Colors, AuthColors, Fonts } from '../utils/constants';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -38,7 +39,7 @@ export default function SideDrawer({ visible, onClose, onNavigate }: SideDrawerP
         useNativeDriver: true,
       }).start();
     }
-  }, [visible, slideAnim]);
+  }, [visible]); // slideAnim is a stable ref — intentionally omitted from deps
 
   const menuItems = [
     { key: 'ai', label: 'AI Assistant', icon: '🤖' },
@@ -76,7 +77,7 @@ export default function SideDrawer({ visible, onClose, onNavigate }: SideDrawerP
           </View>
 
           <View style={styles.footer}>
-            <Text style={styles.version}>v1.0.0</Text>
+            <Text style={styles.version}>v{Constants.expoConfig?.version ?? '1.0.0'}</Text>
           </View>
         </Animated.View>
       </View>

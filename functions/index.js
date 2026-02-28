@@ -34,7 +34,10 @@ async function enforceRateLimit(uid) {
     await ref.update({ count: data.count + 1 });
   } else {
     // First message of the day (or first ever) — reset counter.
-    await ref.set({ date: today, count: 1 });
+    // expireAt lets Firestore TTL auto-delete this doc if the user's account is
+    // deleted but wipeUserData misses it (belt-and-suspenders, 2-day window).
+    const expireAt = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
+    await ref.set({ date: today, count: 1, expireAt });
   }
 }
 
@@ -82,8 +85,11 @@ exports.chatWithUlly = onCall(
     }
 
     if (!response.ok) {
+      // Log full detail server-side; return a generic message to the client so
+      // internal API errors (including any key-related detail) are never exposed.
       const errorText = await response.text();
-      throw new HttpsError('internal', `Claude API error (${response.status}): ${errorText}`);
+      console.error(`Claude API error ${response.status}: ${errorText}`);
+      throw new HttpsError('internal', 'Ully AI is unavailable right now. Please try again.');
     }
 
     const data = await response.json();
@@ -120,12 +126,15 @@ exports.wipeUserData = onCall(async (request) => {
 
   const collections = ['recipes', 'cafes', 'profiles'];
   const deletePromises = collections.map(async (col) => {
-    const snap = await db.collection(col).where('userId', '==', uid).get();
+    const snap = await db.collection(col).where('uid', '==', uid).get();
     if (!snap.empty) await deleteInBatches(snap.docs);
   });
 
-  // Also delete the profile document keyed directly by uid
+  // Delete the profile document keyed directly by uid
   deletePromises.push(db.collection('profiles').doc(uid).delete().catch(() => {}));
+
+  // Delete the rate-limit document so it doesn't accumulate for deleted users
+  deletePromises.push(db.collection('rateLimits').doc(uid).delete().catch(() => {}));
 
   // Delete user's Storage folder
   try {

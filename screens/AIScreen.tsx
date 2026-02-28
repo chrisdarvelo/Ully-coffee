@@ -27,8 +27,9 @@ import { extractFrames, validateImageSize } from '../utils/mediaUtils';
 import CameraModal from '../components/ai/CameraModal';
 import ChatHistory from '../components/ai/ChatHistory';
 import ActionChips from '../components/ai/ActionChips';
+import DialInModal from '../components/ai/DialInModal';
 import { MicIcon, BookIcon, FlagIcon } from '../components/ai/AIIcons';
-import { ChatMessage } from '../types';
+import { DialInData } from '../types';
 
 // Speech Recognition (Keep inline for safe optional require)
 let ExpoSpeechRecognitionModule: any = null;
@@ -71,6 +72,7 @@ export default function AIScreen() {
 
   const [query, setQuery] = useState('');
   const [listening, setListening] = useState(false);
+  const [showDialIn, setShowDialIn] = useState(false);
   const [thinkingQuote, setThinkingQuote] = useState('');
   const [currentFact, setCurrentFact] = useState(() => COFFEE_FUN_FACTS[Math.floor(Math.random() * COFFEE_FUN_FACTS.length)]);
   
@@ -277,6 +279,17 @@ export default function AIScreen() {
     refreshFact();
   };
 
+  const handleDialInConfirm = async (data: DialInData) => {
+    setShowDialIn(false);
+    const tasteMap = { sour: 'too sour', balanced: 'well balanced', bitter: 'too bitter' };
+    const visualNote = data.image
+      ? " I've attached a photo of the shot — look for crema color, channeling, and extraction patterns."
+      : '';
+    const text = `Dial-in: ${data.dose.toFixed(1)}g dose → ${data.yield.toFixed(1)}g yield in ${data.time}s. Tasted ${tasteMap[data.taste]}.${visualNote} What grind or technique adjustments do I need?`;
+    await addMessage({ role: 'user', text, image: data.image, imageUri: data.imageUri });
+    setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
+  };
+
   const handleFlagMessage = (text: string) => {
     Alert.alert(
       'Report Response',
@@ -337,8 +350,8 @@ export default function AIScreen() {
                 <Text style={styles.subGreeting}>how can I help?</Text>
 
                 <ActionChips
-                  onDialIn={() => openCamera('extraction')}
-                  onDialInLongPress={() => pickMedia('extraction')}
+                  onDialIn={() => setShowDialIn(true)}
+                  onDialInLongPress={() => openCamera('extraction')}
                   onScan={() => openCamera('scan')}
                   onScanLongPress={() => pickMedia('scan')}
                 />
@@ -395,7 +408,7 @@ export default function AIScreen() {
               >
                 {messages.map((msg, i) =>
                   msg.role === 'user' ? (
-                    <GoldGradient key={i} style={styles.userBubble}>
+                    <GoldGradient key={`${i}-user`} style={styles.userBubble}>
                       {msg.imageUri && !msg.frames && !msg.isVideo && (
                         <Image source={{ uri: msg.imageUri }} style={styles.bubbleImage} />
                       )}
@@ -407,7 +420,7 @@ export default function AIScreen() {
                       <Text style={styles.userText}>{msg.text}</Text>
                     </GoldGradient>
                   ) : (
-                    <View key={i} style={styles.ullyBubbleWrapper}>
+                    <View key={`${i}-ully`} style={styles.ullyBubbleWrapper}>
                       <View style={styles.ullyBubble}>
                         <Text style={styles.ullyText}>{msg.text}</Text>
                       </View>
@@ -435,8 +448,8 @@ export default function AIScreen() {
 
               <ActionChips
                 compact
-                onDialIn={() => openCamera('extraction')}
-                onDialInLongPress={() => pickMedia('extraction')}
+                onDialIn={() => setShowDialIn(true)}
+                onDialInLongPress={() => openCamera('extraction')}
                 onScan={() => openCamera('scan')}
                 onScanLongPress={() => pickMedia('scan')}
               />
@@ -480,6 +493,12 @@ export default function AIScreen() {
             onTakePicture={takePhotoWrapper}
             onStartBurst={() => startBurst(handleBurstCaptured)}
             onStopBurst={() => stopBurst(handleBurstCaptured)}
+          />
+
+          <DialInModal
+            visible={showDialIn}
+            onClose={() => setShowDialIn(false)}
+            onConfirm={handleDialInConfirm}
           />
 
         </KeyboardAvoidingView>

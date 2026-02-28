@@ -16,7 +16,7 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const { user, initializing, initialize } = useAuthStore();
-  const { onboarded, fetchProfile } = useProfileStore();
+  const { onboarded, profileReady, fetchProfile } = useProfileStore();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [emailVerified, setEmailVerified] = useState(false);
   const [fontsLoaded] = useFonts({ PressStart2P_400Regular });
@@ -45,7 +45,7 @@ export default function App() {
     }
   }, [initializing, fadeAnim]);
 
-  if (initializing || !fontsLoaded) {
+  if (initializing || !fontsLoaded || (user && !profileReady)) {
     return (
       <View style={styles.loading}>
         <CoffeeFlower size={80} spinning />

@@ -24,6 +24,7 @@ export default function CafeDetailScreen({ route, navigation }) {
   const [notes, setNotes] = useState(cafe?.notes || '');
 
   const handleSave = async () => {
+    if (!uid) return;
     if (!name.trim()) {
       Alert.alert('Name required', 'Please enter a cafe name.');
       return;

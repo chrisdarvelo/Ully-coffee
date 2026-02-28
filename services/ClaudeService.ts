@@ -28,7 +28,7 @@ class ClaudeService {
     } catch (error: any) {
       // Preserve rate-limit errors so useUllyChat can surface them specifically.
       if (error?.code === 'functions/resource-exhausted') throw error;
-      console.error('Firebase Function Error:', error);
+      if (__DEV__) console.error('Firebase Function Error:', error);
       throw new Error(`AI assistant error: ${error.message}`);
     }
   }

@@ -18,10 +18,11 @@ export async function getProfile(uid: string): Promise<UserProfile | null> {
 }
 
 export async function saveProfile(uid: string, data: Partial<UserProfile>): Promise<UserProfile> {
+  if (!uid) throw new Error('uid is required');
   const existing = await getProfile(uid);
   const profile: UserProfile = {
     uid,
-    email: auth.currentUser?.email ?? existing?.email ?? null,
+    email: existing?.email ?? auth.currentUser?.email ?? null,
     ...existing,
     ...data,
     onboarded: true,

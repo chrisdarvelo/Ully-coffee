@@ -463,7 +463,7 @@ const styles = StyleSheet.create({
   },
   baristaPhotoFollowed: {
     borderWidth: 3,
-    borderColor: '#C8923C',
+    borderColor: Colors.primary,
   },
   followBadge: {
     position: 'absolute',
@@ -472,14 +472,14 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#C8923C',
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
     borderColor: Colors.background,
   },
   followBadgeText: {
-    color: '#FFFFFF',
+    color: Colors.text,
     fontSize: 12,
     fontWeight: '700',
   },
@@ -492,7 +492,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   baristaAvatarText: {
-    color: '#FFFFFF',
+    color: Colors.text,
     fontSize: 28,
     fontWeight: '700',
     fontFamily: Fonts.mono,

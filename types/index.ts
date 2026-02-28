@@ -100,3 +100,12 @@ export interface NotificationPrefs {
   dailyTip: boolean;
   newContent: boolean;
 }
+
+export interface DialInData {
+  dose: number;    // grams
+  yield: number;   // grams
+  time: number;    // seconds
+  taste: 'sour' | 'balanced' | 'bitter';
+  image?: string;  // base64 — espresso shot photo
+  imageUri?: string;
+}
