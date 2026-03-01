@@ -456,28 +456,92 @@ been waiting for — and it launched at World of Coffee."*
 - [ ] Begin small paid social testing on Instagram and Reddit ($500/month,
       performance-oriented, r/espresso and barista-adjacent communities)
 
-### Three product moves to ship before WoC
+### Three product moves — deferred, design decisions captured
 
-These are high-leverage, low-engineering-cost changes that make Ully dramatically
-more compelling at live demos:
+High-leverage, low-engineering-cost features to build post-WoC. Design
+decisions are resolved — implementation is ready to start when prioritised.
+
+---
 
 **1. Shift Mode**
-One-tap UI switch that sets the AI to maximum brevity — one paragraph max, no
-preamble, optimised for on-shift, time-pressure, greasy-hand environments.
-Implementation: system prompt flag in `useUllyChat.ts`. Not a new feature — a
-mode switch.
 
-**2. Dial-in shot history**
-Save each dial-in session to AsyncStorage under `@ully_dialin_{uid}` with
-timestamp, grind size, dose, yield, time, taste, and notes. Display as a simple
-chronological list in the dial-in screen. Even three sessions of history makes
-the app dramatically stickier than any competitor.
+One-tap UI switch that sets the AI to maximum brevity for on-shift, time-pressure,
+greasy-hand environments. Distinct from the current "short and practical" default —
+Shift Mode removes all context and explanation entirely.
 
-**3. "Share this fix" button on diagnostic responses**
-After the AI resolves a troubleshooting question, one tap generates a formatted
-summary ("Machine: [model]. Issue: [problem]. Fix: [AI response].") and opens
-the native Share sheet. Implementation: React Native `Share` API, two lines of
-code. Drives organic peer-to-peer distribution among technician networks.
+| Normal Mode | Shift Mode |
+|---|---|
+| Answer + brief context | Answer only |
+| "Here's why this happens..." | Removed |
+| "You might also consider..." | Removed |
+| Multi-paragraph when complex | One paragraph hard cap |
+
+**UX decision (resolved):** Gold chip in the AI screen header, always visible.
+Active state is gold-filled. Sticky across sessions — saved to AsyncStorage so a
+technician doesn't re-enable it every morning.
+
+**Implementation:** System prompt flag in `useUllyChat.ts`. Add a `shiftMode`
+boolean to the hook, persist to AsyncStorage under `@ully_shift_mode_{uid}`,
+inject a secondary brevity override into `buildSystemPrompt()` when active.
+
+---
+
+**2. Dial-in Shot History**
+
+Save each dial-in session to AsyncStorage. Creates a genuine data trail that no
+competitor has. Foundation for the future crop-to-cup data layer.
+
+**UX decision (resolved):** History lives inside the dial-in modal as a "History"
+tab — contextual, no navigation away from the dial-in flow. Scrollable list of
+previous sessions with dose/yield/time/taste and the AI recommendation. Not a
+separate screen.
+
+**AsyncStorage key:** `@ully_dialin_{uid}`
+
+**Schema per session:**
+```ts
+{
+  id: string           // uuid
+  createdAt: string    // ISO timestamp
+  dose: number         // grams in
+  yield: number        // grams out
+  time: number         // seconds
+  taste: 'sour' | 'balanced' | 'bitter'
+  imageUri?: string    // optional shot photo
+  aiRecommendation: string  // Claude response text
+  notes?: string       // optional free text
+}
+```
+
+**Implementation:** Save on dial-in submission in `AIScreen.tsx`. Read and display
+in a new History tab in `DialInModal`. Add `@ully_dialin_{uid}` to the AsyncStorage
+key index in `CLAUDE.md`.
+
+---
+
+**3. Share This Fix**
+
+Share icon on every Ully AI response — not just diagnostic responses. The user
+decides what is worth sharing; don't try to detect intent. A brilliant extraction
+explanation is as shareable as a machine fix.
+
+**UX decision (resolved):** Small share icon at the bottom-right of each assistant
+message bubble. Not shown on user messages. Not shown on every message in a long
+conversation — shown only on the most recent assistant response to avoid visual
+noise.
+
+**Share format:**
+```
+💡 Ully AI — Espresso Assistant
+
+[full response text]
+
+─────────────────
+Get Ully: [App Store / Play Store link]
+```
+
+**Implementation:** `Share.share()` from React Native core in
+`components/ai/ChatHistory.tsx`. No new dependencies.
 
 ### Key dates — 2026 industry calendar
 
