@@ -9,6 +9,9 @@ import {
   Switch,
   Alert,
   ScrollView,
+  Modal,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useFocusEffect } from '@react-navigation/native';
@@ -32,13 +35,19 @@ import { Colors, AuthColors, Fonts } from '../utils/constants';
 import { sanitizeText } from '../utils/validation';
 import CoffeeFlower from '../components/CoffeeFlower';
 import { GoldGradient } from '../components/GoldGradient';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { TabParamList } from '../navigation/AppNavigator';
 
-export default function SettingsScreen({ navigation: tabNav }) {
+type Props = BottomTabScreenProps<TabParamList, 'Profile'>;
+
+export default function SettingsScreen({ navigation: tabNav }: Props) {
   const navigation = tabNav.getParent();
   const user = auth.currentUser;
   const name = user?.email ? user.email.split('@')[0] : 'User';
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [deletePassword, setDeletePassword] = useState('');
   const [location, setLocation] = useState('');
   const [shops, setShops] = useState([]);
   const [shopInput, setShopInput] = useState('');
@@ -100,45 +109,44 @@ export default function SettingsScreen({ navigation: tabNav }) {
           text: 'Delete',
           style: 'destructive',
           onPress: () => {
-            Alert.prompt(
-              'Confirm Password',
-              'Enter your password to confirm account deletion.',
-              async (password) => {
-                if (!password) return;
-                setLoading(true);
-                try {
-                  const credential = EmailAuthProvider.credential(user.email, password);
-                  await reauthenticateWithCredential(user, credential);
-                  // Clear all local user data from AsyncStorage — must succeed before
-                  // deleting the Auth record, otherwise local data is orphaned.
-                  try {
-                    const keys = await AsyncStorage.getAllKeys();
-                    const userKeys = keys.filter((k) => k.includes(user.uid));
-                    if (userKeys.length > 0) {
-                      await AsyncStorage.multiRemove(userKeys);
-                    }
-                  } catch {
-                    setLoading(false);
-                    Alert.alert('Error', 'Failed to clear local data. Please try again.');
-                    return;
-                  }
-                  // Wipe server-side data (Firestore + Storage) and delete Auth record
-                  await deleteUserAccount();
-                } catch (error) {
-                  setLoading(false);
-                  const msg =
-                    error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential'
-                      ? 'Incorrect password. Please try again.'
-                      : 'Failed to delete account. Please try again.';
-                  Alert.alert('Error', msg);
-                }
-              },
-              'secure-text',
-            );
+            setDeletePassword('');
+            setDeleteModalVisible(true);
           },
         },
       ],
     );
+  };
+
+  const confirmDelete = async () => {
+    if (!deletePassword) return;
+    setDeleteModalVisible(false);
+    setLoading(true);
+    try {
+      const credential = EmailAuthProvider.credential(user.email, deletePassword);
+      await reauthenticateWithCredential(user, credential);
+      // Clear all local user data from AsyncStorage — must succeed before
+      // deleting the Auth record, otherwise local data is orphaned.
+      try {
+        const keys = await AsyncStorage.getAllKeys();
+        const userKeys = keys.filter((k) => k.includes(user.uid));
+        if (userKeys.length > 0) {
+          await AsyncStorage.multiRemove(userKeys);
+        }
+      } catch {
+        setLoading(false);
+        Alert.alert('Error', 'Failed to clear local data. Please try again.');
+        return;
+      }
+      // Wipe server-side data (Firestore + Storage) and delete Auth record
+      await deleteUserAccount();
+    } catch (error) {
+      setLoading(false);
+      const msg =
+        error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential'
+          ? 'Incorrect password. Please try again.'
+          : 'Failed to delete account. Please try again.';
+      Alert.alert('Error', msg);
+    }
   };
 
   const handleToggleNotifications = async (value) => {
@@ -366,6 +374,52 @@ export default function SettingsScreen({ navigation: tabNav }) {
           <Text style={styles.deleteText}>Delete Account</Text>
         </TouchableOpacity>
       </View>
+      <Modal
+        visible={deleteModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setDeleteModalVisible(false)}
+      >
+        <KeyboardAvoidingView
+          style={styles.modalOverlay}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <View style={styles.modalCard}>
+            <Text style={styles.modalTitle}>Confirm Password</Text>
+            <Text style={styles.modalSubtitle}>
+              Enter your password to permanently delete your account.
+            </Text>
+            <TextInput
+              style={styles.modalInput}
+              value={deletePassword}
+              onChangeText={setDeletePassword}
+              placeholder="Password"
+              placeholderTextColor={Colors.textSecondary}
+              secureTextEntry
+              autoFocus
+              onSubmitEditing={confirmDelete}
+              returnKeyType="done"
+            />
+            <View style={styles.modalActions}>
+              <TouchableOpacity
+                style={styles.modalCancel}
+                onPress={() => setDeleteModalVisible(false)}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.modalCancelText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalConfirm, !deletePassword && styles.modalConfirmDisabled]}
+                onPress={confirmDelete}
+                disabled={!deletePassword}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.modalConfirmText}>Delete</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
     </ScrollView>
   );
 }
@@ -585,5 +639,77 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: Colors.textSecondary,
     fontFamily: Fonts.mono,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  modalCard: {
+    backgroundColor: Colors.card,
+    borderRadius: 14,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  modalTitle: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: Colors.text,
+    fontFamily: Fonts.mono,
+    marginBottom: 8,
+  },
+  modalSubtitle: {
+    fontSize: 13,
+    color: Colors.textSecondary,
+    fontFamily: Fonts.mono,
+    marginBottom: 20,
+    lineHeight: 18,
+  },
+  modalInput: {
+    backgroundColor: Colors.background,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 14,
+    fontFamily: Fonts.mono,
+    color: Colors.text,
+    marginBottom: 20,
+  },
+  modalActions: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  modalCancel: {
+    flex: 1,
+    padding: 14,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    alignItems: 'center',
+  },
+  modalCancelText: {
+    fontSize: 15,
+    color: Colors.textSecondary,
+    fontFamily: Fonts.mono,
+    fontWeight: '600',
+  },
+  modalConfirm: {
+    flex: 1,
+    padding: 14,
+    borderRadius: 8,
+    backgroundColor: Colors.danger,
+    alignItems: 'center',
+  },
+  modalConfirmDisabled: {
+    opacity: 0.4,
+  },
+  modalConfirmText: {
+    fontSize: 15,
+    color: '#FFFFFF',
+    fontFamily: Fonts.mono,
+    fontWeight: '700',
   },
 });

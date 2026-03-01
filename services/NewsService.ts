@@ -7,7 +7,7 @@ const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
 const FEEDS = [
   { url: 'https://perfectdailygrind.com/feed/', source: 'Perfect Daily Grind' },
   { url: 'https://baristamagazine.com/feed/', source: 'Barista Magazine' },
-  { url: 'https://dailycoffeenews.com/feed/', source: 'Roast Magazine' },
+  { url: 'https://dailycoffeenews.com/feed/', source: 'Daily Coffee News' },
 ];
 
 function decodeHtmlEntities(str: string): string {

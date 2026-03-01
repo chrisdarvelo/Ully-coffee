@@ -27,7 +27,7 @@ Ully AI is a **mobile-first AI coffee companion** built for baristas, enthusiast
 | State | Zustand (`authStore`, `profileStore`) |
 | Server state | TanStack React Query v5 |
 | Auth | Firebase Authentication (email/password) |
-| Backend logic | Firebase Cloud Functions v2 (Node 18) |
+| Backend logic | Firebase Cloud Functions v2 (Node 22) |
 | AI | Anthropic Claude Sonnet via Cloud Function proxy |
 | Local storage | AsyncStorage — ALL user data (recipes, profile, cafes, follows) |
 | Firestore | Reserved / rules locked — not used by client yet |
@@ -114,7 +114,7 @@ Ully-Coffee/
 │
 ├── functions/
 │   ├── index.js             # Cloud Functions: chatWithUlly, wipeUserData
-│   └── package.json         # Node 18, firebase-admin ^13, firebase-functions ^6
+│   └── package.json         # Node 22, firebase-admin ^13, firebase-functions ^6
 │
 ├── __tests__/
 │   ├── hooks/useUllyChat.test.ts

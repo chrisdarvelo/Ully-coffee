@@ -11,13 +11,17 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { auth } from '../services/FirebaseConfig';
 import { toggleFollow } from '../services/BaristaService';
 import { Colors, AuthColors, Fonts } from '../utils/constants';
 import { GoldGradient } from '../components/GoldGradient';
 import { Barista } from '../types';
+import { RootStackParamList } from '../navigation/AppNavigator';
 
-export default function BaristaDetailScreen({ route, navigation }: any) {
+type Props = NativeStackScreenProps<RootStackParamList, 'BaristaDetail'>;
+
+export default function BaristaDetailScreen({ route, navigation }: Props) {
   const insets = useSafeAreaInsets();
   const queryClient = useQueryClient();
   const barista: Barista = route.params?.barista;

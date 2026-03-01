@@ -53,6 +53,9 @@ GoogleService-Info.plist
 # Testing
 coverage/
 
+# Firebase CLI local cache
+.firebase/
+
 # Temporary
 tmp/
 temp/

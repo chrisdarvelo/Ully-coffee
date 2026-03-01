@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Colors, AuthColors, Fonts } from '../utils/constants';
 import { TabIcon } from '../components/NavigationIcons';
+import { Recipe, Barista, Cafe } from '../types';
 
 // Screens
 import HomeScreen from '../screens/HomeScreen';
@@ -24,9 +25,9 @@ export type RootStackParamList = {
   PrivacyPolicy: undefined;
   Onboarding: undefined;
   Tabs: undefined;
-  RecipeDetail: { recipe?: any; isNew?: boolean };
-  BaristaDetail: { barista: any };
-  CafeDetail: { cafe?: any; isNew?: boolean };
+  RecipeDetail: { recipe?: Recipe; isNew?: boolean };
+  BaristaDetail: { barista: Barista };
+  CafeDetail: { cafe?: Cafe; isNew?: boolean };
 };
 
 export type TabParamList = {

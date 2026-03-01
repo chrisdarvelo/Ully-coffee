@@ -82,7 +82,7 @@ describe('addMessage', () => {
 
     await waitFor(() =>
       expect(AsyncStorage.setItem).toHaveBeenCalledWith(
-        '@ully_chat_history',
+        '@ully_chat_history_test-uid',
         expect.any(String)
       )
     );

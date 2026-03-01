@@ -248,7 +248,9 @@ export default function AIScreen() {
         const asset = result.assets[0];
         if (asset.type === 'video') {
           const frames = await extractFrames(asset.uri, 5, 10000);
-          const promptText = mode === 'scan' ? 'Identify part...' : 'Analyze extraction...';
+          const promptText = mode === 'scan'
+            ? `Identify this coffee equipment from ${frames.length} video frames...`
+            : `Analyze this espresso extraction sequence (${frames.length} frames from a video)...`;
           await addMessage({ role: 'user', text: promptText, frames, imageUri: asset.uri });
         } else {
           if (asset.base64) {
@@ -259,7 +261,9 @@ export default function AIScreen() {
               return;
             }
           }
-          const promptText = mode === 'scan' ? 'Identify part...' : 'Analyze extraction...';
+          const promptText = mode === 'scan'
+            ? 'Identify this coffee equipment part. Provide: part name, manufacturer/model compatibility, what it does, signs of wear or damage, recommended replacement part numbers, and where to source it.'
+            : 'Analyze this espresso extraction image. Provide: what you observe, potential issues, recommended fixes or adjustments, and any parts that may need replacement. Be specific and actionable.';
           await addMessage({ role: 'user', text: promptText, image: asset.base64 || undefined, imageUri: asset.uri });
         }
       }

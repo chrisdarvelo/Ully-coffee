@@ -12,14 +12,18 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { auth } from '../services/FirebaseConfig';
 import { saveRecipe, deleteRecipe } from '../services/RecipeService';
 import { Colors, AuthColors, Fonts } from '../utils/constants';
 import RecipeArtCover from '../components/RecipeArtCover';
 import { GoldGradient } from '../components/GoldGradient';
 import { Recipe } from '../types';
+import { RootStackParamList } from '../navigation/AppNavigator';
 
-export default function RecipeDetailScreen({ route, navigation }: any) {
+type Props = NativeStackScreenProps<RootStackParamList, 'RecipeDetail'>;
+
+export default function RecipeDetailScreen({ route, navigation }: Props) {
   const insets = useSafeAreaInsets();
   const queryClient = useQueryClient();
   const recipe: Recipe | undefined = route.params?.recipe;
