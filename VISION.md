@@ -132,6 +132,100 @@ hooks/useUllyChat.ts             — small change: KB check before/alongside Cla
 
 ---
 
+## Phase 2b — User Feedback & Dataset Pipeline
+
+**Status:** Planned post-launch, after offline KB.
+
+**The problem:** The offline KB starts with manually authored entries. To grow it
+faster and make it reflect real user questions, Ully needs a voluntary feedback
+loop where users contribute Q&A pairs back to the knowledge base.
+
+**What this is not:** Fine-tuning Claude. Anthropic does not allow model fine-tuning
+via the API. This is a **feedback pipeline that informs KB authoring** — user
+contributions are reviewed by a human (you) and promoted into the offline KB.
+Never describe this as "training the AI" in UI copy.
+
+### User-facing flow
+
+```
+User asks question → Claude answers
+        ↓
+Subtle thumbs row appears below response (not a modal)
+  👍  👎  · Share to improve Ully
+        ↓
+User taps "Share to improve Ully"
+        ↓
+Single confirmation sheet:
+  "This Q&A will be sent anonymously to help improve
+   Ully's knowledge base. No personal info is included."
+  [ Send anonymously ]   [ No thanks ]
+        ↓
+Q&A pair + metadata written to Firestore feedback collection
+        ↓
+You review → good entries authored into offline KB
+```
+
+### When to show the prompt
+
+Do not ask after every message. Show only when:
+- Response is 3+ sentences long
+- User has not been prompted in the last 10 messages
+- User has not disabled feedback prompts in Settings
+
+### Firestore schema
+
+```
+feedback/{autoId}
+  question:    string
+  answer:      string
+  rating:      'helpful' | 'not_helpful'
+  shared:      boolean
+  method:      string | null    — espresso, pour_over, etc. if detectable
+  category:    string | null    — troubleshooting, technique, etc.
+  appVersion:  string
+  createdAt:   timestamp
+  // NO uid, NO email, NO location — anonymous by design
+```
+
+### Privacy requirements before shipping
+
+- Explicit opt-in only — never collect silently
+- Update `public/privacy.html` to disclose feedback collection
+- Update Play Store data safety form — add "App activity → Other
+  user-generated content → Collected, not shared with third parties"
+- Add feedback opt-out toggle in Settings screen
+- Firestore rules must restrict feedback collection to authenticated writes,
+  no client reads
+
+### The compounding effect
+
+```
+Users share feedback
+      ↓
+Identify the 20 most frequently asked questions
+      ↓
+Author those as KB entries with expert-level answers
+      ↓
+KB entries serve those questions offline at zero API cost
+      ↓
+Better answers → more sharing → more KB entries → better Ully
+```
+
+This is how the proprietary crop-to-cup dataset starts — not with a data
+engineering project, but with a feedback button and human curation.
+
+### Files to create
+
+```
+components/FeedbackRow.tsx        — thumbs up/down + share prompt UI
+services/FeedbackService.ts       — write to Firestore feedback collection
+screens/SettingsScreen.tsx        — add feedback opt-out toggle
+public/privacy.html               — update to disclose feedback collection
+firestore.rules                   — add feedback collection write rules
+```
+
+---
+
 ## Phase 3 — Ully Roaster
 
 **Status:** Future.
