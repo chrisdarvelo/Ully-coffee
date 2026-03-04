@@ -16,6 +16,7 @@ interface SectionRowProps {
   renderItem: (info: { item: any; index: number }) => React.ReactElement | null;
   keyExtractor: (item: any, index: number) => string;
   onAdd?: () => void;
+  actionLabel?: string;
   emptyText?: string;
   emptyDescription?: string;
 }
@@ -26,6 +27,7 @@ export default function SectionRow({
   renderItem,
   keyExtractor,
   onAdd,
+  actionLabel,
   emptyText,
   emptyDescription,
 }: SectionRowProps) {
@@ -35,7 +37,7 @@ export default function SectionRow({
         <Text style={styles.sectionTitle}>{title}</Text>
         {onAdd && (
           <TouchableOpacity onPress={onAdd} activeOpacity={0.7} style={styles.addButton}>
-            <Text style={styles.addButtonText}>+</Text>
+            <Text style={styles.addButtonText}>{actionLabel ?? '+'}</Text>
           </TouchableOpacity>
         )}
       </View>

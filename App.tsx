@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Animated, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -20,6 +20,7 @@ export default function App() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [emailVerified, setEmailVerified] = useState(false);
   const [fontsLoaded] = useFonts({ PressStart2P_400Regular });
+  const handleEmailVerified = useCallback(() => setEmailVerified(true), []);
 
   // Initialize Auth
   useEffect(() => {
@@ -61,7 +62,7 @@ export default function App() {
           <StatusBar style="light" />
           <NavigationContainer>
             {user && !emailVerified ? (
-              <VerifyEmailScreen onVerified={() => setEmailVerified(true)} />
+              <VerifyEmailScreen onVerified={handleEmailVerified} />
             ) : user ? (
               <AppNavigator onboarded={onboarded} />
             ) : (

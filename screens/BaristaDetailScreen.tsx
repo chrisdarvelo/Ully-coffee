@@ -30,6 +30,7 @@ export default function BaristaDetailScreen({ route, navigation }: Props) {
   const followMutation = useMutation({
     mutationFn: () => {
       if (!uid) throw new Error('Not authenticated');
+      if (!barista) throw new Error('Barista not found');
       return toggleFollow(uid, barista.id);
     },
     onMutate: async () => {
@@ -66,8 +67,10 @@ export default function BaristaDetailScreen({ route, navigation }: Props) {
   // Since we are using TanStack Query globally, we should ideally read the 'followed' state 
   // from the query cache to ensure the detail screen is in sync with the list.
   const baristas = queryClient.getQueryData<Barista[]>(['baristas', uid]);
-  const currentBarista = baristas?.find(b => b.id === barista.id) || barista;
-  const followed = !!currentBarista.followed;
+  const currentBarista = barista
+    ? (baristas?.find(b => b.id === barista.id) ?? barista)
+    : null;
+  const followed = !!currentBarista?.followed;
 
   if (!barista) {
     return (

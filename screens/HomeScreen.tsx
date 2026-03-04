@@ -68,7 +68,7 @@ export default function HomeScreen() {
     enabled: !!uid,
   });
 
-  const { data: news = [], isLoading: newsLoading } = useQuery({
+  const { data: news = [], isLoading: newsLoading, isError: newsError, refetch: refetchNews } = useQuery({
     queryKey: ['news'],
     queryFn: getNews,
     staleTime: 60 * 60 * 1000, // 1 hour
@@ -272,8 +272,9 @@ export default function HomeScreen() {
             data={news}
             renderItem={renderNewsCard}
             keyExtractor={(item: any, i: number) => `news-${i}`}
-            emptyText="No News"
-            emptyDescription="Pull down to refresh your coffee news feed."
+            {...(newsError ? { onAdd: () => { void refetchNews(); }, actionLabel: '↻' } : {})}
+            emptyText={newsError ? 'Could not load news' : 'No News'}
+            emptyDescription={newsError ? 'Tap ↻ to retry.' : 'Pull down to refresh your coffee news feed.'}
           />
         </View>
 

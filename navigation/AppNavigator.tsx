@@ -24,7 +24,7 @@ export type RootStackParamList = {
   Welcome: undefined;
   Login: undefined;
   SignUp: undefined;
-  PrivacyPolicy: undefined;
+  PrivacyPolicy: { modal?: boolean } | undefined;
   Onboarding: undefined;
   Tabs: undefined;
   RecipeDetail: { recipe?: Recipe; isNew?: boolean };
@@ -109,7 +109,7 @@ export function AppNavigator({ onboarded }: { onboarded: boolean }) {
       <AppStack.Screen
         name="Onboarding"
         component={OnboardingScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: false }}
       />
       <AppStack.Screen
         name="Tabs"

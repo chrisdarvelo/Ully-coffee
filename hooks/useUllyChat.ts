@@ -119,6 +119,7 @@ export function useUllyChat() {
   }, []);
 
   const sendToUlly = async (newMessages: ChatMessage[]) => {
+    if (loading) return;
     setLoading(true);
     try {
       const apiMessages = buildApiMessages(newMessages);

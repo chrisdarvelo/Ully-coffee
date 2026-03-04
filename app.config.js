@@ -30,6 +30,10 @@ export default {
           'Ully uses your photo library to upload photos of coffee equipment and espresso extractions for AI analysis.',
         NSLocationWhenInUseUsageDescription:
           'Ully uses your location to recommend local cafes, roasteries, and weather-appropriate coffee drinks.',
+        NSMicrophoneUsageDescription:
+          'Ully AI needs microphone access for voice input.',
+        NSSpeechRecognitionUsageDescription:
+          'Ully AI needs speech recognition to convert your voice to text.',
       },
     },
     android: {

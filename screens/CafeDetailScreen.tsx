@@ -8,13 +8,17 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { auth } from '../services/FirebaseConfig';
 import { addCafe, saveCafe, removeCafe } from '../services/CafeService';
 import { Colors, AuthColors, Fonts } from '../utils/constants';
 import { sanitizeText } from '../utils/validation';
 import { GoldGradient } from '../components/GoldGradient';
+import type { RootStackParamList } from '../navigation/AppNavigator';
 
-export default function CafeDetailScreen({ route, navigation }: { route: any; navigation: any }) {
+type Props = NativeStackScreenProps<RootStackParamList, 'CafeDetail'>;
+
+export default function CafeDetailScreen({ route, navigation }: Props) {
   const cafe = route.params?.cafe;
   const isNew = route.params?.isNew;
   const uid = auth.currentUser?.uid;
@@ -29,21 +33,27 @@ export default function CafeDetailScreen({ route, navigation }: { route: any; na
       Alert.alert('Name required', 'Please enter a cafe name.');
       return;
     }
-    if (isNew) {
-      await addCafe(uid, {
-        name: sanitizeText(name, 100),
-        location: sanitizeText(location, 200),
-        notes: sanitizeText(notes, 500),
-      });
-    } else {
-      await saveCafe(uid, {
-        ...cafe,
-        name: sanitizeText(name, 100),
-        location: sanitizeText(location, 200),
-        notes: sanitizeText(notes, 500),
-      });
+    try {
+      if (isNew) {
+        await addCafe(uid, {
+          name: sanitizeText(name, 100),
+          location: sanitizeText(location, 200),
+          notes: sanitizeText(notes, 500),
+        });
+      } else {
+        if (!cafe?.id) return;
+        await saveCafe(uid, {
+          ...cafe,
+          id: cafe.id,
+          name: sanitizeText(name, 100),
+          location: sanitizeText(location, 200),
+          notes: sanitizeText(notes, 500),
+        });
+      }
+      navigation.goBack();
+    } catch {
+      Alert.alert('Error', 'Failed to save cafe. Please try again.');
     }
-    navigation.goBack();
   };
 
   const handleRemove = () => {
@@ -53,9 +63,13 @@ export default function CafeDetailScreen({ route, navigation }: { route: any; na
         text: 'Remove',
         style: 'destructive',
         onPress: async () => {
-          if (!uid) return;
-          await removeCafe(uid, cafe.id);
-          navigation.goBack();
+          if (!uid || !cafe?.id) return;
+          try {
+            await removeCafe(uid, cafe.id);
+            navigation.goBack();
+          } catch {
+            Alert.alert('Error', 'Failed to remove cafe. Please try again.');
+          }
         },
       },
     ]);

@@ -41,7 +41,7 @@ import type { TabParamList } from '../navigation/AppNavigator';
 type Props = BottomTabScreenProps<TabParamList, 'Profile'>;
 
 export default function SettingsScreen({ navigation: tabNav }: Props) {
-  const navigation = tabNav.getParent()!;
+  const navigation = tabNav.getParent();
   const user = auth.currentUser;
   const name = user?.email ? (user.email.split('@')[0] ?? 'User') : 'User';
   const [loading, setLoading] = useState(false);
@@ -348,7 +348,7 @@ export default function SettingsScreen({ navigation: tabNav }: Props) {
 
         <TouchableOpacity
           style={styles.row}
-          onPress={() => navigation.navigate('PrivacyPolicy', { modal: true })}
+          onPress={() => navigation?.navigate('PrivacyPolicy', { modal: true })}
           activeOpacity={0.7}
         >
           <Text style={styles.rowIcon}>&#128274;</Text>
