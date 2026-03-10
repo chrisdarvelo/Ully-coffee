@@ -1,0 +1,275 @@
+================================================================================
+  ULLY — MASTER TODO
+  Updated: March 2026
+  Audit run: March 9, 2026 (67 files reviewed across mobile + web)
+================================================================================
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  CRITICAL — Fix before any public release
+  (Security & correctness issues found in audit)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  [ ] JWT secret hard-fail in production
+        ully-web/src/lib/auth.ts:8
+        Throw hard error if JWT_SECRET env var is missing when NODE_ENV === 'production'
+        Currently falls back to a weak dev string — sessions can be forged
+
+  [ ] Null guard on org in chat route
+        ully-web/src/app/api/chat/route.ts:57
+        db...get() can return null — dereference happens without guard
+        Add: if (!org) return Response.json({ error: 'Org not found' }, { status: 500 })
+
+  [ ] Role guard on business screens (mobile)
+        screens/business/BusinessDashboardScreen, MaintenanceScreen, TeamScreen
+        No check that profile.role === 'organization' before rendering
+        Add role check in AppNavigator or at screen entry point
+
+  [ ] RBAC on equipment + team DELETE routes (web)
+        ully-web/src/app/api/equipment/route.ts, /api/team/route.ts
+        getSession() checks auth but never checks user.role
+        Only owner / manager should be able to mutate — add role check
+
+  [ ] Replace Date.now() IDs with crypto.randomUUID()
+        utils/idGenerator.ts + services/RecipeService.ts + services/CafeService.ts
+        Current approach has collision risk on rapid creates
+        Use crypto.randomUUID() everywhere — already available in RN and Node
+
+  [ ] No message length cap on Claude chat route (web)
+        ully-web/src/app/api/chat/route.ts
+        Unrestricted input reaches the Claude API — cost and abuse risk
+        Cap at 2000 chars before forwarding
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  LAUNCH BLOCKERS — App Store + Play Store
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Apple
+  [ ] Enroll in Apple Developer Program ($99/year) — unblocks TestFlight
+  [ ] eas build --platform ios --profile production
+  [ ] eas submit --platform ios → TestFlight
+  [ ] Review APP_STORE_METADATA.md — screenshots, description, keywords
+
+  Android
+  [ ] Create Google Play Console account
+  [ ] Generate Service Account JSON → wire to EAS for eas submit
+  [ ] eas build --platform android --profile production (AAB)
+  [ ] Upload to internal testing track → add testers
+  [ ] Complete Play Store listing:
+        App name: Ully AI
+        Short description: 80 chars max
+        Full description: 4000 chars max
+        Screenshots: minimum 4-6 phone screenshots
+        Feature graphic: 1024×500px
+        App icon: 512×512px (scale existing icon.png)
+        Privacy policy URL: update to Railway domain once live
+  [ ] Complete App Content form:
+        Content rating: IARC questionnaire (~10 min) → 13+
+        Data safety: No data collected, photos not stored, location for recs only
+        News apps: Yes (coffee news feed declared)
+  [ ] Commit .gitignore update (google-services.json / GoogleService-Info.plist)
+  [ ] Verify google-services.json and GoogleService-Info.plist present locally for EAS
+
+  Firebase
+  [ ] Run: firebase deploy --only firestore:rules,storage,functions (against prod)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  MONTH 1 — March → April 10 (World of Coffee San Diego)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Security (from audit — HIGH)
+  [ ] Fix any type on message content in useUllyChat.ts:43
+        Define: type ClaudeContent = { type: 'text' | 'image_url'; source?: {...}; text?: string }
+  [ ] Fix catch (error: any) in useUllyChat.ts:131
+        Type as unknown, use instanceof guard for rate-limit detection
+  [ ] Add input validation on category fields
+        ully-web/src/app/api/inventory/route.ts:33
+        ully-web/src/app/api/revenue/route.ts:34
+        Add .trim() + max length check
+  [ ] Add pagination to all GET endpoints (web)
+        /api/equipment, /api/team, /api/inventory, /api/revenue
+        Add .limit(100).offset(page * 100) — full table scans on every load
+  [ ] Add input validation + sanitizeText() on recipe names
+        services/RecipeService.ts:74-84
+
+  Mobile — wire Espresso Studios into nav
+  [ ] Wire screens/business/ into AppNavigator behind org role gate
+  [ ] Add business entry point for org users (4th tab or modal from Home)
+  [ ] Push notifications scaffold for maintenance overdue alerts
+
+  Web — polish before WoC
+  [ ] About page: add real career timeline + drop founder photo at /public/images/founder.jpg
+  [ ] Dashboard: add quick-stats summary (equipment count, team size, low-stock items)
+        Currently empty on first login — bad first impression
+  [ ] Empty states: add guided empty states on Equipment, Team, Inventory
+        "Add your first machine →" pattern
+  [ ] Auth forms: add loading/disabled state on submit — prevent double-submit
+  [ ] Landing page: update mobile section (App Store / Play Store links or coming-soon)
+  [ ] Landing page: tighten hero CTA copy ("Try Ully Free" is cleaner than "Get Started Free")
+  [ ] Landing page: add "Built by a working espresso technician" credibility line
+
+  Infrastructure
+  [ ] Get Railway public URL → deploy Firebase redirect from ully-coffee.web.app
+  [ ] Check GoDaddy → Railway DNS propagation — test custom domain
+  [ ] Register for World of Coffee San Diego at usa.worldofcoffee.org
+  [ ] Print 100 QR code cards (Android beta + TestFlight links)
+  [ ] Draft 3 press pitches: Daily Coffee News, Sprudge, Perfect Daily Grind
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  MONTH 2 — April → May (Post-WoC consolidation)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Code architecture (from audit — MEDIUM)
+  [ ] Extract shared utils
+        utils/storageKeys.ts — typed AsyncStorage key registry (eliminates scattered string literals)
+        utils/date.ts — shared formatDate() used by both web + mobile (currently duplicated)
+  [ ] Build withAuth() route wrapper for web API
+        Eliminates 15x repeated getSession() + null check across route.ts files
+        Signature: withAuth(handler, requiredRole?: 'owner' | 'manager')
+  [ ] Build ApiError class for web
+        Consistent { error, code, status } JSON shape across all routes
+        Currently each route returns its own ad-hoc 500 string
+  [ ] Add Zod schema validation to all web API routes
+        Replace manual if-checks — one schema per route, validate request body upfront
+  [ ] Extract media upload to useMediaUpload hook
+        AIScreen.tsx handles camera + picker + frame extraction + chat — too many responsibilities
+  [ ] Simplify CafeService.ts migration logic
+        Extract to migrations/cafeMigration.ts — complex inline code
+
+  Type alignment — mobile vs web (required before Phase 3 sync)
+  [ ] Align Machine.type enum
+        Mobile: water_treatment | Web: brewer, roaster — pick one canonical set
+  [ ] Align ServiceRecord service type enum
+        Mobile: group_service | boiler_flush | descale | gasket_replacement | grinder_calibration | custom
+        Web: routine | repair | calibration | cleaning
+        These are completely different — decide on canonical and migrate both
+  [ ] Add cost field to mobile ServiceRecord
+        Web has it, mobile doesn't — required for cross-platform sync
+  [ ] Add partsReplaced[] to web service_records schema
+        Mobile has it, web doesn't
+  [ ] Align TeamMember — merge mobile (linkedUid, avatarUri) with web (email, phone, hourlyRate, status)
+  [ ] Align startDate format — mobile uses ISO string, web uses Unix timestamp
+
+  Monetization setup
+  [ ] Integrate RevenueCat (react-native-purchases) — handles IAP for both stores
+  [ ] Store entitlement token in Firebase, verified server-side in chatWithUlly Cloud Function
+  [ ] Gate camera features (Scan + Dial-in photo) behind Pro
+  [ ] Enforce daily message limit on Free tier (20 messages/day)
+
+  GTM
+  [ ] Publish post-WoC recap (blog or PDG contributed piece)
+  [ ] Activate CTG member offer — free 90-day Pro trial for verified CTG members
+  [ ] Begin collecting in-app feedback from beta users
+  [ ] World of Coffee Asia, Bangkok (May 7-9) — press hook, no travel required
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  MONTH 3 — May → June (iOS launch + European moment)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Features
+  [ ] Offline knowledge base (Phase 2a)
+        Author first 50 KB entries (espresso troubleshooting priority)
+        Build KnowledgeService.ts (SQLite FTS5)
+        Wire into useUllyChat.ts — KB check before Claude API call
+  [ ] User feedback pipeline (Phase 2d)
+        Thumbs row below AI responses (show only every 10 messages, not every time)
+        Confirmation sheet → anonymous Firestore write
+        Add feedback opt-out to Settings screen
+        Update privacy policy to disclose feedback collection
+  [ ] Dial-in shot history (post-WoC deferred feature)
+        AsyncStorage key: @ully_dialin_{uid}
+        History tab inside dial-in modal
+  [ ] Shift Mode chip (post-WoC deferred feature)
+        Gold chip in AI header — sticky via AsyncStorage @ully_shift_mode_{uid}
+        Brevity override injected into buildSystemPrompt()
+  [ ] Share This Fix (post-WoC deferred feature)
+        Share icon on latest assistant message bubble
+        Uses Share.share() from React Native core
+
+  Espresso Studios — complete mobile wiring
+  [ ] Photo capture on service records (camera → AsyncStorage URI)
+  [ ] Progression chart in TeamScreen (scores over time per skill area)
+  [ ] Ully Web: Schedule — shift assignment (currently calendar shell only)
+  [ ] Ully Web: Inventory — reorder thresholds + low-stock alerts
+
+  iOS launch
+  [ ] Submit to App Store — target full iOS availability by end of June
+  [ ] World of Coffee Europe, Brussels (June 25-27) — "now available globally" press story
+  [ ] Begin small paid social ($500/month — Instagram + Reddit r/espresso)
+
+  Infrastructure
+  [ ] Rate limiting on web API routes — protect Claude chat endpoint from abuse
+  [ ] Screen-level error boundaries in mobile — catch per-screen crashes
+  [ ] Add service-level error logging (replace catch { return [] } with logging)
+  [ ] Add timezone support to web org settings — currently hardcoded 'America/New_York'
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  BACKLOG — Phase 3+ (6-12 months)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Espresso Studios sync
+  [ ] Firestore sync bridge — mobile AsyncStorage ↔ web SQLite via Firestore as shared layer
+  [ ] Multi-site view — technicians managing multiple café locations in one list
+  [ ] Barista follows sync across devices (currently local-only AsyncStorage)
+
+  Integrations
+  [ ] Square POS integration — daily/weekly revenue, item sales, labour %
+  [ ] Machine volumetrics — manual input first, then native API (La Marzocco, Sanremo)
+  [ ] QuickBooks Online — read-only OAuth, P&L + COGS + supplier invoices
+
+  Ully Learn (Phase 1b)
+  [ ] LearnScreen.tsx — tier map + progress rings
+  [ ] StageScreen.tsx — lesson slides + quiz flow
+  [ ] LessonContent.ts — static content for 40 stages (Amateur → Champion)
+
+  Platform
+  [ ] Ully Roaster (Phase 4) — roast profile assistant, green coffee lot tracking
+  [ ] Web roaster module — desktop-first, roasters need big screens
+  [ ] Analytics — custom event logging to backend (no Mixpanel/Amplitude)
+  [ ] Multi-language — Spanish first (Latin America café market)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  BRING TO NEXT SESSION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  [ ] Railway public URL (needed to redirect Firebase static site)
+  [ ] Founder photo — square crop, min 600×600 → drop at ully-web/public/images/founder.jpg
+  [ ] Career timeline details for About page (years, roles, certifications)
+  [ ] Confirm Apple Developer enrollment status
+  [ ] Google Play Console: generate Service Account JSON
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  REFERENCE — Commands
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Build
+    eas build --platform android --profile production   # signed AAB
+    eas build --platform ios --profile production       # signed IPA
+    eas build --platform all --profile production       # both
+
+  Submit
+    eas submit --platform android
+    eas submit --platform ios
+
+  Firebase
+    firebase deploy                                     # everything
+    firebase deploy --only firestore:rules,storage      # rules only (safe anytime)
+    firebase deploy --only functions                    # cloud functions only
+
+  Web (local)
+    cd ~/ully-web && npm run dev                        # add CLAUDE_API_KEY to .env.local
+
+  UI Audit skill (Claude Code)
+    /ui-audit screens/AIScreen.tsx
+    /ui-audit screens/SettingsScreen.tsx
+    /ui-audit components/SideDrawer.tsx
+    /ui-audit                                           # audits current discussion
+
+================================================================================
