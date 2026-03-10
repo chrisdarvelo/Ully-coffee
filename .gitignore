@@ -26,6 +26,11 @@ yarn-error.log*
 .idea/
 *.sublime-workspace
 
+# Claude Code internals
+.claude/agent-memory/
+.claude/agents/
+.claude/scheduled_tasks.lock
+
 # Logs
 logs/
 *.log

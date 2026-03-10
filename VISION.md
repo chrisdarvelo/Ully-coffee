@@ -45,12 +45,29 @@ The core product belief:
 
 **Core features:**
 - AI chat assistant (Claude Sonnet) — coffee-only, precision responses, no preamble
-- Personal recipe library with procedural art covers
-- Curated barista content and blog feed
-- Café bookmarking and personal coffee map
-- Coffee news aggregation (Perfect Daily Grind, Barista Magazine, Daily Coffee News)
 - Weather-aware drink and brew recommendations
 - Espresso dial-in assistant with photo analysis
+- Focused home screen: logo + greeting + single "ask ully" CTA — no feed, no distractions
+
+**HomeScreen architecture decision (resolved):**
+The home screen was stripped of the feed (recipes, baristas, cafes, news) and simplified to a
+single-purpose landing: greet the user, surface a rotating coffee tip, and send them to AI.
+This is the correct call for a professional tool — content feeds are a distraction, not a feature.
+Feed items (recipes, barista content, café maps, news) are documented below as deferred.
+
+**Deferred social features (reinstated post-launch):**
+- Personal recipe library with procedural art covers — removed from v1, planned for Phase 2
+- Curated barista content and blog feed — removed from v1, planned for Phase 2
+- Café bookmarking and personal coffee map — removed from v1, planned for Phase 2
+- Coffee news aggregation (Perfect Daily Grind, Barista Magazine, Daily Coffee News) — removed from v1, planned for Phase 2
+
+**Planned (Phase 1b — Ully Learn):**
+- Duolingo-style coffee knowledge apprentice system
+- Four tiers matching onboarding roles: Amateur → Semi-Pro → Barista → Champion
+- Each tier contains 10 progressive stages (lessons + quizzes)
+- Completing onboarding automatically places user in Amateur tier Stage 1
+- Progression unlocks next tier; Champion tier targets competition-level barista knowledge
+- See Phase 1b section below for full design
 
 **Launch blocklist:**
 - [ ] Apple Developer Program enrollment
@@ -60,13 +77,292 @@ The core product belief:
 
 ---
 
+## Phase 1b — Ully Learn (Apprentice System)
+
+**Status:** Designed. Not yet built.
+
+### Concept
+
+A Duolingo-style progressive coffee knowledge system embedded in the app.
+Users earn their way through four tiers that mirror the real coffee career ladder.
+
+### Tier Structure
+
+| Tier | Who it's for | Stages |
+|---|---|---|
+| Amateur | Home enthusiasts, new to specialty coffee | 10 |
+| Semi-Pro | Experienced home brewers, aspiring baristas | 10 |
+| Barista | Working baristas, café staff | 10 |
+| Champion | Competition-level, World Barista Championship caliber | 10 |
+
+**Total: 40 stages across 4 tiers.**
+
+### Progression Rules
+
+1. Completing onboarding automatically places the user in **Amateur, Stage 1**.
+2. Each stage = a short lesson (3–5 screens) + a quiz (5–8 questions).
+3. Passing a quiz (≥80%) unlocks the next stage.
+4. Completing all 10 stages in a tier unlocks the next tier.
+5. Tier completion grants a badge displayed on the user's profile.
+6. Users who selected "Barista" in onboarding start at Semi-Pro Stage 1 (skips Amateur).
+7. Users who selected "Organization" in onboarding start at Barista Stage 1.
+
+### Sample Stage Topics
+
+**Amateur (1–10)**
+1. What is specialty coffee? Grading and scoring.
+2. Brewing methods overview: espresso, pour over, French press, AeroPress.
+3. Coffee origins: Ethiopia, Colombia, Brazil — taste profile basics.
+4. Grind size and its effect on extraction.
+5. Water quality and temperature fundamentals.
+6. Reading a coffee bag: roast date, process, variety.
+7. Espresso basics: dose, yield, time (the recipe triangle).
+8. Milk basics: steaming temperature, microfoam vs. foam.
+9. Barista tools: tamper, scale, timer, portafilter.
+10. How to taste coffee: the flavor wheel.
+
+**Semi-Pro (1–10)** — dial-in, extraction, water chemistry, latte art fundamentals...
+
+**Barista (1–10)** — SCA protocols, workflow optimization, customer service, calibration...
+
+**Champion (1–10)** — WBC judging criteria, signature drink design, sensory science, terroir...
+
+### Architecture (future implementation)
+
+```
+AsyncStorage key: @ully_learn_progress_{uid}
+
+{
+  tier: 'amateur' | 'semi-pro' | 'barista' | 'champion',
+  stage: number,          // 1–10
+  completedStages: string[],  // ['amateur-1', 'amateur-2', ...]
+  badges: string[],       // ['amateur', 'semi-pro', ...]
+  lastActivity: number,   // timestamp
+}
+```
+
+Screens needed:
+- `LearnScreen.tsx` — tier map + progress rings (tab 3 or modal from Home)
+- `StageScreen.tsx` — lesson slides + quiz flow
+- `BadgeScreen.tsx` — earned badge showcase
+- `LessonContent.ts` — static lesson + quiz data per stage (JSON or TS object)
+
+---
+
+---
+
+## Ully Web — Business Platform
+
+**Status:** Live on Railway (March 2026).
+**Repo:** `~/ully-web/` — separate git repo from the mobile app.
+
+The web platform is Ully's desktop-first B2B product. It targets café owners, managers,
+and multi-site operators who need a real operational workspace, not a mobile companion.
+It runs independently of Firebase — fully self-contained with SQLite + JWT auth.
+
+### Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind v4 (same design tokens as mobile) |
+| Database | SQLite via better-sqlite3 + Drizzle ORM |
+| Auth | JWT (httpOnly cookie, org-scoped sessions) |
+| AI | Claude API — streaming chat, context-aware |
+| Hosting | Railway |
+| Charts | DashboardCharts (custom, no lib dependency) |
+
+### Live Modules
+
+| Module | Route | What it does |
+|---|---|---|
+| **Dashboard** | `/dashboard` | Revenue KPIs, machine health, team count, 7-day revenue + expense charts |
+| **Ully AI** | `/chat` | Full streaming chat with business context awareness — parity with mobile |
+| **Equipment** | `/equipment` | Machine registry (type, brand, model, serial, status) + per-machine service record log |
+| **Team** | `/team` | Team member management — roles, hourly rates, start dates, status |
+| **Training** | `/training` | Session logging per team member — topic, score (★★★★☆), trainer notes |
+| **Schedule** | `/schedule` | Weekly calendar view for shift planning |
+| **Inventory** | `/inventory` | Stock management |
+| **Revenue** | `/revenue` | Revenue + expense records, P&L tracking |
+| **Settings** | `/settings` | Org profile management |
+
+### Marketing Pages (live)
+
+| Page | Route |
+|---|---|
+| Landing | `/` |
+| Products | `/products` |
+| About | `/about` (founder photo placeholder at `/public/images/founder.jpg`) |
+| Pricing | `/pricing` |
+| Privacy, Terms, Cookies | `/(legal)/` |
+
+### Layout Pattern
+
+The platform uses `PlatformShell` — a persistent sidebar + main content area. The sidebar
+carries the ULLY brand, org name + role header, and gold-accented active states for each module.
+This is the same dark gold design language as the mobile app — consistent across platforms.
+
+```
+PlatformShell
+├── Sidebar (240px, dark #080604)
+│   ├── Brand: ULLY / business platform
+│   ├── Org name + role
+│   └── Nav: Dashboard → AI → Equipment → Team (Schedule, Training) → Inventory → Revenue → Settings
+└── Main content area
+    └── Page content (module-specific)
+```
+
+Visual anchors present on all public pages:
+- `CoffeeFarmScene.tsx` — pixel-art SVG coffee farm at the bottom of every marketing page
+- `FlowerIcon.tsx` — the Ully coffee blossom SVG logo used in all nav bars
+- Terminal bracket nav links `[ link ]` — consistent across marketing pages
+
+---
+
 ## Phase 2 — Professional Operations Layer
 
-**Status:** Planned post-launch.
+**Status:** Infrastructure partially built. See Espresso Studios section below.
 
 This phase deepens Ully's value for the two highest-leverage professional personas:
 **espresso technicians** and **working baristas**. Both need tools that go beyond
 AI chat — they need structured, longitudinal records tailored to their daily workflow.
+
+---
+
+## Espresso Studios — Cross-Platform Layout Infrastructure
+
+**Status:** Foundation built across both platforms. Mobile screens exist, not yet wired to nav. Web is live.
+
+"Espresso Studios" is the internal name for the professional operations workspace that spans
+both the mobile app and the web platform. It is the B2B product layer — a consistent,
+purposeful layout system where coffee businesses manage machines, teams, training, and finances.
+
+The name reflects the target user's world: a studio-grade professional environment designed
+around espresso as the commercial core of a coffee operation.
+
+### What it is
+
+Not a dashboard bolted on. Not a generic CRUD app. A purpose-built professional workspace
+where every module is engineered around the daily decisions of a café operator or technician.
+The AI layer is integrated throughout — not isolated to a chat tab.
+
+### Cross-Platform Architecture
+
+```
+Espresso Studios
+├── Mobile (Ully Coffee — screens/business/)
+│   ├── BusinessDashboardScreen     — KPI overview + "Ask Ully AI" with prefilled operational prompt
+│   ├── MaintenanceScreen           — Machine registry + service record logging + color-coded health
+│   └── TeamScreen                  — Team roster + training session XP system
+│
+└── Web (Ully Web — /platform/)
+    ├── /dashboard                  — Live KPIs + 7-day revenue/expense charts
+    ├── /chat                       — Ully AI with business context awareness
+    ├── /equipment                  — Full machine + service record CRUD
+    ├── /team                       — Team roster with roles + hourly rates
+    ├── /training                   — Training log per member, scored by topic
+    ├── /schedule                   — Weekly shift calendar
+    ├── /inventory                  — Stock management
+    └── /revenue                    — P&L records
+```
+
+### Shared Data Model (same entities, two storage layers)
+
+| Entity | Mobile (AsyncStorage) | Web (SQLite / Drizzle) |
+|---|---|---|
+| Machines | `@ully_machines_{uid}` | `equipment` table |
+| Service records | `@ully_service_records_{uid}` | `serviceRecords` table |
+| Team members | `@ully_team_members_{uid}` | `teamMembers` table |
+| Training sessions | `@ully_training_logs_{uid}` | `trainingLogs` table |
+| Revenue / expenses | — | `revenueRecords`, `expenseRecords` tables |
+| Inventory | — | `inventory` table |
+
+**Phase 3 goal:** Firestore sync bridges the two layers — mobile data feeds the web dashboard
+and vice versa. This requires the Business tier account model from Phase 3.
+
+### Mobile Layout Pattern
+
+Mobile business screens follow a consistent pattern:
+
+```
+PaperBackground (dark gradient)
+└── SafeAreaView
+    ├── Header — screen title, "+" add button
+    ├── ScrollView — entity list with status indicators
+    │   └── Card — entity summary (name, type, status color)
+    └── BottomSheet (modal) — add / edit forms
+        └── FormField — labelled text input, reusable across all screens
+```
+
+Reusable components in `components/business/`:
+- `BottomSheet.tsx` — slide-up modal for all add/edit forms
+- `FormField.tsx` — labelled text input with consistent dark gold styling
+
+### Web Layout Pattern
+
+Web business screens follow the PlatformShell pattern:
+
+```
+PlatformShell
+├── Sidebar — persistent, 240px, dark
+│   └── Gold active state on current module
+└── Main area — module-specific content
+    ├── Header — page title + primary action button
+    ├── Data table or card grid — entity list
+    └── Inline form panel — add/edit (no modal, no navigation away)
+```
+
+### AI Integration Points
+
+The AI is not a separate tab bolted onto the operations workspace. It is wired in:
+
+| Platform | Integration |
+|---|---|
+| Mobile | `BusinessDashboardScreen` has a gold "Ask Ully AI" button that navigates to AI tab with a prefilled operational prompt |
+| Web | `/chat` receives business context (equipment status, team, recent revenue) — AI answers are grounded in the org's actual data |
+
+**Planned:** Push-style alerts — Ully proactively surfaces maintenance overdue, low inventory,
+or margin alerts without the user asking. This is the "AI operating system for the café" vision.
+
+### Machine Health Colour System (Mobile)
+
+Colour-coded maintenance urgency — used in `MaintenanceScreen`:
+
+| Days since last service | Colour | Meaning |
+|---|---|---|
+| < 30 days | Green `#4CAF50` | Healthy |
+| 30–60 days | Amber `#FF9800` | Due soon |
+| > 60 days | Red `#F44336` | Overdue |
+
+### Training XP System (Mobile)
+
+`TeamScreen` uses an XP model to gamify barista development:
+
+```ts
+XP per session = durationMinutes × (managerScore ?? selfScore)
+Monthly XP displayed as a progress bar (cap: 500 XP)
+```
+
+This gives managers a quick visual signal of who is training and at what intensity —
+without needing to open each individual session log.
+
+### What remains to build
+
+**Mobile:**
+- [ ] Wire `screens/business/` into `AppNavigator` behind the org role gate
+- [ ] Add a 4th tab (or modal entry point) for Business users
+- [ ] Push notifications for maintenance overdue alerts
+- [ ] Photo capture on service records (camera → AsyncStorage)
+
+**Web:**
+- [ ] Schedule: shift assignment (currently calendar shell only)
+- [ ] Inventory: reorder thresholds + low-stock alerts
+- [ ] Revenue: chart breakdowns by category
+- [ ] Firestore sync bridge (Phase 3 — requires Business tier accounts)
+- [ ] Founder photo at `/public/images/founder.jpg`
+- [ ] Railway public domain → DNS propagation (GoDaddy → Railway)
+- [ ] Redirect / take down old Firebase static site (ully-coffee.web.app)
 
 ---
 
@@ -146,6 +442,9 @@ hooks/useUllyChat.ts             — KB check before/alongside Claude
 
 **Who it serves:** Espresso technicians, café owners, head baristas managing equipment.
 
+**Status:** Core built. Mobile screen (`MaintenanceScreen.tsx`) + service (`MaintenanceService.ts`) complete.
+Web equivalent live at `/equipment`. Not yet exposed in mobile nav (behind org role gate).
+
 **The problem:** Equipment maintenance in the coffee industry is managed informally —
 paper logs, memory, or nothing at all. Missed maintenance intervals mean machine
 failure mid-service, voided warranties, and costly emergency callouts. No purpose-built
@@ -155,13 +454,19 @@ mobile tool exists for technicians managing multi-site fleets.
 espresso equipment — custom-engineered for the technician's workflow, not adapted
 from a generic maintenance app.
 
-#### Core functionality
+#### Core functionality (built)
 
-- Machine registry — add machines by type, location, serial number
-- Maintenance schedule per machine — custom intervals for each service type
-- Service log — technician records each visit: parts replaced, notes, photos
-- Push reminders — notify before a service interval expires
-- Multi-site view — technicians managing multiple cafés see all machines in one list
+- Machine registry — type (espresso_machine, grinder, water_treatment, other), location, serial
+- Service log — log each visit: service type, technician note, parts replaced
+- Service type options: `group_service`, `boiler_flush`, `descale`, `gasket_replacement`, `grinder_calibration`, `custom`
+- Color-coded machine health (green < 30 days, amber 30–60, red > 60 days since last service)
+
+#### Remaining to build
+
+- Push reminders — notify before service interval expires
+- Photo capture on service records
+- Multi-site view — one list across all org locations
+- Custom interval configuration per machine + service type
 
 #### Schema per service record
 
@@ -169,7 +474,7 @@ from a generic maintenance app.
 {
   id: string
   machineId: string
-  serviceType: 'group_service' | 'boiler_flush' | 'descale' | 'gasket' | 'custom'
+  serviceType: 'group_service' | 'boiler_flush' | 'descale' | 'gasket_replacement' | 'grinder_calibration' | 'custom'
   completedAt: string       // ISO timestamp
   technicianNote: string
   partsReplaced?: string[]
@@ -178,7 +483,7 @@ from a generic maintenance app.
 }
 ```
 
-**AsyncStorage key:** `@ully_maintenance_{uid}`
+**AsyncStorage key:** `@ully_service_records_{uid}` + `@ully_machines_{uid}`
 
 **Phasing:** v1 is on-device only. Multi-technician sync (shared Firestore) is Phase 3
 when the Business tier is live.
@@ -188,7 +493,10 @@ when the Business tier is live.
 ### 2c — Training Logs & Personal Performance
 
 **Who it serves:** Baristas at all levels — from new hires tracking their development
-to competition-level professionals logging prep sessions.
+to competition-level professionals logging prep sessions. Also café managers tracking team development.
+
+**Status:** Core built on both platforms. Mobile: `TeamScreen.tsx` + `TeamService.ts`.
+Web: `/training` module live. Not yet exposed in mobile nav (behind org role gate).
 
 **The problem:** Barista skill development is tracked informally or not at all.
 Coaches provide feedback verbally. Competition prep sessions are undocumented.
@@ -198,32 +506,38 @@ There is no tool purpose-built for tracking a barista's longitudinal performance
 Ully AI feedback, and gives the barista a clear view of their progression over time —
 custom-made for the professional barista, not adapted from a fitness tracker.
 
-#### Core functionality
+#### Core functionality (built)
 
-- Session log — drill type, duration, focus area, self-assessment score
-- Ully AI integration — log a question during training, it auto-attaches to the session
-- Skill tags — milk texture, extraction consistency, workflow speed, sensory calibration
-- Progression view — chart of self-assessed scores over time per skill area
-- Coach notes — optional field for instructor feedback
+- Team member roster — role (barista, head_barista, manager), linked to training sessions
+- Session log — drill type, duration, self-score, optional manager score, trainer notes
+- Drill types: `espresso_workflow`, `milk_texture`, `cupping`, `latte_art`, `customer_service`, `custom`
+- XP system — `durationMinutes × score` per session, monthly XP bar per member
+- Web topics: espresso technique, latte art, cupping, equipment, customer service, food safety, roasting, brew methods
 
-#### Schema per session
+#### Remaining to build
+
+- Progression chart — self-assessed scores over time per skill area (mobile)
+- Ully AI integration — auto-attach a chat exchange to a training session
+- Competition prep mode — structured WBC-style session logging
+
+#### Schema per session (mobile)
 
 ```ts
 {
   id: string
+  memberId: string              // links to TeamMember
   createdAt: string
-  drillType: string              // 'espresso_workflow' | 'milk_texture' | 'cupping' | custom
+  drillType: DrillType          // 'espresso_workflow' | 'milk_texture' | 'cupping' | 'latte_art' | 'customer_service' | 'custom'
   durationMinutes: number
-  focusArea: string
   selfScore: 1 | 2 | 3 | 4 | 5
+  managerScore?: 1 | 2 | 3 | 4 | 5
   notes: string
   coachNotes?: string
-  linkedChatId?: string          // attaches a Ully AI exchange to the session
-  tags: string[]
+  linkedChatId?: string         // attaches a Ully AI exchange to the session
 }
 ```
 
-**AsyncStorage key:** `@ully_training_{uid}`
+**AsyncStorage keys:** `@ully_team_members_{uid}` + `@ully_training_logs_{uid}`
 
 ---
 
@@ -309,7 +623,8 @@ engineering project, but with a feedback button and human curation.
 
 ## Phase 3 — Ully Business
 
-**Status:** Planned. Target: 6–12 months post-launch.
+**Status:** Foundation built (Espresso Studios — mobile + web). Data sync and integrations are next.
+Target: 6–12 months post-launch.
 
 **Who it serves:** Café owners, multi-site operators, hospitality group managers.
 
@@ -324,6 +639,12 @@ accessible in a useful form.
 into Ully — connecting POS data, machine volumetrics, and accounting systems to
 give the owner a real-time operational picture and AI-assisted decision support.
 Built in-house, tailored for the coffee operator, not adapted from a generic BI tool.
+
+**Phase 3 foundation already in place (Espresso Studios):**
+The mobile business screens (`BusinessDashboardScreen`, `MaintenanceScreen`, `TeamScreen`)
+and the full Ully Web platform give Phase 3 a significant head start. The missing piece is
+the Firestore sync bridge — once live, mobile data feeds the web dashboard and the AI
+layer has full operational context across both surfaces.
 
 ---
 
@@ -738,40 +1059,69 @@ Get Ully: [App Store / Play Store link]
 ## What to Build and When
 
 ```
-NOW
-├── Ship Ully Coffee v1 (iOS + Android)
-├── Internal testing → Play Store internal track
-└── Apple Developer enrollment → TestFlight
+DONE (as of March 2026)
+├── Ully Coffee v1 — mobile app (Android APK in testing, iOS pending)
+│   ├── AI chat — Claude Sonnet, coffee-only, weather-aware
+│   ├── Espresso dial-in assistant with photo analysis
+│   ├── Simplified HomeScreen — logo + greeting + "ask ully" CTA
+│   └── TestFlight readiness — all critical/high/medium issues resolved
+│
+├── Espresso Studios — mobile (screens/business/, not yet in nav)
+│   ├── BusinessDashboardScreen — KPI overview + AI integration point
+│   ├── MaintenanceScreen — machine registry + service record log + health colours
+│   ├── TeamScreen — team roster + training sessions + XP system
+│   ├── MaintenanceService.ts — AsyncStorage CRUD for machines + records
+│   ├── TeamService.ts — AsyncStorage CRUD for team + sessions + XP calc
+│   └── components/business/ — BottomSheet, FormField
+│
+└── Ully Web — live on Railway
+    ├── Platform: Dashboard, AI Chat, Equipment, Team, Training, Schedule,
+    │            Inventory, Revenue, Settings
+    ├── Marketing: /, /products, /about, /pricing, legal pages
+    ├── SQLite + Drizzle ORM — all org data persisted on Railway
+    ├── JWT auth — org-scoped sessions
+    └── CoffeeFarmScene + FlowerIcon — consistent visual identity
+
+NOW (immediate — before WoC April 2026)
+├── Apple Developer Program enrollment → TestFlight
+├── Play Store internal testing → open beta at WoC
+├── Wire screens/business/ into AppNavigator behind org role gate
+├── Add business tab / entry point for org users in mobile nav
+└── Founder photo at ully-web /public/images/founder.jpg
 
 NEXT (3–6 months post-launch)
+├── Espresso Studios — complete the mobile wiring
+│   ├── Push notifications for maintenance overdue
+│   ├── Photo capture on service records
+│   └── Progression chart view in TeamScreen
 ├── Offline knowledge base (Phase 2a)
 │   ├── Author ~200 KB entries
 │   ├── KnowledgeService.ts (SQLite FTS5)
 │   └── Wire into useUllyChat.ts
-├── Maintenance schedule tracking (Phase 2b)
-├── Training logs + personal performance (Phase 2c)
 ├── User feedback pipeline (Phase 2d)
-└── Pro subscription tier (RevenueCat integration)
+├── Pro subscription tier (RevenueCat integration)
+└── Ully Web — domain live + Firebase static site redirected/removed
 
 6–12 MONTHS
-├── Ully Business (Phase 3)
+├── Ully Business (Phase 3) — Firestore sync bridge
+│   ├── Mobile ↔ Web data sync (Firestore as shared layer)
 │   ├── Square POS integration
-│   ├── Machine volumetrics (manual input → native API)
+│   ├── Machine volumetrics (manual input → native API where supported)
 │   ├── QuickBooks Online integration
-│   └── Business intelligence dashboard
-└── Business tier go-to-market — café owner channels
+│   └── Multi-site view — technicians managing multiple café locations
+└── Business tier go-to-market — café owner channels + CTG outreach
 
 12–24 MONTHS
 ├── Ully Roaster (Phase 4)
-│   ├── Shared Firestore data layer
-│   ├── Roast profile + cupping score features
-│   └── Green coffee lot tracking
-└── Web dashboard (roasters and importers need desktop)
+│   ├── Roast profile development assistant
+│   ├── Green coffee lot tracking + cupping score log
+│   └── Cropster interop (import/export or API bridge)
+└── Ully Web roaster module — desktop-first, roasters need big screens
 
 24+ MONTHS
 ├── Ully Agriculture (Phase 5)
-│   ├── Offline-first architecture
-│   ├── Multi-language support
+│   ├── Offline-first architecture (farms have no connectivity)
+│   ├── Multi-language (Spanish, Amharic, Indonesian, Portuguese, Swahili)
 │   └── Cooperative B2B sales motion
 └── Crop-to-cup traceability QR system
 

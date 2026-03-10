@@ -3,15 +3,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Colors, AuthColors, Fonts } from '../utils/constants';
 import { TabIcon } from '../components/NavigationIcons';
-import type { Recipe, Barista, Cafe } from '../types';
 
 // Screens — consumer
 import HomeScreen from '../screens/HomeScreen';
 import AIScreen from '../screens/AIScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import RecipeDetailScreen from '../screens/RecipeDetailScreen';
-import BaristaDetailScreen from '../screens/BaristaDetailScreen';
-import CafeDetailScreen from '../screens/CafeDetailScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
@@ -27,9 +23,6 @@ export type RootStackParamList = {
   PrivacyPolicy: { modal?: boolean } | undefined;
   Onboarding: undefined;
   Tabs: undefined;
-  RecipeDetail: { recipe?: Recipe; isNew?: boolean };
-  BaristaDetail: { barista: Barista };
-  CafeDetail: { cafe?: Cafe; isNew?: boolean };
 };
 
 export type TabParamList = {
@@ -115,21 +108,6 @@ export function AppNavigator({ onboarded }: { onboarded: boolean }) {
         name="Tabs"
         component={TabNavigator}
         options={{ headerShown: false }}
-      />
-      <AppStack.Screen
-        name="RecipeDetail"
-        component={RecipeDetailScreen}
-        options={{ headerShown: false }}
-      />
-      <AppStack.Screen
-        name="BaristaDetail"
-        component={BaristaDetailScreen}
-        options={{ headerShown: false }}
-      />
-      <AppStack.Screen
-        name="CafeDetail"
-        component={CafeDetailScreen}
-        options={{ title: 'Cafe' }}
       />
       <AppStack.Screen
         name="PrivacyPolicy"
