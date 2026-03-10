@@ -2,7 +2,7 @@
   <img src="./assets/icon.png" alt="Ully AI" width="120" />
 
   <h1>Ully AI</h1>
-  <p><em>your coffee companion</em></p>
+  <p><em>Brewing at the edge of technology.</em></p>
 
   <p>
     <img src="https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey?style=flat-square" />
@@ -17,9 +17,13 @@
 
 ---
 
-## What is Ully?
+## What is Ully AI?
 
-Built for the enthusiast chasing the perfect extraction and the barista after that perfect shot — Ully brings the intelligence, you bring the approach. A tool with the capabilities to help you troubleshoot and dial in your espresso. We are just like you, brewing at the edge of technology.
+Ully AI is a mobile companion for baristas and coffee enthusiasts. Dial-in your espresso, troubleshoot your equipment, and build your craft — with an AI assistant that knows coffee as well as you do.
+
+Free to download. Pro at **$7.99/month** — unlimited AI, full dial-in assistant, recipe library, and skill tracking.
+
+> Part of the Ully platform. For cafe and business operations, see [Ully Business Platform](https://github.com/chrisdarvelo/ully-web).
 
 ---
 
@@ -27,12 +31,10 @@ Built for the enthusiast chasing the perfect extraction and the barista after th
 
 | Feature | Description |
 |---|---|
-| **Ully AI Chat** | Coffee-only AI assistant — espresso, brewing, equipment, origins, latte art, and more |
-| **Visual Dial-In** | Upload or capture photos of espresso pours for AI extraction analysis |
+| **AI Chat** | Coffee-only assistant — espresso, brewing, equipment, origins, latte art, and more |
+| **Espresso Dial-In** | Upload or capture photos of espresso pours for AI extraction analysis |
+| **Troubleshoot** | Diagnose equipment issues and get step-by-step fix guidance |
 | **Recipe Library** | Personal recipe collection with procedural generative art covers |
-| **Barista Feed** | Follow curated baristas and read their blog content |
-| **Café Bookmarks** | Save and manage your favorite coffee shops |
-| **Coffee News** | Live feed from top specialty coffee publications |
 | **Weather Context** | AI recommendations adapt to your local weather and location |
 | **Voice Input** | Speak your questions directly to Ully |
 
@@ -48,7 +50,7 @@ Built for the enthusiast chasing the perfect extraction and the barista after th
 | State | Zustand (`authStore`, `profileStore`) |
 | Server State | TanStack React Query v5 |
 | Auth | Firebase Authentication (email/password) |
-| Backend | Firebase Cloud Functions v2 (Node 18) |
+| Backend | Firebase Cloud Functions v2 (Node 22) |
 | AI | Anthropic Claude Sonnet via Cloud Function proxy |
 | Local Storage | AsyncStorage — all user data (recipes, profile, cafes, follows, chat) |
 | Media | Firebase Storage — user uploads under `users/{uid}/` |
@@ -100,8 +102,8 @@ App.tsx
 ### Installation
 
 ```bash
-git clone https://github.com/your-username/ully-coffee.git
-cd ully-coffee
+git clone https://github.com/chrisdarvelo/Ully-Coffee.git
+cd Ully-Coffee
 npm install
 ```
 
@@ -159,10 +161,10 @@ eas submit --platform ios       # Submit to App Store Connect
 ### Firebase
 
 ```bash
-firebase deploy                                         # Deploy everything
-firebase deploy --only firestore:rules,storage          # Rules only
-firebase deploy --only functions                        # Cloud Functions only
-firebase emulators:start                                # Local emulator
+firebase deploy                                 # Deploy everything
+firebase deploy --only firestore:rules,storage  # Rules only
+firebase deploy --only functions                # Cloud Functions only
+firebase emulators:start                        # Local emulator
 ```
 
 ---
@@ -209,7 +211,7 @@ npm run e2e:recipe        # Save recipe flow
 ├── store/                   # Zustand auth + profile stores
 ├── types/                   # Shared TypeScript interfaces
 ├── utils/                   # Colors, fonts, validation, media utils
-├── functions/               # Firebase Cloud Functions (Node 18)
+├── functions/               # Firebase Cloud Functions (Node 22)
 └── __tests__/               # Jest unit tests
 ```
 
