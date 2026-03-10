@@ -222,35 +222,16 @@ Visual anchors present on all public pages:
 
 ## Phase 2 — Professional Operations Layer
 
-**Status:** Infrastructure partially built. See Espresso Studios section below.
+**Status:** Infrastructure partially built. Mobile screens exist, not yet wired to nav. Web platform is live.
 
 This phase deepens Ully's value for the two highest-leverage professional personas:
 **espresso technicians** and **working baristas**. Both need tools that go beyond
 AI chat — they need structured, longitudinal records tailored to their daily workflow.
 
----
-
-## Espresso Studios — Cross-Platform Layout Infrastructure
-
-**Status:** Foundation built across both platforms. Mobile screens exist, not yet wired to nav. Web is live.
-
-"Espresso Studios" is the internal name for the professional operations workspace that spans
-both the mobile app and the web platform. It is the B2B product layer — a consistent,
-purposeful layout system where coffee businesses manage machines, teams, training, and finances.
-
-The name reflects the target user's world: a studio-grade professional environment designed
-around espresso as the commercial core of a coffee operation.
-
-### What it is
-
-Not a dashboard bolted on. Not a generic CRUD app. A purpose-built professional workspace
-where every module is engineered around the daily decisions of a café operator or technician.
-The AI layer is integrated throughout — not isolated to a chat tab.
-
 ### Cross-Platform Architecture
 
 ```
-Espresso Studios
+Professional Operations Layer
 ├── Mobile (Ully Coffee — screens/business/)
 │   ├── BusinessDashboardScreen     — KPI overview + "Ask Ully AI" with prefilled operational prompt
 │   ├── MaintenanceScreen           — Machine registry + service record logging + color-coded health
@@ -280,72 +261,6 @@ Espresso Studios
 
 **Phase 3 goal:** Firestore sync bridges the two layers — mobile data feeds the web dashboard
 and vice versa. This requires the Business tier account model from Phase 3.
-
-### Mobile Layout Pattern
-
-Mobile business screens follow a consistent pattern:
-
-```
-PaperBackground (dark gradient)
-└── SafeAreaView
-    ├── Header — screen title, "+" add button
-    ├── ScrollView — entity list with status indicators
-    │   └── Card — entity summary (name, type, status color)
-    └── BottomSheet (modal) — add / edit forms
-        └── FormField — labelled text input, reusable across all screens
-```
-
-Reusable components in `components/business/`:
-- `BottomSheet.tsx` — slide-up modal for all add/edit forms
-- `FormField.tsx` — labelled text input with consistent dark gold styling
-
-### Web Layout Pattern
-
-Web business screens follow the PlatformShell pattern:
-
-```
-PlatformShell
-├── Sidebar — persistent, 240px, dark
-│   └── Gold active state on current module
-└── Main area — module-specific content
-    ├── Header — page title + primary action button
-    ├── Data table or card grid — entity list
-    └── Inline form panel — add/edit (no modal, no navigation away)
-```
-
-### AI Integration Points
-
-The AI is not a separate tab bolted onto the operations workspace. It is wired in:
-
-| Platform | Integration |
-|---|---|
-| Mobile | `BusinessDashboardScreen` has a gold "Ask Ully AI" button that navigates to AI tab with a prefilled operational prompt |
-| Web | `/chat` receives business context (equipment status, team, recent revenue) — AI answers are grounded in the org's actual data |
-
-**Planned:** Push-style alerts — Ully proactively surfaces maintenance overdue, low inventory,
-or margin alerts without the user asking. This is the "AI operating system for the café" vision.
-
-### Machine Health Colour System (Mobile)
-
-Colour-coded maintenance urgency — used in `MaintenanceScreen`:
-
-| Days since last service | Colour | Meaning |
-|---|---|---|
-| < 30 days | Green `#4CAF50` | Healthy |
-| 30–60 days | Amber `#FF9800` | Due soon |
-| > 60 days | Red `#F44336` | Overdue |
-
-### Training XP System (Mobile)
-
-`TeamScreen` uses an XP model to gamify barista development:
-
-```ts
-XP per session = durationMinutes × (managerScore ?? selfScore)
-Monthly XP displayed as a progress bar (cap: 500 XP)
-```
-
-This gives managers a quick visual signal of who is training and at what intensity —
-without needing to open each individual session log.
 
 ### What remains to build
 
@@ -623,7 +538,7 @@ engineering project, but with a feedback button and human curation.
 
 ## Phase 3 — Ully Business
 
-**Status:** Foundation built (Espresso Studios — mobile + web). Data sync and integrations are next.
+**Status:** Foundation built across mobile + web. Data sync and integrations are next.
 Target: 6–12 months post-launch.
 
 **Who it serves:** Café owners, multi-site operators, hospitality group managers.
@@ -640,7 +555,7 @@ into Ully — connecting POS data, machine volumetrics, and accounting systems t
 give the owner a real-time operational picture and AI-assisted decision support.
 Built in-house, tailored for the coffee operator, not adapted from a generic BI tool.
 
-**Phase 3 foundation already in place (Espresso Studios):**
+**Phase 3 foundation already in place:**
 The mobile business screens (`BusinessDashboardScreen`, `MaintenanceScreen`, `TeamScreen`)
 and the full Ully Web platform give Phase 3 a significant head start. The missing piece is
 the Firestore sync bridge — once live, mobile data feeds the web dashboard and the AI
@@ -1068,7 +983,7 @@ DONE (as of March 2026)
 │   ├── Simplified HomeScreen — logo + greeting + "ask ully" CTA
 │   └── TestFlight readiness — all critical/high/medium issues resolved
 │
-├── Espresso Studios — mobile (screens/business/, not yet in nav)
+├── Business operations — mobile (screens/business/, not yet in nav)
 │   ├── BusinessDashboardScreen — KPI overview + AI integration point
 │   ├── MaintenanceScreen — machine registry + service record log + health colours
 │   ├── TeamScreen — team roster + training sessions + XP system
@@ -1092,7 +1007,7 @@ NOW (immediate — before WoC April 2026)
 └── Founder photo at ully-web /public/images/founder.jpg
 
 NEXT (3–6 months post-launch)
-├── Espresso Studios — complete the mobile wiring
+├── Business operations — complete the mobile wiring
 │   ├── Push notifications for maintenance overdue
 │   ├── Photo capture on service records
 │   └── Progression chart view in TeamScreen

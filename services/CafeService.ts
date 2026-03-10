@@ -24,7 +24,7 @@ export async function getCafes(uid: string): Promise<Cafe[]> {
         const migrated_cafes: Cafe[] = profile.shops
           .filter((name) => !shopNames.includes(name))
           .map((name, i) => ({
-            id: `migrated_${Date.now()}_${i}_${Math.random().toString(36).slice(2, 7)}`,
+            id: crypto.randomUUID(),
             name,
             location: '',
             notes: '',
@@ -48,7 +48,7 @@ export async function getCafes(uid: string): Promise<Cafe[]> {
 export async function addCafe(uid: string, cafe: Partial<Cafe>): Promise<Cafe[]> {
   const cafes = await getCafes(uid);
   const newCafe: Cafe = {
-    id: cafe.id || `cafe_${Date.now()}`,
+    id: cafe.id || crypto.randomUUID(),
     name: cafe.name || '',
     addedAt: new Date().toISOString(),
     ...(cafe.location !== undefined ? { location: cafe.location } : { location: '' }),

@@ -94,7 +94,7 @@
   [ ] Add input validation + sanitizeText() on recipe names
         services/RecipeService.ts:74-84
 
-  Mobile — wire Espresso Studios into nav
+  Mobile — wire business screens into nav
   [ ] Wire screens/business/ into AppNavigator behind org role gate
   [ ] Add business entry point for org users (4th tab or modal from Home)
   [ ] Push notifications scaffold for maintenance overdue alerts
@@ -190,7 +190,7 @@
         Share icon on latest assistant message bubble
         Uses Share.share() from React Native core
 
-  Espresso Studios — complete mobile wiring
+  Business operations — complete mobile wiring
   [ ] Photo capture on service records (camera → AsyncStorage URI)
   [ ] Progression chart in TeamScreen (scores over time per skill area)
   [ ] Ully Web: Schedule — shift assignment (currently calendar shell only)
@@ -212,7 +212,7 @@
   BACKLOG — Phase 3+ (6-12 months)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  Espresso Studios sync
+  Business data sync
   [ ] Firestore sync bridge — mobile AsyncStorage ↔ web SQLite via Firestore as shared layer
   [ ] Multi-site view — technicians managing multiple café locations in one list
   [ ] Barista follows sync across devices (currently local-only AsyncStorage)

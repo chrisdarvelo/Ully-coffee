@@ -73,7 +73,7 @@ export async function saveRecipe(uid: string, recipe: Partial<Recipe> & { id?: s
     recipes[index] = { ...recipes[index]!, ...recipe, updatedAt: now } as Recipe;
   } else {
     recipes.push({
-      id: recipe.id || `recipe_${Date.now()}`,
+      id: recipe.id || crypto.randomUUID(),
       name: recipe.name || 'New Recipe',
       method: recipe.method || 'Unknown',
       description: recipe.description || '',
