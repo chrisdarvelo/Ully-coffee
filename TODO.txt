@@ -1,6 +1,6 @@
 ================================================================================
   ULLY — MASTER TODO
-  Updated: March 11, 2026
+  Updated: March 12, 2026
   Audit run: March 11, 2026 (ully.web full codebase — 25 routes, all components)
 ================================================================================
 
@@ -53,7 +53,7 @@
   [ ] Complete App Content form:
         Content rating: IARC questionnaire (~10 min) → 13+
         Data safety: No data collected, photos not stored, location for recs only
-        News apps: Yes (coffee news feed declared)
+        News apps: No — no news feed (permanently removed)
   [ ] Commit .gitignore update (google-services.json / GoogleService-Info.plist)
   [ ] Verify google-services.json and GoogleService-Info.plist present locally for EAS
 
@@ -78,6 +78,7 @@
   [x] DB migration: safe ALTER TABLE for existing databases
   [x] 14-day trial set on every new signup
   [x] Billing link added to sidebar
+  [x] Signup redirects to /billing (not /dashboard) — new users land on plan page immediately
 
   Still needed (Stripe Dashboard + Railway env):
   [ ] Create Stripe products in dashboard:
@@ -115,9 +116,6 @@
   [ ] Add pagination to all GET endpoints (web)
         /api/equipment, /api/team, /api/inventory, /api/revenue
         Add .limit(100).offset(page * 100) — full table scans on every load
-  [ ] Add input validation + sanitizeText() on recipe names
-        services/RecipeService.ts:74-84
-
   Web — polish before WoC
   [x] Footer: removed Products + Pricing links — Privacy, Terms, email only
   [x] Footer: email now opens contact modal (not direct mailto)
@@ -169,8 +167,6 @@
         Replace manual if-checks — one schema per route, validate request body upfront
   [ ] Extract media upload to useMediaUpload hook
         AIScreen.tsx handles camera + picker + frame extraction + chat — too many responsibilities
-  [ ] Simplify CafeService.ts migration logic
-        Extract to migrations/cafeMigration.ts — complex inline code
 
   Type alignment — mobile vs web (required before Phase 3 sync)
   [ ] Align Machine.type enum
@@ -248,17 +244,19 @@
   Business data sync
   [ ] Firestore sync bridge — mobile AsyncStorage ↔ web SQLite via Firestore as shared layer
   [ ] Multi-site view — technicians managing multiple café locations in one list
-  [ ] Barista follows sync across devices (currently local-only AsyncStorage)
 
   Integrations
   [ ] Square POS integration — daily/weekly revenue, item sales, labour %
   [ ] Machine volumetrics — manual input first, then native API (La Marzocco, Sanremo)
   [ ] QuickBooks Online — read-only OAuth, P&L + COGS + supplier invoices
 
-  Ully Learn (Phase 1b)
+  Ully Learn (Phase 1b) — tiers: Amateur → Barista → Hero → Champion
+  [ ] LessonContent.ts — Author Chapter 1 (Amateur, 10 stages) — START HERE
+  [ ] Taste Profiles intro screen (Cacao / Almond / Tobacco / Citrus)
   [ ] LearnScreen.tsx — tier map + progress rings
-  [ ] StageScreen.tsx — lesson slides + quiz flow
-  [ ] LessonContent.ts — static content for 40 stages (Amateur → Champion)
+  [ ] StageScreen.tsx — lesson slides + Claude quiz flow
+  [ ] Firestore learnProgress write on stage completion
+  [ ] Web: /training/apprentice — rank table + PDF certification export
 
   Platform
   [ ] Ully Roaster (Phase 4) — roast profile assistant, green coffee lot tracking
@@ -271,7 +269,20 @@
   BRING TO NEXT SESSION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  [ ] Complete Stripe Dashboard setup (products, prices, webhook, portal)
+  Stripe — activate billing (Mar 12)
+  [ ] Stripe Dashboard → Products: create 4 prices
+        "Ully Business"     $49.99/mo  → STRIPE_PRICE_BUSINESS_MONTHLY
+        "Ully Business"     $399/yr    → STRIPE_PRICE_BUSINESS_ANNUAL
+        "Ully Business Pro" $79/mo     → STRIPE_PRICE_BIZPRO_MONTHLY
+        "Ully Business Pro" $659/yr    → STRIPE_PRICE_BIZPRO_ANNUAL
+  [ ] Railway Variables: add STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET + the 4 price IDs above
+  [ ] Stripe Dashboard → Developers → Webhooks → + Add endpoint
+        URL: https://ullyapp.com/api/stripe/webhook
+        Events: customer.subscription.created / updated / deleted
+        Copy signing secret → STRIPE_WEBHOOK_SECRET in Railway
+  [ ] Stripe Dashboard → Settings → Billing → Customer Portal → Activate
+  [ ] Mobile (iOS) Pro tier: RevenueCat — separate task, not Stripe
+
   [ ] Confirm Railway still connected after repo rename (check Railway project → GitHub source)
   [ ] Founder photo — square crop, min 600×600 → drop at ully.web/public/images/founder.jpg
   [ ] Career timeline details for About page (years, roles, certifications)

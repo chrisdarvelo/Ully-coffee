@@ -41,7 +41,7 @@ Ully AI is a **mobile-first AI coffee companion** built for baristas, enthusiast
 ## Project Structure
 
 ```
-Ully-Coffee/
+Ully-app/
 ├── App.tsx                  # Root: auth gate, QueryClient, NavigationContainer
 ├── app.config.js            # Expo config — version, permissions, EAS project ID
 ├── eas.json                 # EAS build profiles (preview = APK, production = AAB)

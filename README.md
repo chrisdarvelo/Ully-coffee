@@ -138,8 +138,8 @@ App.tsx
 ### Installation
 
 ```bash
-git clone https://github.com/chrisdarvelo/Ully-Coffee.git
-cd Ully-Coffee
+git clone https://github.com/chrisdarvelo/Ully.app.git
+cd Ully-app
 npm install
 ```
 
