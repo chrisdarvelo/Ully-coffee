@@ -1,7 +1,7 @@
 ================================================================================
   ULLY — MASTER TODO
-  Updated: March 2026
-  Audit run: March 9, 2026 (67 files reviewed across mobile + web)
+  Updated: March 11, 2026
+  Audit run: March 11, 2026 (ully.web full codebase — 25 routes, all components)
 ================================================================================
 
 
@@ -15,7 +15,12 @@
   [x] RBAC on equipment + team DELETE routes — role check on all mutating methods
   [x] No message length cap on Claude chat route — 2000 char cap at chat/route.ts:51-53
   [x] Replace Date.now() IDs with crypto.randomUUID() — done in web routes
+  [x] Email .trim() missing in signup duplicate check — fixed in api/auth/signup/route.ts
+  [x] Org deletion not atomic — wrapped in SQLite transaction in api/settings/route.ts
 
+  [ ] Rate limiting on auth endpoints (login, signup, join)
+        No brute-force protection — high priority before any paid traffic
+        Use upstash/ratelimit or a simple in-memory sliding window
   [ ] Role guard on business screens (mobile)
         screens/business/BusinessDashboardScreen, MaintenanceScreen, TeamScreen
         No check that profile.role === 'organization' before rendering
@@ -44,7 +49,7 @@
         Screenshots: minimum 4-6 phone screenshots
         Feature graphic: 1024×500px
         App icon: 512×512px (scale existing icon.png)
-        Privacy policy URL: update to Railway domain once live
+        Privacy policy URL: ullyapp.com/privacy
   [ ] Complete App Content form:
         Content rating: IARC questionnaire (~10 min) → 13+
         Data safety: No data collected, photos not stored, location for recs only
@@ -57,6 +62,44 @@
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STRIPE — Billing layer (code done, setup required)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Code complete (Mar 11):
+  [x] Install stripe npm package
+  [x] src/lib/stripe.ts — lazy singleton Stripe client
+  [x] POST /api/stripe/checkout — creates Stripe Checkout session with 14-day trial
+  [x] POST /api/stripe/portal — opens Stripe billing portal for plan management
+  [x] POST /api/stripe/webhook — handles subscription.created/updated/deleted
+  [x] GET  /api/billing — serves current plan/status to billing page
+  [x] /billing page — plan cards + trial countdown + Manage Billing button
+  [x] /billing/success — post-checkout redirect with 3s auto-forward to dashboard
+  [x] Schema: stripeCustomerId, stripeSubscriptionId, plan, planStatus, trialEndsAt on orgs
+  [x] DB migration: safe ALTER TABLE for existing databases
+  [x] 14-day trial set on every new signup
+  [x] Billing link added to sidebar
+
+  Still needed (Stripe Dashboard + Railway env):
+  [ ] Create Stripe products in dashboard:
+        "Business" — $49.99/mo + $399/yr
+        "Business Pro" — $79/mo + $659/yr
+  [ ] Add to Railway Variables:
+        STRIPE_SECRET_KEY=sk_live_...
+        STRIPE_PRICE_BUSINESS_MONTHLY=price_...
+        STRIPE_PRICE_BUSINESS_ANNUAL=price_...
+        STRIPE_PRICE_BIZPRO_MONTHLY=price_...
+        STRIPE_PRICE_BIZPRO_ANNUAL=price_...
+        STRIPE_WEBHOOK_SECRET=whsec_...
+  [ ] Create webhook in Stripe Dashboard → Developers → Webhooks
+        URL: https://ullyapp.com/api/stripe/webhook
+        Events: customer.subscription.created / updated / deleted
+  [ ] Enable Customer Portal in Stripe Dashboard → Settings → Billing → Customer Portal
+  [ ] Test full flow locally with Stripe CLI:
+        stripe listen --forward-to localhost:3000/api/stripe/webhook
+  [ ] Gate dashboard access: redirect to /billing if plan='cancelled' (post-launch)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   MONTH 1 — March → April 10 (World of Coffee San Diego)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -66,8 +109,8 @@
   [ ] Fix catch (error: any) in useUllyChat.ts:131
         Type as unknown, use instanceof guard for rate-limit detection
   [ ] Add input validation on category fields
-        ully-web/src/app/api/inventory/route.ts:33
-        ully-web/src/app/api/revenue/route.ts:34
+        ully.web/src/app/api/inventory/route.ts:33
+        ully.web/src/app/api/revenue/route.ts:34
         Add .trim() + max length check
   [ ] Add pagination to all GET endpoints (web)
         /api/equipment, /api/team, /api/inventory, /api/revenue
@@ -75,25 +118,36 @@
   [ ] Add input validation + sanitizeText() on recipe names
         services/RecipeService.ts:74-84
 
+  Web — polish before WoC
+  [x] Footer: removed Products + Pricing links — Privacy, Terms, email only
+  [x] Footer: email now opens contact modal (not direct mailto)
+  [x] Footer: copyright updated to "© 2026 Ully App"
+  [x] All footers unified — landing, marketing, legal identical structure
+  [x] Google OAuth sign-in on login + signup pages
+  [x] Chat input focus bug fixed (nested component anti-pattern)
+  [x] Chat: ULLY wordmark uses pixel font, messages use mono font
+  [x] Chat: rotating quote → static per-session quote
+  [x] Coffee farm scene: real coffee bushes, centered sun, seagulls, varied clouds, left-side only
+  [x] Products page: removed "Ready to run a smarter operation?" CTA
+  [x] Build: Suspense boundaries on login + signup (useSearchParams fix)
+  [x] Build: 'use client' on marketing + legal layouts (event handler fix)
+  [x] Claude model updated to claude-sonnet-4-6
+  [x] Chat: plain text only — no markdown, no emojis, no filler phrases
+  [ ] About page: add real career timeline + drop founder photo at /public/images/founder.jpg
+  [ ] Verify Railway deployment reconnected after repo rename (Ully.app / ully.web)
+
   Mobile — wire business screens into nav
   [ ] Wire screens/business/ into AppNavigator behind org role gate
   [ ] Add business entry point for org users (4th tab or modal from Home)
   [ ] Push notifications scaffold for maintenance overdue alerts
 
-  Web — polish before WoC
-  [ ] About page: add real career timeline + drop founder photo at /public/images/founder.jpg
-  [x] Dashboard: quick-stats summary — metric cards + get-started section already live
-  [x] Empty states: guided empty states on Equipment, Team, Inventory — all done
-  [x] Auth forms: loading/disabled state on submit — already implemented
-  [x] Landing page: mobile section updated to "coming soon" copy
-  [x] Landing page: hero CTA → "Try Ully Free", nav CTA → "Try Ully Free"
-  [x] Landing page: added "Built by a working espresso technician" credibility line
-
   Infrastructure
-  [ ] Get Railway public URL → deploy Firebase redirect from ully-coffee.web.app
-  [ ] Check GoDaddy → Railway DNS propagation — test custom domain
+  [x] Railway public URL confirmed — ullyapp.com live
+  [x] GoDaddy → Railway DNS — resolved
+  [x] GitHub repos renamed: Ully-coffee → Ully.app, ully-web → ully.web
+  [x] Local git remotes updated to match new repo names
   [ ] Register for World of Coffee San Diego at usa.worldofcoffee.org
-  [ ] Print 100 QR code cards (Android beta + TestFlight links)
+  [ ] Print 100 QR code cards (Android beta + web platform links)
   [ ] Draft 3 press pitches: Daily Coffee News, Sprudge, Perfect Daily Grind
 
 
@@ -217,8 +271,9 @@
   BRING TO NEXT SESSION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  [ ] Railway public URL (needed to redirect Firebase static site)
-  [ ] Founder photo — square crop, min 600×600 → drop at ully-web/public/images/founder.jpg
+  [ ] Complete Stripe Dashboard setup (products, prices, webhook, portal)
+  [ ] Confirm Railway still connected after repo rename (check Railway project → GitHub source)
+  [ ] Founder photo — square crop, min 600×600 → drop at ully.web/public/images/founder.jpg
   [ ] Career timeline details for About page (years, roles, certifications)
   [ ] Confirm Apple Developer enrollment status
   [ ] Google Play Console: generate Service Account JSON
@@ -243,7 +298,10 @@
     firebase deploy --only functions                    # cloud functions only
 
   Web (local)
-    cd ~/ully-web && npm run dev                        # add CLAUDE_API_KEY to .env.local
+    cd ~/ully.web && npm run dev                        # add CLAUDE_API_KEY to .env.local
+
+  Stripe (local testing)
+    stripe listen --forward-to localhost:3000/api/stripe/webhook
 
   UI Audit skill (Claude Code)
     /ui-audit screens/AIScreen.tsx
