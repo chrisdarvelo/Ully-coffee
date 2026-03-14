@@ -1,4 +1,4 @@
-appId: com.ullycoffee.app
+appId: com.ullyapp.app
 name: "Happy Path — Login → AI Dial-in → Save Recipe"
 ---
 # Runs the three sub-flows in order.

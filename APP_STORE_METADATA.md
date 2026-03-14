@@ -1,48 +1,44 @@
 # Ully Coffee — App Store Metadata
 
 ## App Name
-Ully Coffee
+Ully AI
 
 ## Subtitle (30 chars max)
-AI Coffee Companion
+Espresso Mastery & Certification
 
 ## Category
 Primary: Food & Drink
-Secondary: Lifestyle
+Secondary: Education
 
 ## Description
 
-Ully is a coffee companion for baristas and enthusiasts. Get AI-powered help dialing in espresso, scan equipment parts, save recipes, and stay current with coffee industry news.
+Ully AI is the professional training and co-pilot platform for espresso machine mastery — building baristas who know their machine the way a pilot knows their plane.
 
-**AI-Powered Assistance**
-Chat with Ully AI for help with extraction troubleshooting, grinder calibration, water chemistry, and more. Snap a photo of your espresso or equipment and get instant analysis and dial-in suggestions.
+Most baristas learn to make coffee. Ully builds baristas who understand pressure, temperature, thermodynamics, and machine systems at instrument level — and can troubleshoot, calibrate, and maintain their equipment on the spot without calling a technician.
 
-**Recipes**
-Build your personal recipe library with brew method, dose, yield, and tasting notes. Starter recipes included to get you going.
+**AI Machine Technician**
+Ask Ully about boiler behavior, OPV calibration, solenoid diagnostics, pressure curves, flow profiling, PID tuning, group head maintenance, and more. Get direct, technical answers — no hedging, no guessing. Upload a photo of your espresso pour for instant extraction diagnosis.
 
-**Baristas**
-Follow curated barista profiles and read their latest blog posts and insights from the specialty coffee world.
+**The Pilot Certification Program**
+Ully Learn is a structured 40-stage mastery curriculum that takes baristas from first espresso to Certified Espresso Pilot. Four tiers — Amateur, Barista, Hero, Champion — each with progressive lessons and AI-evaluated open-ended examinations. Pro ($7.99/month) unlocks all four tiers. The Certified Espresso Pilot credential is a premium add-on — an AI-conducted examination and exportable certificate that proves instrument-level machine mastery.
 
-**Cafes**
-Keep a personal collection of cafes with notes, locations, and what you ordered.
-
-**Daily News**
-Stay informed with the latest articles from Perfect Daily Grind, Barista Magazine, and Daily Coffee News — updated daily.
+**For Café Owners and Managers**
+A Ully-certified barista can change gaskets, recalibrate pressure, and diagnose machine failures at the bar — eliminating $200–$800 technician callouts. Owners can purchase certification for their team directly, and track every barista's progress and competency gaps on the Ully Business Platform.
 
 **Privacy First**
 No ads, no tracking, no analytics SDKs. Photos are analyzed in real-time and never stored. Chat history stays on your device.
 
 ## Keywords (100 chars max)
-coffee,espresso,barista,dial-in,extraction,grinder,recipes,latte,brew,AI
+espresso,barista,machine,pressure,boiler,certification,dial-in,extraction,coffee,pilot
 
 ## Support URL
-https://ullycoffee.com
+https://ullyapp.com
 
 ## Support Email
-support@ullycoffee.com
+support@ullyapp.com
 
 ## Marketing URL (optional)
-https://ullycoffee.com
+https://ullyapp.com
 
 ---
 
@@ -91,7 +87,7 @@ https://ullycoffee.com
 ## Google Play Store
 
 ### Short Description (80 chars max)
-AI coffee companion — dial-in espresso, scan parts, save recipes, read news.
+Espresso mastery & certification — know your machine like a pilot knows their plane.
 
 ### Full Description
 (Use the same App Store description above.)
@@ -106,7 +102,7 @@ Everyone (no objectionable content)
 - **Data shared with third parties:** Photos shared with Anthropic API for analysis (not stored)
 - **Data collected:** Email address, user-created content (profile, recipes, cafes)
 - **Security:** Data encrypted in transit (HTTPS), Firebase encryption at rest
-- **Data deletion:** Users can request account deletion via support@ullycoffee.com (in-app deletion flow planned)
+- **Data deletion:** Users can request account deletion via support@ullyapp.com (in-app deletion flow planned)
 
 ---
 
@@ -130,10 +126,10 @@ Same screens, taken on Android device/emulator.
 
 ---
 
-## support@ullycoffee.com Setup
+## support@ullyapp.com Setup
 
 Options:
-1. **Domain email forwarding** — Forward support@ullycoffee.com to your personal email via your domain registrar (Namecheap, Cloudflare, Google Domains, etc.)
+1. **Domain email forwarding** — Forward support@ullyapp.com to your personal email via your domain registrar (Namecheap, Cloudflare, Google Domains, etc.)
 2. **Google Workspace** — Full inbox at ~$6/mo
 3. **Zoho Mail free tier** — Free custom domain email (1 user)
 4. **Cloudflare Email Routing** — Free forwarding if domain is on Cloudflare

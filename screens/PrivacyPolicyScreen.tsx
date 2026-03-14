@@ -76,7 +76,7 @@ export default function PrivacyPolicyScreen({ navigation, route }: { navigation:
             Ully is intended for users aged 13 and older. We do not knowingly
             collect personal information from children under 13. If you are a
             parent or guardian and believe your child has provided us with
-            personal information, please contact us at support@ullycoffee.com
+            personal information, please contact us at support@ullyapp.com
             and we will promptly delete it.
           </Paragraph>
         </Section>
@@ -240,7 +240,7 @@ export default function PrivacyPolicyScreen({ navigation, route }: { navigation:
           <BulletItem>Delete your account and all associated data directly within the app</BulletItem>
           <BulletItem>Clear your local chat history at any time through the app</BulletItem>
           <BulletItem>
-            Request data deletion by emailing support@ullycoffee.com if you
+            Request data deletion by emailing support@ullyapp.com if you
             cannot access the app
           </BulletItem>
           <Paragraph>
@@ -249,7 +249,7 @@ export default function PrivacyPolicyScreen({ navigation, route }: { navigation:
             the right to opt out of data sales (we do not sell data).
             EEA/UK residents have rights under GDPR including access,
             rectification, erasure, and portability of personal data.
-            Contact support@ullycoffee.com to exercise any of these rights.
+            Contact support@ullyapp.com to exercise any of these rights.
           </Paragraph>
         </Section>
 
@@ -275,7 +275,7 @@ export default function PrivacyPolicyScreen({ navigation, route }: { navigation:
             is permanent and cannot be undone.
           </Paragraph>
           <Paragraph>
-            If you cannot access the app, email support@ullycoffee.com.
+            If you cannot access the app, email support@ullyapp.com.
             We will process your request within 30 days.
           </Paragraph>
         </Section>
@@ -292,7 +292,7 @@ export default function PrivacyPolicyScreen({ navigation, route }: { navigation:
         <Section title="Contact">
           <Paragraph>
             Questions about this Privacy Policy or your data:{'\n'}
-            support@ullycoffee.com
+            support@ullyapp.com
           </Paragraph>
         </Section>
 

@@ -1,6 +1,6 @@
 {
   "name": "ully-functions",
-  "description": "Firebase Cloud Functions for Ully Coffee",
+  "description": "Firebase Cloud Functions for Ully AI",
   "scripts": {
     "serve": "firebase emulators:start --only functions",
     "deploy": "firebase deploy --only functions"

@@ -2,7 +2,7 @@
   <img src="./assets/icon.png" alt="Ully AI" width="120" />
 
   <h1>Ully AI</h1>
-  <p><em>Brewing at the edge of technology.</em></p>
+  <p><em>Know your machine the way a pilot knows their plane.</em></p>
 
   <p>
     <img src="https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey?style=flat-square" />
@@ -19,11 +19,20 @@
 
 ## What is Ully AI?
 
-Ully AI is a mobile companion for baristas and coffee enthusiasts. Dial-in your espresso, troubleshoot your equipment, and build your craft — with an AI assistant that knows coffee as well as you do.
+Ully AI is the professional training and co-pilot platform for espresso machine mastery.
 
-Free to download. Pro at **$7.99/month** — unlimited AI, full dial-in assistant, recipe library, and skill tracking.
+Pilots don't guess. They read instruments — pressure, temperature, system state — and
+diagnose problems in real time without leaving the cockpit. Ully builds that barista.
+Not someone who makes good coffee. Someone who understands the boiler, the OPV, the
+solenoid, the flow meter, and the thermodynamics behind every shot — and can troubleshoot
+at the bar, mid-service, without calling a technician.
 
-> Part of the Ully platform. For cafe and business operations, see [Ully Business Platform](https://github.com/chrisdarvelo/ully-web).
+Free to download — includes Amateur Stages 1–3 of Ully Learn forever, plus a **14-day
+full Pro trial** on first signup. Pro at **$7.99/month** — unlimited AI and all 40
+learning stages. The **Certified Espresso Pilot** credential is a premium add-on,
+available individually or purchased by owners for their team.
+
+> Part of the Ully platform. For café and business operations, see [Ully Business Platform](https://github.com/chrisdarvelo/ully-web).
 
 ---
 
@@ -31,48 +40,67 @@ Free to download. Pro at **$7.99/month** — unlimited AI, full dial-in assistan
 
 | Feature | Description |
 |---|---|
-| **AI Chat** | Coffee-only assistant — espresso, brewing, equipment, origins, latte art, and more |
-| **Espresso Dial-In** | Upload or capture photos of espresso pours for AI extraction analysis |
-| **Troubleshoot** | Diagnose equipment issues and get step-by-step fix guidance |
-| **Recipe Library** | Personal recipe collection with procedural generative art covers |
+| **AI Co-Pilot** | Coffee-only assistant with deep machine knowledge — espresso, equipment, boilers, pressure, valves, thermodynamics |
+| **Espresso Dial-In** | Upload or capture photos of espresso pours for AI extraction analysis and diagnosis |
+| **Machine Troubleshoot** | Diagnose equipment issues at instrument level — OPV, solenoid, group head, temperature stability |
+| **Pilot Certification** | Progressive mastery program: Amateur → Barista → Hero → Certified Espresso Pilot |
 | **Weather Context** | AI recommendations adapt to your local weather and location |
 | **Voice Input** | Speak your questions directly to Ully |
 
 ---
 
-## Ully Learn — Apprentice System (Phase 1b)
+## Ully Learn — The Pilot Certification Program
 
 *Designed. Not yet built.*
 
-**"SCA in your Pocket"** — a progressive coffee apprenticeship embedded in the app.
-SCA courses cost $500+. Ully Learn delivers the same career-ladder progression
-on your phone, powered by AI-driven conversational quizzes instead of multiple-choice.
+**"Know your machine the way a pilot knows their plane."**
 
-### Tier structure
+Ully Learn is a structured professional certification program — the first credential
+in the industry built for instrument-level espresso machine mastery, evaluated by AI
+conversation instead of multiple-choice tests. This is not a Duolingo alternative.
+This is the new industry standard for what a certified barista should know and prove.
 
-| Tier | Stages | Target |
+A barista who has earned the Ully Champion certification can:
+- Diagnose a pressure drop or temperature instability mid-service and fix it on the spot
+- Change gaskets, rebuild group heads, calibrate OPV settings, and interpret boiler behavior
+- Train junior staff through a structured, testable curriculum
+- Produce evidence of their skill level that any owner can verify
+
+That barista is worth more. They get promoted. Their certification means something —
+because it was earned through open-ended AI examination, not multiple-choice trivia.
+
+### The Pilot Path
+
+| Tier | Who it's for | Focus |
 |---|---|---|
-| Amateur | 10 | Home enthusiasts, new to specialty |
-| Barista | 10 | Aspiring and working café staff |
-| Hero | 10 | Experienced professionals, senior baristas |
-| Champion | 10 | Competition-level — WBC caliber |
+| Amateur | Home enthusiasts, new to specialty | Coffee fundamentals, palate, first espresso |
+| Barista | Aspiring and working café staff | Dial-in, extraction science, milk, workflow |
+| Hero | Experienced professionals, senior baristas | Machine systems, pressure, temperature, thermodynamics, team leadership |
+| Champion | Competition-level, machine experts | Advanced thermodynamics, maintenance, certification examination |
 
-### The quiz format is the moat
+**Champion = Certified Espresso Pilot.** 40 stages total.
 
-Ully doesn't ask "Which grind size for espresso?" It asks:
-*"You're pulling 18g in, 32g out in 35 seconds and it tastes sour. Walk me through your next adjustments."*
-Claude evaluates the response — open-ended, evaluative, not guesssable.
+### The Quiz Format Is the Moat
 
-### The business case for cafés
+Ully doesn't ask "What is the ideal OPV setting?" It asks:
 
-Replacing a barista costs ~$3,000. Rank gives managers a visible, evidence-based
-signal for who's ready to advance — and a clear hook for retention:
-*"You don't touch the machine until you hit Hero rank."*
+*"Your machine is pulling inconsistent extraction times and your pressure gauge is
+peaking at 11 bar. Walk me through your diagnosis and what you'd adjust first."*
+
+Claude evaluates the response — open-ended, evaluative, not guessable. This cannot
+be scraped or auto-completed. It is a world-first integration of conversational AI
+into structured professional certification.
+
+### The Business Case for Café Owners
+
+> A single technician callout costs $200–$800. A barista who can diagnose a pressure
+> drop, replace a group head gasket, or recalibrate the OPV on the spot eliminates
+> that cost entirely. Ully Learn builds that barista. The certification proves it.
 
 On the Business Platform, ranks surface as a **Competency Map** — a heat map of
-each team member's skill strengths and gaps, tied to promotions and pay grades.
+each team member's machine knowledge, tied to promotions and pay grades.
 
-> See `VISION.md` → Phase 1b for full architecture, technical risks, and web integration spec.
+> See `VISION.md` for full architecture, stage curriculum, and web integration spec.
 
 ---
 
@@ -109,12 +137,10 @@ App.tsx
 └── (authenticated) → AppNavigator
     ├── OnboardingScreen       ← shown once after signup
     ├── TabNavigator           ← 3 tabs: Home · AI · Profile
-    │   ├── HomeScreen         ← Recipes, News, Baristas, Cafes (React Query)
+    │   ├── HomeScreen         ← Clean landing: logo + greeting + "ask ully" CTA
     │   ├── AIScreen           ← Ully AI chat + camera + voice input
     │   └── SettingsScreen     ← Account, preferences, delete account
-    ├── RecipeDetailScreen
-    ├── BaristaDetailScreen
-    └── CafeDetailScreen
+    └── PrivacyPolicyScreen
 ```
 
 ### Cloud Functions
@@ -260,5 +286,5 @@ Support: [support@ullyapp.com](mailto:support@ullyapp.com)
 ---
 
 <div align="center">
-  <sub>Brewing at the edge of technology ☕</sub>
+  <sub>Know your machine the way a pilot knows their plane.</sub>
 </div>

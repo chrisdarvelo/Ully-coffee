@@ -21,7 +21,7 @@ export default {
     },
     ios: {
       supportsTablet: true,
-      bundleIdentifier: 'com.ullycoffee.app',
+      bundleIdentifier: 'com.ullyapp.app',
       buildNumber: '1',
       infoPlist: {
         NSCameraUsageDescription:
@@ -41,7 +41,7 @@ export default {
         foregroundImage: './assets/adaptive-icon.png',
         backgroundColor: '#1A1614',
       },
-      package: 'com.ullycoffee.app',
+      package: 'com.ullyapp.app',
       versionCode: 1,
       permissions: ['CAMERA', 'ACCESS_COARSE_LOCATION'],
       googleServicesFile: process.env.GOOGLE_SERVICES_JSON ?? './google-services.json',

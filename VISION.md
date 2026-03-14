@@ -6,21 +6,40 @@
 
 ---
 
-## What Ully Is Becoming
+## The Core Idea
 
-Ully began as a coffee companion. The long-term vision is a category-defining platform:
+> **A barista who knows their machine the way a pilot knows their plane.**
 
-**Ully is a purpose-built professional intelligence platform for skilled trades and
-supply-chain industries — starting with coffee, expanding to every domain where
-expert knowledge is locked inside people's heads and unavailable at the moment
-it is needed most.**
+Pilots don't guess. They read instruments. They know their systems — engines,
+hydraulics, pressures, temperatures — and when something is off, they diagnose it
+in real time and fix it without leaving the cockpit.
+
+Ully exists to produce that barista.
+
+Not someone who "makes good coffee." Someone who understands every system on
+their espresso machine — the boiler, the pump, the OPV, the solenoid, the group
+head, the flow meter — and can troubleshoot, calibrate, and maintain it on the
+spot. Someone who reads a shot the way a pilot reads instruments. Someone whose
+café owner knows they can be trusted with a $15,000 machine and a full service rush.
+
+**That barista is worth more. That barista gets promoted. That barista is certified.**
+
+Ully is the guide that gets them there — and the co-pilot in their pocket
+every shift after that.
+
+---
+
+## What Ully Is
+
+**Ully is the professional training and intelligence platform for espresso machine
+mastery — the path from barista to certified espresso pilot.**
 
 The core product belief:
-> Professionals in the field — a barista dialling in at 6am, a technician
-> diagnosing a faulty group head mid-service, a café owner reconciling labour
-> cost against daily covers — need expert-level answers and actionable business
-> data immediately. Not after a Google search, not after a call to a consultant.
-> Ully puts that capability in their pocket, tailored to their trade.
+> The best baristas in the world are not the ones who memorize recipes.
+> They are the ones who understand pressure, temperature, thermodynamics,
+> flow, and system dynamics well enough to adapt in real time — during service,
+> under pressure, with a line out the door. Ully teaches that. Ully tests it.
+> Ully certifies it.
 
 ---
 
@@ -28,12 +47,52 @@ The core product belief:
 
 | What Ully is | What Ully is not |
 |---|---|
-| A purpose-built professional tool for the coffee industry | A general-purpose chatbot |
-| Domain-specific, opinionated, and expert-calibrated | Broad, vague, or hedging |
-| Offline-capable and field-ready | Dependent on a continuous connection |
-| Grounded in a proprietary curated knowledge base | Relying solely on AI generation |
-| A connected platform spanning the supply chain | A single-use consumer application |
-| Custom-engineered tool integrations for real workflows | A generic dashboard bolted onto third-party data |
+| A mastery platform — from barista to certified espresso pilot | A general-purpose coffee chatbot |
+| Machine-deep: boilers, pressure, valves, thermodynamics | Recipe-only, surface-level advice |
+| A co-pilot during service and troubleshooting | A search engine with a chat interface |
+| Structured progression with real certification at the end | Gamified trivia with badges |
+| A retention and promotion tool for café owners | A consumer lifestyle app |
+| Field-ready — works mid-service, in the moment | Dependent on a Wi-Fi connection |
+
+---
+
+## The Pilot Metaphor — Why It Works
+
+A commercial pilot earns a certificate that proves they understand their aircraft's systems,
+can respond to instrument readings, handle emergencies without a manual, and lead their
+crew calmly through any situation. Nobody questions whether that certificate means something.
+
+We want the same thing for baristas.
+
+The espresso machine is their aircraft. Pressure is their instrument panel. Temperature
+stability is their flight path. A spike in extraction time is a stall warning. A faulty
+OPV is a hydraulic failure. They need to know all of it — and most of them never get
+the chance to learn it.
+
+**The Ully Champion certification is the ATP rating for espresso.** Owners hire for it.
+Baristas train toward it. The industry respects it — because it proves instrument-level
+machine knowledge, not just palate.
+
+---
+
+## The B2B Case (Why Owners Love It)
+
+Imagine hiring a manager barista who:
+- Can change gaskets, clean group heads, and replace solenoid valves without calling a tech
+- Diagnoses a pressure drop or temperature instability mid-service and fixes it on the spot
+- Trains junior staff through a structured, testable curriculum with certifiable outcomes
+- Has a Ully Champion badge that proves all of the above
+
+That manager saves $500–$2,000 on every technician call. They reduce machine downtime
+during service. They train the next barista faster. And they have a credential that
+benchmarks their skill against a real standard.
+
+**For owners, Ully is not a coffee app. It is a workforce development and maintenance
+cost reduction platform — and the certification is something they will gladly pay for
+on behalf of their best people.**
+
+> "A manager barista champion who can change gaskets, control pressure, and
+> troubleshoot at the spot using Ully? That's a major advantage."
 
 ---
 
@@ -45,6 +104,7 @@ The core product belief:
 
 **Core features:**
 - AI chat assistant (Claude Sonnet) — coffee-only, precision responses, no preamble
+- Machine technician mode — deep system knowledge: boilers, OPV, valves, pressure curves
 - Weather-aware drink and brew recommendations
 - Espresso dial-in assistant with photo analysis
 - Focused home screen: logo + greeting + single "ask ully" CTA — no feed, no distractions
@@ -52,23 +112,15 @@ The core product belief:
 **HomeScreen architecture decision (resolved):**
 The home screen was stripped of the feed (recipes, baristas, cafes, news) and simplified to a
 single-purpose landing: greet the user, surface a rotating coffee tip, and send them to AI.
-This is the correct call for a professional tool — content feeds are a distraction, not a feature.
-Feed items (recipes, barista content, café maps, news) are documented below as deferred.
+Feed items (recipes, barista content, café maps, news) are permanently deferred.
+The home screen is a clean canvas for the apprentice system and Pilot path.
 
-**Feed features — permanently removed:**
-- Coffee news aggregation — removed. The home screen will show a **Leaderboard** once Ully Learn ships.
-- Curated barista content and blog feed — removed.
-- Personal recipe library — removed.
-- Café bookmarking — removed.
-
-The home screen is a clean canvas for the apprentice system. No feeds return.
-
-**Planned (Phase 1b — Ully Learn):**
-- "SCA in your Pocket" coffee knowledge apprentice system
-- Four tiers: Amateur → Barista → Hero → Champion
-- Each tier contains 10 progressive stages (lessons + AI-powered conversational quizzes)
-- Completing onboarding automatically places user in Amateur tier Stage 1
-- Champion tier targets competition-level barista knowledge
+**Planned (Phase 1b — Ully Learn / Pilot Certification):**
+- Progressive espresso mastery curriculum
+- Four tiers: Amateur → Barista → Hero → Champion (Certified Espresso Pilot)
+- Each tier: 10 stages covering craft, machine systems, thermodynamics, leadership
+- AI-powered conversational quizzes — evaluated by Claude, not multiple-choice
+- Completing onboarding automatically places user in Amateur Stage 1
 - See Phase 1b section below for full design
 
 **Launch blocklist:**
@@ -79,25 +131,32 @@ The home screen is a clean canvas for the apprentice system. No feeds return.
 
 ---
 
-## Phase 1b — Ully Learn (Apprentice System)
+## Phase 1b — Ully Learn (Pilot Certification Program)
 
 **Status:** Designed. Not yet built.
 
 ### Concept
 
-"SCA in your Pocket" — a progressive coffee knowledge system that mirrors the real-world
-career ladder, powered by AI-driven conversational quizzes instead of multiple-choice.
-Where SCA courses cost $500+, Ully Learn is the accessible, mobile-native alternative
-built for the TikTok generation of baristas.
+"Know your machine the way a pilot knows their plane."
 
-This is not Duolingo with coffee trivia. It is a structured apprenticeship — rooted
-in SCA-calibrated content, delivered through AI conversation, and tied to real career
-incentives via the Business Platform.
+A progressive mastery system that takes a barista from first espresso to Certified Espresso Pilot —
+covering not just craft and palate, but instruments, pressure, temperature, thermodynamics,
+situational awareness, and team leadership.
+
+This is not Duolingo with coffee trivia. It is not a cheaper alternative to SCA courses.
+It is a new industry standard — the first professional certification built for how baristas
+actually work and learn, evaluated by AI conversation instead of multiple-choice tests, and
+designed to become the credential that owners look for when they hire.
+
+Coursera did not position itself as cheaper than university. It positioned itself as the
+modern standard for professional development. That is the model. Ully Learn is what
+professional coffee certification looks like in 2026.
+
+---
 
 ### Three Pillars (Partner PoC)
 
-The minimum build to demonstrate Ully Learn to café/roaster partners. These three
-deliverables are the pitch — complete them before outreach.
+The minimum build to demonstrate Ully Learn to café/roaster partners.
 
 ---
 
@@ -105,18 +164,44 @@ deliverables are the pitch — complete them before outreach.
 
 **What it is:** 10 stages, fully playable, with interactive Taste Profiles and AI quiz logic.
 
-**Taste Profiles** — interactive flavor anchors used in every Amateur lesson:
+**Taste Profiles** — interactive flavor anchors introduced progressively across the Amateur tier.
+The vocabulary spans the full SCA Coffee Taster's Flavor Wheel — from roast-forward
+espresso notes to the floral and fruit complexity of washed high-altitude lots.
+
+**Roast-forward / base notes** (familiar entry points — introduced first)
 - **Cacao** — dark chocolate, roast-forward, low acidity
 - **Almond** — nutty, mild, balanced sweetness
 - **Tobacco** — earthy, complex, aged quality signal
+- **Caramel** — brown sugar sweetness, maillard-driven, round body
+- **Hazelnut** — roasted nut, mild bitterness, approachable
+
+**Stone fruit and tropical** (mid-tier complexity — natural and honey process)
+- **Apricot** — stone fruit brightness, found in Ethiopian and Geisha naturals
+- **Peach** — soft sweetness, low-acid, common in Brazilian naturals and Bourbon mutations
+- **Mango** — tropical, full body, high sweetness — natural process Yirgacheffe
+- **Plum** — dark fruit, jammy, found in Kenyan and Rwandan washed lots
+
+**Orchard and berry** (high complexity — washed high-altitude lots)
+- **Apple** — crisp malic acidity, found in Typica and Bourbon mutations, Colombian washed
+- **Blueberry** — bright berry, fermentation-adjacent, classic Ethiopian natural signal
+- **Cherry** — red fruit clarity, washed process, Central American Bourbon
+- **Blackcurrant** — sharp, wine-like, Kenyan AA — SL28/SL34 cultivar signature
+
+**Floral and tea-like** (elite complexity — Geisha, Yirgacheffe washed)
+- **Jasmine** — perfumed floral, delicate — Geisha and Guji washed
+- **Bergamot** — Earl Grey quality, citrus-floral — Ethiopian Yirgacheffe washed
+- **Rose** — subtle floral sweetness — Geisha at high elevation
+- **Hibiscus** — tart floral, high acidity, Ethiopian natural at light roast
+
+**Citrus** (acidity-forward — light roast, washed process)
+- **Lemon** — bright citric acidity, clean finish — washed East African
+- **Orange** — round citrus sweetness — Colombian, Honduran, medium roast
+- **Grapefruit** — sharp, clean, drying finish — Kenyan washed at high extraction
 
 Each stage introduces a concept via 3–5 lesson screens, then runs an AI-powered
-conversational quiz evaluated by Claude. The Taste Profile vocabulary carries through
-all 10 stages — students learn to identify, describe, and dial-in using this language.
-
-**Why this scope:** Amateur is the entry point for every user regardless of skill level.
-It must be flawless. If partners can play it themselves and feel the progression, the
-system sells itself.
+conversational quiz evaluated by Claude. The Taste Profile vocabulary is introduced
+progressively — base notes first, florals and high-complexity fruit in later stages.
+Students learn to identify, describe, and dial-in using this language across all 10 stages.
 
 **Build checklist:**
 - [ ] `LearnScreen.tsx` — tier map, progress rings, locked/unlocked states
@@ -128,47 +213,49 @@ system sells itself.
 
 ---
 
-#### Pillar 2 — Technician AI Persona
+#### Pillar 2 — Technician AI Persona (The Co-Pilot)
 
 **What it is:** A specialized Claude system prompt that responds like an experienced
-technician with 10+ years on commercial espresso equipment — zero fluff, direct diagnosis.
+espresso machine technician — zero fluff, direct diagnosis, instrument-level knowledge.
+
+**What Ully knows in this mode:**
+- Boiler types: single-boiler, heat exchanger (HX), dual-boiler, thermoblock — how each affects temperature stability and workflow
+- Pressure systems: pump calibration, OPV (over-pressure valve) setting, pre-infusion pressure curves, pressure profiling (mechanical vs. electronic)
+- Temperature dynamics: PID controller behavior, thermal mass and recovery, thermosiphon flow, thermal stability under load
+- Valves: solenoid valve function and failure modes, steam valve, OPV bypass symptoms
+- Flow: flow meter integration, flow profiling (Decent, La Marzocco GS3 MP), volumetric dosing
+- Thermodynamics: heat exchange efficiency, steam pressure and vapor temperature relationship, boiler pressure vs. steam quality
+- Maintenance: group head gasket and screen replacement, backflush procedure, descaling frequency and method, pump maintenance
+- Situational awareness: diagnosing extraction issues under service pressure, reading pressure gauges, interpreting channeling patterns from visual extraction
 
 **Persona rules:**
 - No preamble. No "Great question!" No hedging.
 - Starts with the most likely cause, not a list of possibilities.
 - Gives a specific fix: what to adjust, by how much, in what order.
-- Uses technician vocabulary: channeling, pre-infusion, group head, puck prep, backflush.
+- Uses technician vocabulary: OPV, solenoid, group head, puck prep, pre-infusion, boiler pressure, TDS, extraction yield.
 
 **Shot analysis (Dial-in with photo):**
-- Identifies channeling from extraction pattern (uneven color, tiger-striping)
+- Identifies channeling from extraction pattern (uneven color, tiger-striping, blonding)
 - Flags over-tamping from cone/wavy extraction
 - Reads puck condition from the photo (dry/wet, cracked, imprinted)
 - Returns: diagnosis + one adjustment + expected result
-
-**System prompt location:** `functions/index.js` — injected into `chatWithUlly` alongside
-the base coffee-only system prompt. The Technician persona activates when a photo
-is attached or the Dial-in chip is tapped.
-
-**Why this matters for partners:** Café owners will test Ully by uploading a shot photo
-and seeing if it catches the same issue their head barista would catch. This is the demo
-that closes the room.
 
 ---
 
 #### Pillar 3 — Team Progress Dashboard (MVP)
 
 **What it is:** A simple, exportable view on the Business Platform showing each team
-member's apprentice rank and skill gaps.
+member's rank, machine competency, and skill gaps.
 
 **MVP table:**
 | Barista Name | Current Rank | Stages Completed | Skill Gap | Last Active |
 |---|---|---|---|---|
-| Alex | Barista | 14/20 | Extraction science | 2 days ago |
-| Jamie | Amateur | 6/10 | Milk texturing | 1 week ago |
+| Alex | Barista | 14/20 | Pressure management | 2 days ago |
+| Jamie | Amateur | 6/10 | Machine systems | 1 week ago |
 
 **Exportable Certification:**
-- PDF export: "Ully Apprentice Certification — [Name] — [Rank] — [Date]"
-- Designed for the business owner to use in HR records or display in the café
+- PDF: "Ully Certified Espresso Pilot — [Name] — [Rank] — [Date]"
+- Designed for the business owner to use in HR records, post in the café, or include in job applications
 
 **Implementation:**
 - Add `/training/apprentice` route to ully-web
@@ -184,8 +271,13 @@ The ROI frame for café owners and managers:
 
 > **Replacing a barista costs ~$3,000** in recruiting, training, and lost productivity.
 > Ully Learn reduces that cost by compressing ramp-up time and making skill
-> progression visible — so managers retain good people longer and promote them
-> with confidence instead of guessing.
+> progression visible — so managers retain good people longer and promote with confidence.
+
+The machine mastery angle adds a second ROI lever:
+
+> **A single technician callout costs $200–$800.** A barista who can diagnose a pressure
+> drop, replace a group head gasket, or recalibrate the OPV on the spot eliminates that
+> cost. Ully Learn builds that barista. The certification proves it.
 
 The career-gate hook that makes it sticky:
 
@@ -194,30 +286,116 @@ The career-gate hook that makes it sticky:
 Managers can use rank as a gating mechanism for station access — a built-in
 incentive that makes progression feel real, not gamified.
 
+---
+
+### Pricing Model
+
+```
+Free — forever
+ └─ 20 AI messages/day
+ └─ Ully Learn: Amateur Stages 1–3 (permanent, never locked away)
+ └─ Progress and badges preserved even after trial ends
+ └─ 14-day Pro trial on first signup (full access, no credit card)
+
+Pro — $7.99/month
+ └─ Unlimited AI co-pilot
+ └─ Full Ully Learn access: all 4 tiers, all 40 stages
+ └─ Progress badges, stage unlocks, quiz history
+ └─ (Certified Espresso Pilot credential not included)
+
+Certified Espresso Pilot — premium add-on (price TBD)
+ └─ Champion tier examination: AI oral defense with Claude as examiner
+ └─ Exportable Ully Certified Espresso Pilot credential (PDF + digital badge)
+ └─ Verifiable certification tied to account and date
+ └─ Individual purchase OR redeemable via Business seat
+
+Business — owner/org tier (price TBD, per seat or team bundle)
+ └─ Purchase certification seats for team members
+ └─ Team Competency Map on the Business Platform web dashboard
+ └─ Track each barista's tier, quiz scores, and competency gaps
+ └─ Exportable team certification report for HR records
+```
+
+**The free tier is designed to be sticky, not stingy.**
+
+Amateur Stages 1–3 stay free forever. That is enough content for a new barista to:
+- Complete their first conversational AI quiz
+- Unlock their first Taste Profile (Cacao, Almond, or Tobacco)
+- Earn their first progress badge
+- See the full tier map — Amateur, Barista, Hero, Champion — stretching above them
+
+They hit Stage 4 and the path continues, just behind a paywall. Their progress bar
+sits at 3/10. Their badge says "Amateur — In Progress." The incomplete loop is
+intentional. Progress that exists but is frozen converts better than content that
+was never started.
+
+**The 14-day trial does the heavy lifting.**
+
+On signup, every new user gets 14 days of full Pro access — no credit card, no friction.
+That is enough time to push deep into Barista tier, feel the pull of Hero, and get
+invested in a progress score they do not want to lose. When the trial ends:
+
+- Stages 4+ lock
+- Their progress, badges, and position are fully visible — they can see exactly where
+  they stopped and exactly what is next
+- The AI still works (20 msg/day) — they are never totally cut off
+
+The ask at the end of 14 days is not "pay to try something new." It is "pay to
+continue something you already started and care about." That is a fundamentally
+different conversion.
+
+**The certification premium is the owner product.**
+
+The $7.99 subscription is the training platform — the volume play. A barista pays
+it for themselves. The certification is what owners buy for their best people.
+No café owner hesitates to pay for a certification that proves their manager barista
+can troubleshoot a machine failure at the bar and train the rest of the team.
+It is an obvious ROI against a $800 technician callout.
+
+The psychological sequence: free trial hooks the barista → Pro converts them →
+certification is what the owner buys when they see the barista's tier progress and
+want to make it official.
+
+---
+
 ### Competitive Moat
 
 | What exists | What Ully Learn is |
 |---|---|
-| SCA courses — $500+, in-person, certificate-driven | Mobile-native, free with subscription, always current |
-| Multiple-choice quiz apps | AI-powered conversational quizzes — open-ended, evaluative, not guesssable |
-| YouTube tutorials | Structured curriculum + proof of completion |
-| Generic LMS platforms | Purpose-built for coffee, integrated with ops data |
+| SCA courses — in-person, static content, multiple-choice | AI-examined, machine-deep, always current, tied to real ops |
+| Quiz apps and coffee trivia | A professional certification program with a credential that means something |
+| YouTube machine tutorials | Structured curriculum + examination + exportable proof of mastery |
+| Generic LMS / Coursera-style platforms | Purpose-built for espresso machine mastery, integrated with business ops |
+| Manufacturer training sessions | Always available, evaluates judgment not recall, tied to career progression |
 
-The AI quiz format is the key differentiator. Instead of "Which grind size for espresso?
-A) Fine B) Medium C) Coarse" — Ully asks *"You're pulling 18g in, 32g out in 35 seconds
-and it's too sour. Walk me through your next three adjustments."* Claude evaluates the
-response and gives feedback. This cannot be scraped, guessed, or auto-completed.
+Ully Learn is not positioned as an alternative to existing options. It is the new standard.
+The SCA certification tests knowledge of coffee. Ully certification tests knowledge of
+the machine — a gap that no existing credential fills.
 
-### Tier Structure
+The AI quiz format is the key differentiator. Instead of "What is the ideal OPV setting?
+A) 8 bar B) 9 bar C) 10 bar" — Ully asks *"Your machine is pulling inconsistent
+extraction times and the pressure gauge is peaking at 11 bar. Walk me through
+your diagnosis and what you'd adjust first."* Claude evaluates the response. This
+cannot be scraped, guessed, or auto-completed.
 
-| Tier | Who it's for | Stages | Milestone |
-|---|---|---|---|
-| Amateur | Home enthusiasts, new to specialty coffee | 10 | Amateur badge |
-| Barista | Aspiring and working baristas, café staff | 10 | Barista badge |
-| Hero | Experienced professionals, senior baristas | 10 | Hero badge |
-| Champion | Competition-level, World Barista Championship caliber | 10 | Champion badge |
+---
+
+### Tier Structure — The Pilot Path
+
+| Tier | Who it's for | Stages | Focus | Milestone |
+|---|---|---|---|---|
+| Amateur | Home enthusiasts, new to specialty | 10 | Coffee fundamentals, palate, first espresso | Amateur badge |
+| Barista | Aspiring and working café staff | 10 | Dial-in, extraction science, milk, workflow | Barista badge |
+| Hero | Experienced professionals, senior baristas | 10 | Machine systems, pressure, temperature, thermodynamics, team leadership | Hero badge |
+| Champion | Competition-level, machine experts | 10 | Advanced thermodynamics, machine maintenance, certification-level mastery | Certified Espresso Pilot |
 
 **Total: 40 stages across 4 tiers.**
+
+The Hero and Champion tiers are where the Pilot metaphor fully activates — deep machine
+systems knowledge, situational awareness training, leadership skills. Champion completion
+grants the **Ully Certified Espresso Pilot** credential.
+
+---
 
 ### Progression Rules
 
@@ -226,15 +404,32 @@ response and gives feedback. This cannot be scraped, guessed, or auto-completed.
 3. Passing a quiz (evaluated by Claude, ≥80% equivalent) unlocks the next stage.
 4. Completing all 10 stages in a tier unlocks the next tier.
 5. Tier completion grants a badge displayed on the user's profile.
-6. Users who selected "Barista" skill level in onboarding start at Barista Stage 1 (skips Amateur).
+6. Users who selected "Barista" skill level in onboarding start at Barista Stage 1.
 7. Users who selected "Hero" skill level start at Hero Stage 1.
 8. Users who selected "Organization" in onboarding start at Barista Stage 1.
+
+**Gating rules by plan:**
+
+| Stage | Free (after trial) | Pro | Cert add-on |
+|---|---|---|---|
+| Amateur 1–3 | Unlocked forever | Unlocked | Unlocked |
+| Amateur 4–10 | Locked (visible, progress preserved) | Unlocked | Unlocked |
+| Barista 1–10 | Locked | Unlocked | Unlocked |
+| Hero 1–10 | Locked | Unlocked | Unlocked |
+| Champion 1–9 | Locked | Unlocked | Unlocked |
+| Champion Stage 10 (Exam) | Locked | Locked | Unlocked |
+
+- Locked stages are **visible** — users see the stage title, topic, and their position in the path. They cannot start the lesson. The progress ring shows their frozen position.
+- During the 14-day trial, all stages are unlocked as if Pro.
+- Progress earned during the trial is preserved when the trial ends — the bar stays at wherever they reached, just frozen.
+
+---
 
 ### AI Quiz Design
 
 Quizzes are **conversational, not multiple-choice.** Claude plays the examiner:
 
-- Presents a real-world scenario ("You're dialling in a new SO Ethiopia natural...")
+- Presents a real-world scenario ("Your HX machine is pulling short despite a fine grind...")
 - Evaluates the user's free-text response for correctness, depth, and reasoning
 - Gives targeted feedback before moving to the next question
 - Scores holistically (not keyword matching) — harder to game, higher knowledge signal
@@ -242,45 +437,82 @@ Quizzes are **conversational, not multiple-choice.** Claude plays the examiner:
 This format is a world-first integration of conversational AI into structured
 professional certification. It is the moat. Protect it.
 
-### Sample Stage Topics
+---
 
-**Amateur (1–10)**
-1. What is specialty coffee? Grading and scoring.
-2. Brewing methods overview: espresso, pour over, French press, AeroPress.
+### Sample Stage Topics — The Pilot Curriculum
+
+**Amateur (1–10)** — First flights
+1. What is specialty coffee? Grading, scoring, the supply chain.
+2. Brewing methods: espresso, pour over, French press, AeroPress.
 3. Coffee origins: Ethiopia, Colombia, Brazil — taste profile basics.
 4. Grind size and its effect on extraction.
 5. Water quality and temperature fundamentals.
 6. Reading a coffee bag: roast date, process, variety.
-7. Espresso basics: dose, yield, time (the recipe triangle).
+7. Espresso basics: dose, yield, time — the recipe triangle.
 8. Milk basics: steaming temperature, microfoam vs. foam.
 9. Barista tools: tamper, scale, timer, portafilter.
-10. How to taste coffee: the flavor wheel.
+10. How to taste: the flavor wheel, descriptors, calibration.
 
-**Barista (1–10)** — dial-in, extraction, water chemistry, latte art fundamentals, milk science...
+**Barista (1–10)** — Instrument familiarization
+1. Dialing in: extraction ratio, TDS, and what the numbers mean.
+2. Extraction science: under- vs. over-extraction, identifying from taste.
+3. Water chemistry: hardness, alkalinity, mineral balance, RO systems.
+4. Latte art fundamentals: milk physics, pouring mechanics.
+5. Workflow optimization: efficiency, mise en place, service rhythm.
+6. Equipment calibration: grinder burrs, dosing consistency.
+7. Shot diagnosis: reading extraction visually, channeling, channeling causes.
+8. Puck preparation: distribution, tamping pressure, WDT.
+9. Machine cleaning: group head, portafilter, backflush, steam wand.
+10. Customer service: translating technical knowledge for guests.
 
-**Hero (1–10)** — SCA protocols, workflow optimization, customer service, calibration, multi-origin cupping...
+**Hero (1–10)** — Systems knowledge
+1. Boiler types and their implications: single, HX, dual-boiler, thermoblock.
+2. Pump mechanics: rotary vs. vibratory, pressure calibration, pump output.
+3. The OPV: what it does, how to set it, failure symptoms.
+4. Temperature management: PID controllers, thermal mass, thermosiphon.
+5. Solenoid valves: function, failure modes, diagnostic tests.
+6. Pressure profiling: pre-infusion, declining pressure, flat profiling — when and why.
+7. Flow meters: volumetric dosing, flow control, calibration.
+8. Thermodynamics applied to espresso: heat transfer, steam pressure, boiler dynamics.
+9. Team training: building skill progressions, running calibrations, feedback techniques.
+10. Situational awareness: diagnosing under service pressure, reading the room.
 
-**Champion (1–10)** — WBC judging criteria, signature drink design, sensory science, terroir, competition prep...
+**Champion (1–10)** — Certified Espresso Pilot
+1. Advanced thermodynamics: vapor pressure curves, thermal conductivity of group materials.
+2. Machine maintenance: gasket replacement, group head rebuild, valve cleaning.
+3. Water system deep dive: filtration, scale buildup, softener management.
+4. Boiler pressure and steam quality: relationship between boiler pressure and steam temperature.
+5. Electrical systems: heating element diagnosis, PID wiring, thermostat behavior.
+6. Signature drink design: technical construction, recipe documentation, reproducibility.
+7. Competition preparation: WBC/USBC format, technical judge criteria, presentation standards.
+8. Sensory science: psychophysics of taste, fatigue, panel calibration.
+9. Business operations: labour cost, covers, machine ROI, maintenance scheduling.
+10. Certification examination: full machine systems audit — oral defense with Claude as examiner.
+
+---
 
 ### Web Platform: Competency Maps
 
-On the Business Platform, manager view upgrades from a simple training log to a
-visual **Competency Map** — a heat map of each team member's strengths and gaps
-across skill areas (espresso, milk, equipment, customer service, cupping, etc.).
+On the Business Platform, manager view shows a visual **Competency Map** — a heat map
+of each team member's strengths and gaps across skill areas (espresso, milk, machine
+systems, thermodynamics, customer service, team leadership).
 
-- Rank is visible to the manager — tied to the mobile apprentice progress
-- Promotions and pay raises can be tied to rank milestones (e.g., Semi-Pro → eligible for head bar)
-- Org can configure one custom chapter per their roaster or house style (v1 limit — no full course creator)
-- Heat map is built from training session scores, apprentice quiz results, and Ully AI interaction topics
+- Rank is visible to the manager — tied to mobile apprentice progress
+- Promotions and pay raises tied to rank milestones
+- Org can configure one custom chapter per their house style (v1 limit)
+- Heat map built from training session scores, quiz results, and Ully AI interaction topics
 
 This transforms staff development from a gut-feel conversation into an evidence-based
-process — and gives managers a clear answer to "why does this person deserve a raise."
+process — and gives managers a clear, defensible answer to "why does this person
+deserve a raise" and "who is ready to run the machine alone."
+
+---
 
 ### Architecture (future implementation)
 
 > **Critical:** AsyncStorage is insufficient for Ully Learn. Progress must sync across
 > devices and be visible on the Business Platform. **Firestore sync is a hard requirement
-> before shipping this feature.** Design for Firestore from day one.
+> before shipping this feature.**
 
 ```
 Firestore path: users/{uid}/learnProgress
@@ -290,9 +522,9 @@ Firestore path: users/{uid}/learnProgress
   stage: number,              // 1–10
   completedStages: string[],  // ['amateur-1', 'amateur-2', ...]
   badges: string[],           // ['amateur', 'barista', 'hero', 'champion']
-  championComplete: boolean,  // true when Champion tier complete
+  championComplete: boolean,  // true when Champion tier complete = Certified Espresso Pilot
   lastActivity: number,       // timestamp
-  quizHistory: {              // lightweight — question ID + score only
+  quizHistory: {
     stageId: string,
     score: number,
     completedAt: number,
@@ -300,944 +532,33 @@ Firestore path: users/{uid}/learnProgress
 }
 ```
 
-Screens needed:
-- `LearnScreen.tsx` — tier map + progress rings (tab 3 or modal from Home)
-- `StageScreen.tsx` — lesson slides + AI quiz flow
-- `BadgeScreen.tsx` — earned badge showcase, Champion badge display
-- `LessonContent.ts` — static lesson data per stage (JSON or TS object)
+---
 
-Web additions:
-- `/training` upgrade — Competency Map heat map view alongside existing training log
-- Rank display on team member cards
+## Phase 2 — Ully Business Platform (Web)
 
-### Leaderboard (replaces all feeds)
+**Status:** Deferred. Repo exists at `ully-web`. Architecture defined.
 
-The news feed, barista content, recipes, and café feeds are **gone permanently.**
-The home screen is a clean canvas for the apprentice system.
+**Who it serves:** Café owners, roasters, multi-site operators.
 
-Once Ully Learn ships, the home screen will surface a **Leaderboard** — top ranks
-within the user's org, or global top performers (opt-in). Amateur / Barista / Hero /
-Champion rank cards replace news cards. Retention via progress, not content consumption.
-
-### Technical Risks
-
-| Risk | Mitigation |
-|---|---|
-| **Content trap** — 40 stages requires deep insider knowledge to author | Author Amateur tier first. Ship with 10 stages. Expand on feedback. |
-| **Firestore sync** — AsyncStorage insufficient for cross-device and web visibility | Must be architected with Firestore from day one. No AsyncStorage fallback for learn progress. |
-| **AI quiz reliability** — Claude must grade consistently and fairly | Strict system prompt for the examiner role. Fixed rubric per stage injected as context. |
-| **No course creator in v1** — orgs want custom content | One custom chapter per org (house style / roaster profile). Full course creator is post-Series A. |
-| **Naming** — tier names are locked | Amateur / Barista / Hero / Champion. No Semi-Pro. |
+**Core features (planned):**
+- Team competency maps and pilot certification tracking
+- Machine maintenance logs and technician callout reduction metrics
+- Labour cost and service volume dashboards
+- Org-specific training chapter builder (one custom chapter per org, v1)
+- Integration with Ully mobile: ranks surface automatically from Firestore
 
 ---
 
----
+## Long-Term Expansion
 
-## Ully Web — Business Platform
+The pilot metaphor and mastery system generalize beyond coffee.
 
-**Status:** Live on Railway (March 2026).
-**Repo:** `~/ully-web/` — separate git repo from the mobile app.
+Every skilled trade has the same problem: expert knowledge is locked in people's heads,
+certification is expensive and inaccessible, and the profession lacks a portable credential
+that proves machine-level competency.
 
-The web platform is Ully's desktop-first B2B product. It targets café owners, managers,
-and multi-site operators who need a real operational workspace, not a mobile companion.
-It runs independently of Firebase — fully self-contained with SQLite + JWT auth.
+Ully's next domains after coffee: craft brewing, HVAC, industrial kitchen equipment.
+The platform, the quiz engine, and the certification infrastructure are the same.
+Only the content changes.
 
-### Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 15 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind v4 (same design tokens as mobile) |
-| Database | SQLite via better-sqlite3 + Drizzle ORM |
-| Auth | JWT (httpOnly cookie, org-scoped sessions) |
-| AI | Claude API — streaming chat, context-aware |
-| Hosting | Railway |
-| Charts | DashboardCharts (custom, no lib dependency) |
-
-### Live Modules
-
-| Module | Route | What it does |
-|---|---|---|
-| **Dashboard** | `/dashboard` | Revenue KPIs, machine health, team count, 7-day revenue + expense charts |
-| **Ully AI** | `/chat` | Full streaming chat with business context awareness — parity with mobile |
-| **Equipment** | `/equipment` | Machine registry (type, brand, model, serial, status) + per-machine service record log |
-| **Team** | `/team` | Team member management — roles, hourly rates, start dates, status |
-| **Training** | `/training` | Session logging per team member — topic, score (★★★★☆), trainer notes |
-| **Schedule** | `/schedule` | Weekly calendar view for shift planning |
-| **Inventory** | `/inventory` | Stock management |
-| **Revenue** | `/revenue` | Revenue + expense records, P&L tracking |
-| **Settings** | `/settings` | Org profile management |
-
-### Marketing Pages (live)
-
-| Page | Route |
-|---|---|
-| Landing | `/` |
-| Products | `/products` |
-| About | `/about` (founder photo placeholder at `/public/images/founder.jpg`) |
-| Pricing | `/pricing` |
-| Privacy, Terms, Cookies | `/(legal)/` |
-
-### Layout Pattern
-
-The platform uses `PlatformShell` — a persistent sidebar + main content area. The sidebar
-carries the ULLY brand, org name + role header, and gold-accented active states for each module.
-This is the same dark gold design language as the mobile app — consistent across platforms.
-
-```
-PlatformShell
-├── Sidebar (240px, dark #080604)
-│   ├── Brand: ULLY / business platform
-│   ├── Org name + role
-│   └── Nav: Dashboard → AI → Equipment → Team (Schedule, Training) → Inventory → Revenue → Settings
-└── Main content area
-    └── Page content (module-specific)
-```
-
-Visual anchors present on all public pages:
-- `CoffeeFarmScene.tsx` — pixel-art SVG coffee farm at the bottom of every marketing page
-- `FlowerIcon.tsx` — the Ully coffee blossom SVG logo used in all nav bars
-- Terminal bracket nav links `[ link ]` — consistent across marketing pages
-
----
-
-## Phase 2 — Professional Operations Layer
-
-**Status:** Infrastructure partially built. Mobile screens exist, not yet wired to nav. Web platform is live.
-
-This phase deepens Ully's value for the two highest-leverage professional personas:
-**espresso technicians** and **working baristas**. Both need tools that go beyond
-AI chat — they need structured, longitudinal records tailored to their daily workflow.
-
-### Cross-Platform Architecture
-
-```
-Professional Operations Layer
-├── Mobile (Ully Coffee — screens/business/)
-│   ├── BusinessDashboardScreen     — KPI overview + "Ask Ully AI" with prefilled operational prompt
-│   ├── MaintenanceScreen           — Machine registry + service record logging + color-coded health
-│   └── TeamScreen                  — Team roster + training session XP system
-│
-└── Web (Ully Web — /platform/)
-    ├── /dashboard                  — Live KPIs + 7-day revenue/expense charts
-    ├── /chat                       — Ully AI with business context awareness
-    ├── /equipment                  — Full machine + service record CRUD
-    ├── /team                       — Team roster with roles + hourly rates
-    ├── /training                   — Training log per member, scored by topic
-    ├── /schedule                   — Weekly shift calendar
-    ├── /inventory                  — Stock management
-    └── /revenue                    — P&L records
-```
-
-### Shared Data Model (same entities, two storage layers)
-
-| Entity | Mobile (AsyncStorage) | Web (SQLite / Drizzle) |
-|---|---|---|
-| Machines | `@ully_machines_{uid}` | `equipment` table |
-| Service records | `@ully_service_records_{uid}` | `serviceRecords` table |
-| Team members | `@ully_team_members_{uid}` | `teamMembers` table |
-| Training sessions | `@ully_training_logs_{uid}` | `trainingLogs` table |
-| Revenue / expenses | — | `revenueRecords`, `expenseRecords` tables |
-| Inventory | — | `inventory` table |
-
-**Phase 3 goal:** Firestore sync bridges the two layers — mobile data feeds the web dashboard
-and vice versa. This requires the Business tier account model from Phase 3.
-
-### What remains to build
-
-**Mobile:**
-- [ ] Wire `screens/business/` into `AppNavigator` behind the org role gate
-- [ ] Add a 4th tab (or modal entry point) for Business users
-- [ ] Push notifications for maintenance overdue alerts
-- [ ] Photo capture on service records (camera → AsyncStorage)
-
-**Web:**
-- [ ] Schedule: shift assignment (currently calendar shell only)
-- [ ] Inventory: reorder thresholds + low-stock alerts
-- [ ] Revenue: chart breakdowns by category
-- [ ] Firestore sync bridge (Phase 3 — requires Business tier accounts)
-- [ ] Founder photo at `/public/images/founder.jpg`
-- [ ] Railway public domain → DNS propagation (GoDaddy → Railway)
-- [ ] Redirect / take down old Firebase static site (ully-coffee.web.app)
-
----
-
-### 2a — Offline Knowledge Base
-
-**The problem:** Ully currently requires an internet connection for every AI response.
-Professionals work in cellars, roasting facilities, machine rooms, and remote locations
-where connectivity is unreliable or absent.
-
-**The solution:** A curated, proprietary knowledge base authored from verified domain
-expertise, queryable on-device with no API call required.
-
-#### Architecture
-
-```
-User question
-      ↓
-KnowledgeService (SQLite FTS5 — on-device)
-      ↓
- offline?  ──YES──▶  Return best KB match as Ully response
-      │
-      NO
-      ↓
-Inject top KB match as grounding context into Claude system prompt
-      ↓
-Claude API response (enhanced and grounded by KB context)
-```
-
-#### Knowledge Base Structure
-
-Each entry:
-```json
-{
-  "id": "espresso-bitter-001",
-  "category": "troubleshooting",
-  "method": "espresso",
-  "question": "Why is my espresso bitter?",
-  "tags": ["bitter", "over-extraction", "grind", "temperature"],
-  "answer": "Full expert answer here...",
-  "related": ["espresso-sour-001", "grind-size-001"]
-}
-```
-
-#### Target Categories (v1 KB)
-
-| Category | Target entries |
-|---|---|
-| Espresso troubleshooting | 40–50 |
-| Filter / pour over methods | 25–30 |
-| Equipment maintenance | 30–40 |
-| Water chemistry | 15–20 |
-| Grinder calibration | 15–20 |
-| Milk texturing / latte art | 20–25 |
-| Dial-in guides per method | 10–15 |
-| Roast basics | 15–20 |
-| Café ops / workflow | 15–20 |
-| **Total** | **~200 entries** |
-
-#### Why this matters
-
-- Reduces Claude API costs — common questions resolved by the KB, not the API
-- Makes Ully field-ready — works anywhere, anytime, without a connection
-- The KB is proprietary — competitors cannot replicate it by using Claude
-- Grounds Claude's answers in verified, curated expertise
-
-#### Files to create
-
-```
-services/KnowledgeService.ts     — SQLite FTS5 search, ranked results
-assets/knowledge/coffee.json     — authored knowledge base
-hooks/useUllyChat.ts             — KB check before/alongside Claude
-```
-
----
-
-### 2b — Maintenance Schedule Tracking
-
-**Who it serves:** Espresso technicians, café owners, head baristas managing equipment.
-
-**Status:** Core built. Mobile screen (`MaintenanceScreen.tsx`) + service (`MaintenanceService.ts`) complete.
-Web equivalent live at `/equipment`. Not yet exposed in mobile nav (behind org role gate).
-
-**The problem:** Equipment maintenance in the coffee industry is managed informally —
-paper logs, memory, or nothing at all. Missed maintenance intervals mean machine
-failure mid-service, voided warranties, and costly emergency callouts. No purpose-built
-mobile tool exists for technicians managing multi-site fleets.
-
-**The solution:** A structured, on-device maintenance log tailored to commercial
-espresso equipment — custom-engineered for the technician's workflow, not adapted
-from a generic maintenance app.
-
-#### Core functionality (built)
-
-- Machine registry — type (espresso_machine, grinder, water_treatment, other), location, serial
-- Service log — log each visit: service type, technician note, parts replaced
-- Service type options: `group_service`, `boiler_flush`, `descale`, `gasket_replacement`, `grinder_calibration`, `custom`
-- Color-coded machine health (green < 30 days, amber 30–60, red > 60 days since last service)
-
-#### Remaining to build
-
-- Push reminders — notify before service interval expires
-- Photo capture on service records
-- Multi-site view — one list across all org locations
-- Custom interval configuration per machine + service type
-
-#### Schema per service record
-
-```ts
-{
-  id: string
-  machineId: string
-  serviceType: 'group_service' | 'boiler_flush' | 'descale' | 'gasket_replacement' | 'grinder_calibration' | 'custom'
-  completedAt: string       // ISO timestamp
-  technicianNote: string
-  partsReplaced?: string[]
-  photoUri?: string
-  nextDueAt: string         // calculated from interval setting
-}
-```
-
-**AsyncStorage key:** `@ully_service_records_{uid}` + `@ully_machines_{uid}`
-
-**Phasing:** v1 is on-device only. Multi-technician sync (shared Firestore) is Phase 3
-when the Business tier is live.
-
----
-
-### 2c — Training Logs & Personal Performance
-
-**Who it serves:** Baristas at all levels — from new hires tracking their development
-to competition-level professionals logging prep sessions. Also café managers tracking team development.
-
-**Status:** Core built on both platforms. Mobile: `TeamScreen.tsx` + `TeamService.ts`.
-Web: `/training` module live. Not yet exposed in mobile nav (behind org role gate).
-
-**The problem:** Barista skill development is tracked informally or not at all.
-Coaches provide feedback verbally. Competition prep sessions are undocumented.
-There is no tool purpose-built for tracking a barista's longitudinal performance.
-
-**The solution:** A structured training log that captures session data, ties it to
-Ully AI feedback, and gives the barista a clear view of their progression over time —
-custom-made for the professional barista, not adapted from a fitness tracker.
-
-#### Core functionality (built)
-
-- Team member roster — role (barista, head_barista, manager), linked to training sessions
-- Session log — drill type, duration, self-score, optional manager score, trainer notes
-- Drill types: `espresso_workflow`, `milk_texture`, `cupping`, `latte_art`, `customer_service`, `custom`
-- XP system — `durationMinutes × score` per session, monthly XP bar per member
-- Web topics: espresso technique, latte art, cupping, equipment, customer service, food safety, roasting, brew methods
-
-#### Remaining to build
-
-- Progression chart — self-assessed scores over time per skill area (mobile)
-- Ully AI integration — auto-attach a chat exchange to a training session
-- Competition prep mode — structured WBC-style session logging
-
-#### Schema per session (mobile)
-
-```ts
-{
-  id: string
-  memberId: string              // links to TeamMember
-  createdAt: string
-  drillType: DrillType          // 'espresso_workflow' | 'milk_texture' | 'cupping' | 'latte_art' | 'customer_service' | 'custom'
-  durationMinutes: number
-  selfScore: 1 | 2 | 3 | 4 | 5
-  managerScore?: 1 | 2 | 3 | 4 | 5
-  notes: string
-  coachNotes?: string
-  linkedChatId?: string         // attaches a Ully AI exchange to the session
-}
-```
-
-**AsyncStorage keys:** `@ully_team_members_{uid}` + `@ully_training_logs_{uid}`
-
----
-
-### 2d — User Feedback & Dataset Pipeline
-
-**The problem:** The offline KB starts with manually authored entries. To grow it
-faster and reflect real user questions, Ully needs a voluntary feedback loop where
-users contribute Q&A pairs back to the knowledge base.
-
-**What this is not:** Fine-tuning Claude. Anthropic does not allow model fine-tuning
-via the API. This is a **feedback pipeline that informs KB authoring** — contributions
-are reviewed by a human and promoted into the offline KB. Never describe this as
-"training the AI" in UI copy.
-
-#### User-facing flow
-
-```
-User asks question → Claude answers
-        ↓
-Subtle thumbs row appears below response (not a modal)
-  👍  👎  · Share to improve Ully
-        ↓
-User taps "Share to improve Ully"
-        ↓
-Single confirmation sheet:
-  "This Q&A will be sent anonymously to help improve
-   Ully's knowledge base. No personal info is included."
-  [ Send anonymously ]   [ No thanks ]
-        ↓
-Q&A pair + metadata written to Firestore feedback collection
-        ↓
-You review → strong entries authored into offline KB
-```
-
-#### When to show the prompt
-
-Do not prompt after every message. Show only when:
-- Response is 3+ sentences long
-- User has not been prompted in the last 10 messages
-- User has not disabled feedback prompts in Settings
-
-#### Firestore schema
-
-```
-feedback/{autoId}
-  question:    string
-  answer:      string
-  rating:      'helpful' | 'not_helpful'
-  shared:      boolean
-  method:      string | null    — espresso, pour_over, etc. if detectable
-  category:    string | null    — troubleshooting, technique, etc.
-  appVersion:  string
-  createdAt:   timestamp
-  // NO uid, NO email, NO location — anonymous by design
-```
-
-#### Privacy requirements before shipping
-
-- Explicit opt-in only — never collect silently
-- Update `public/privacy.html` to disclose feedback collection
-- Update Play Store data safety form
-- Add feedback opt-out toggle in Settings screen
-- Firestore rules must restrict feedback collection to authenticated writes, no client reads
-
-#### The compounding effect
-
-```
-Users share feedback
-      ↓
-Identify the 20 most frequently asked questions
-      ↓
-Author those as KB entries with expert-level answers
-      ↓
-KB entries serve those questions offline at zero API cost
-      ↓
-Better answers → more sharing → more KB entries → better Ully
-```
-
-This is how the proprietary crop-to-cup dataset starts — not with a data
-engineering project, but with a feedback button and human curation.
-
----
-
-## Phase 3 — Ully Business
-
-**Status:** Foundation built across mobile + web. Data sync and integrations are next.
-Target: 6–12 months post-launch.
-
-**Who it serves:** Café owners, multi-site operators, hospitality group managers.
-
-**The problem:** A café owner's critical business data is fragmented across
-incompatible systems — a POS for sales, an espresso machine logging volumetrics,
-and accounting software tracking P&L. No tool connects these data points into a
-unified view purpose-built for coffee business decision-making. Owners make
-consequential decisions based on gut feel because the data exists but is not
-accessible in a useful form.
-
-**The solution:** A custom-engineered business intelligence layer integrated directly
-into Ully — connecting POS data, machine volumetrics, and accounting systems to
-give the owner a real-time operational picture and AI-assisted decision support.
-Built in-house, tailored for the coffee operator, not adapted from a generic BI tool.
-
-**Phase 3 foundation already in place:**
-The mobile business screens (`BusinessDashboardScreen`, `MaintenanceScreen`, `TeamScreen`)
-and the full Ully Web platform give Phase 3 a significant head start. The missing piece is
-the Firestore sync bridge — once live, mobile data feeds the web dashboard and the AI
-layer has full operational context across both surfaces.
-
----
-
-### Tool Integrations
-
-#### Point of Sale — Square (v1)
-
-Square is the most widely deployed POS in independent specialty cafés. The Square
-API provides transaction-level data, item sales, and staff performance metrics.
-
-**Data Ully ingests:**
-- Daily, weekly, monthly revenue — by location, by shift, by item
-- Top-selling items and revenue contribution by category
-- Labour cost as a percentage of sales
-- Hourly transaction volume — identifies peak and dead periods
-
-**Ully AI layer:** Owner asks "Why was Tuesday revenue down 18%?" — Ully correlates
-the POS data with weather, staffing, and prior week trends and surfaces a plain-
-language answer with a recommended action.
-
-**Future:** Toast, Lightspeed, and Kounta integrations follow the same pattern.
-Square is prioritised because it covers the largest share of the target market.
-
-#### Machine Volumetrics
-
-**v1 — Manual input + photo analysis:**
-Most commercial espresso machines do not expose data via API. The v1 approach
-is structured manual input by the technician or head barista — shots pulled,
-average extraction time, machine temperature log — with optional photo of the
-shot or screen display.
-
-**v2 — Native machine API (where supported):**
-La Marzocco (Linea PB, KB90), Sanremo, and a growing number of commercial
-machines expose Bluetooth or Wi-Fi APIs. Ully will integrate these where the
-API is accessible, surfacing live group temperature, shot counter, and
-boiler pressure directly in the app.
-
-**Data Ully captures:**
-- Daily shot count per group head
-- Average extraction time and variance
-- Temperature stability log
-- Service interval proximity alert (feeds into maintenance schedules from Phase 2b)
-
-#### QuickBooks Integration
-
-**Target:** Café owners already using QuickBooks Online for accounting.
-
-**Data Ully ingests (read-only OAuth connection):**
-- Monthly P&L summary — revenue, COGS, gross margin
-- Labour cost tracking against revenue
-- Supplier invoices — cost-per-kg green coffee, consumables trend
-- Cash flow position — current vs prior period
-
-**Ully AI layer:** Owner asks "Am I on track to hit my margin target this quarter?"
-Ully pulls the QuickBooks data, cross-references it with POS revenue, and
-surfaces a direct answer with the specific levers available to close any gap.
-
-**Implementation approach:** QuickBooks Online OAuth 2.0 + Intuit API. Read-only
-scopes only — Ully never writes to the customer's accounting records.
-
----
-
-### Business Intelligence Dashboard
-
-A dedicated owner view inside Ully — not a web dashboard, but a native mobile
-screen purpose-built for the café operator checking performance between shifts.
-
-**Key views:**
-- Today at a glance — revenue, covers, top item, machine status
-- Weekly trend — revenue vs prior week, labour %, best and worst shifts
-- Machine health — all machines, maintenance status, next service due
-- Cost alerts — if COGS or labour crosses a set threshold, Ully flags it proactively
-- AI summary — "Here is what your business data is telling you today"
-
-**Who accesses this:** Business tier subscribers only. Individual barista accounts
-on the same location see their training logs and shift performance only — not the
-full P&L.
-
----
-
-## Phase 4 — Ully Roaster
-
-**Status:** Future. Follows the Business tier.
-
-**Who it serves:** Independent roasters, head roasters, Q Graders, green coffee buyers.
-
-**The problem:** Roasters rely on institutional knowledge and expensive, desktop-bound
-software (Cropster, Artisan) that offers no AI-assisted guidance. Developing profiles
-for new green coffees, diagnosing roast defects, and managing blend consistency are
-solved by experience — not tools.
-
-**Core features:**
-- Roast profile development assistant — charge temp, first crack prediction, development ratio
-- Green coffee intake — origin, variety, process, moisture, density logging
-- Cupping score tracking — lot comparison, QC over time
-- Blend formulation — target profile matching and component ratio adjustment
-- Inventory management — green coffee freshness windows and lot aging alerts
-- Roast defect troubleshooting (tipping, scorching, baked, underdeveloped)
-- Direct connection to Ully Coffee consumer data — "what are baristas saying about this origin?"
-
-**Why this follows Phase 3:**
-- Requires the shared Firestore data layer established in the Business tier
-- Roasters are reachable and willing to pay ($100–300/month per seat)
-- Bridges the farm world and the consumer world in the crop-to-cup data platform
-- Cropster integration or interop may be required — scope TBD
-
----
-
-## Phase 5 — Ully Agriculture
-
-**Status:** Future. Requires dedicated resourcing and regional partnerships.
-
-**Who it serves:** Smallholder coffee farmers, cooperative managers, agronomists,
-farm owners in producing regions (Ethiopia, Colombia, Brazil, Guatemala, Indonesia).
-
-**The problem:** Over 70% of coffee is grown by smallholder farmers with under
-5 hectares. Purpose-built technology tools are virtually nonexistent for this
-population. Agronomic knowledge is passed down verbally or via infrequent extension
-service visits. Climate change is accelerating crop stress. Actionable, localised
-information saves harvests and livelihoods.
-
-**Core features:**
-- Plant disease identification from photos (coffee leaf rust, CBD, CLR, Anthracnose)
-- Soil management — pH, nitrogen, micronutrients, amendment recommendations
-- Harvest timing — cherry ripeness assessment via camera
-- Processing method guidance — washed vs natural vs honey based on local conditions
-- Yield forecasting and tracking
-- Climate adaptation — altitude shifts, drought response, shade management
-- Certification preparation — organic, Fair Trade, Rainforest Alliance, UTZ checklists
-- Hyperlocal weather integration — forecast impact on harvest and processing decisions
-
-**Technical requirements beyond current Ully stack:**
-- Full offline capability — farms have no reliable connectivity
-- Multi-language — Spanish, Amharic, Indonesian, Portuguese, Swahili
-- Low-bandwidth optimisation — images compressed heavily before processing
-- Firestore sync when connected — farm records persist across devices and seasons
-
-**Revenue model:**
-- Direct to cooperative or farm association (B2B, not individual farmer)
-- NGO and impact investment partnerships (USAID, World Bank, Gates Foundation have
-  active coffee agriculture programmes)
-- Importer-funded access — importers pay per farm onboarded for supply chain traceability data
-
----
-
-## The Crop-to-Cup Data Platform
-
-**This is the long-term strategic asset.**
-
-Each Ully vertical captures proprietary data at its node of the supply chain:
-
-```
-Ully Agriculture
-  ↓  farm ID, soil data, variety, process, harvest date, certifications
-Ully Logistics (future)
-  ↓  lot tracking, shipping conditions, transit time, customs documentation
-Ully Roaster
-  ↓  green coffee intake, roast profile, cupping score, blend composition
-Ully Business
-  ↓  POS revenue, machine volumetrics, labour cost, consumer demand signals
-Ully Coffee (current)
-  ↓  barista technique, consumer feedback, brew method preference
-```
-
-When this data flows between verticals, Ully becomes a **traceability and quality
-correlation platform** — the first tool that connects soil composition and farm
-practice to cup quality and consumer preference at scale.
-
-**This dataset does not exist anywhere.** It is Ully's long-term competitive moat.
-
-### Consumer-facing traceability
-
-A barista or consumer scans a QR code on a coffee bag and sees:
-- Farm name, region, altitude, farmer name
-- Harvest date, processing method, certifications
-- Green coffee cupping score
-- Roaster's profile notes
-- Brewing recommendations from Ully AI
-
-This transparency is demanded by specialty coffee buyers and increasingly required
-by importers navigating EU deforestation regulation and ethical sourcing mandates.
-
----
-
-## Vertical Expansion Beyond Coffee
-
-After proving the model across the crop-to-cup chain, the platform architecture
-applies directly to other skilled trades with the same professional identity,
-operational knowledge gap, and mobile-first workflow characteristics.
-
-**Prioritisation criteria:**
-1. Low liability — advice cannot directly injure or kill
-2. Strong professional community — word-of-mouth distribution
-3. Underserved by existing software
-4. Mobile-first workflow — field, not desk
-5. Demonstrated willingness to pay for tools that save time
-
-**Target verticals in priority order:**
-
-| Vertical | Professionals served | Key use case |
-|---|---|---|
-| **Restaurant / F&B** | Chefs, kitchen managers, sommeliers | Kitchen ops, supplier management, recipe scaling, compliance |
-| **Independent auto repair** | Mechanics, shop owners | Diagnosis assistance, repair procedures, parts lookup |
-| **HVAC / Plumbing / Electrical** | Independent contractors | Troubleshooting, code compliance, part identification |
-| **Agriculture (general)** | Farmers, agronomists | Crop disease identification, soil management, yield optimisation |
-| **Welding / Fabrication** | Welders, fabricators | Procedure lookup, material compatibility, certification preparation |
-
-**Regulated industries (aviation, medical, legal) — approach after Series A:**
-These verticals carry real opportunity but require legal counsel, compliance
-frameworks, and validation processes that are not appropriate until the platform
-has proven revenue and has dedicated compliance resources in place.
-
----
-
-## Business Model & Pricing
-
-### Tier structure
-
-| Tier | Price | What's included |
-|---|---|---|
-| **Free** | 14-day full Pro trial, then limited | 20 AI messages/day, read-only access to all platform data |
-| **Pro** | $7.99/month or **$59.99/year** (~$5/mo) | Unlimited AI, shot history, full dial-in assistant, offline KB, training logs |
-| **Business** | $49.99/location/month or **$399/location/year** (~$33/mo) | Everything in Pro + maintenance scheduling, POS integration, machine volumetrics, QuickBooks connection, team performance view, priority support |
-| **Business Pro** | $79/location/month (contact us) | Everything in Business + multi-location dashboard, custom AI on SOPs, API access, 4-hour SLA |
-| **Technician Lifetime** | $149 one-time (first 100 CTG members) | Full Pro forever — seeding the highest-leverage professional community |
-
-### Pricing anchors (2026 market-validated)
-
-- **$7.99/month Pro** — baristas earn $14-19/hr; $9.99 was a psychological barrier. $7.99 clears it.
-- **$59.99/year Pro** — 37% off monthly, ~$5/month equivalent. Standard for consumer apps (Duolingo, Calm, Headspace).
-- **$49.99/location Business** — 7shifts charges $76.99/location for scheduling alone. Ully includes scheduling + equipment + team + training + inventory + P&L + AI. Market floor for any scheduling tool is $35/location/month.
-- **$79/location Business Pro** — parity with Cropster ($79+/month for roast management only). Ully delivers the full ops stack.
-- **Dripos** (closest all-in-one competitor) charges $160/month and requires POS hardware. Ully Web at $49.99 is 70% cheaper, no hardware lock-in, AI-native.
-- **Positioning line**: "Everything 7shifts charges for scheduling — plus equipment, AI, inventory, and P&L. Same price."
-- Launch with a 14-day full trial, no credit card. After trial: paid plan or read-only mode (not hard cutoff).
-- Annual plans should be the default selection on pricing pages — annual subscribers churn at half the rate of monthly.
-
-### Business model evolution
-
-| Phase | Model | Target price |
-|---|---|---|
-| v1 Consumer | 14-day Pro trial → freemium conversion | $7.99/month or $59.99/year |
-| v2 Professional | Pro + offline KB + maintenance + training logs | $9.99/month or $79.99/year |
-| v3 Business | Location-based operator licence with tool integrations | $49.99/location/month or $399/location/year |
-| v3 Business Pro | Multi-location + custom AI + API access | $79/location/month (contact us) |
-| v4 Roaster | Roaster seat licence | $99–299/month/seat |
-| v5 Agriculture | Cooperative licence (B2B) | $500–2000/month/cooperative |
-| Platform | Data licensing + traceability API | Enterprise contract |
-
----
-
-## 90-Day GTM Plan (March — June 2026)
-
-### Community channels — where to show up
-
-| Channel | Audience | Approach |
-|---|---|---|
-| **r/espresso** (546K members) | Home baristas, enthusiasts | Post expert troubleshooting threads — no promotion, genuine expertise only |
-| **Barista Hustle Forum** | Serious professionals, Matt Perger community | High-quality methodology posts; most influential professional forum in the industry |
-| **Coffee Technicians Guild** | Working technicians | Direct outreach; CTG member Pro offer — highest-leverage early adopter community |
-| **Home-Barista.com** | Equipment-focused enthusiasts | Equipment repair and dial-in threads |
-| **Instagram / TikTok** | Barista culture | Field content, dial-in videos |
-| **Perfect Daily Grind** | Global specialty professionals | Contributed articles, press pitch |
-| **Sprudge** | Culture and technology audience | Press pitch — receptive to novel products |
-| **Daily Coffee News** | Industry professionals | First press pitch target — most likely to cover a solo-founder story |
-
-### Press pitch targets — priority order
-
-1. **Daily Coffee News** — most likely to cover a solo-founder coffee technology
-   launch with a technician angle
-2. **Sprudge** — covers culture and technology, receptive to novel products
-3. **Perfect Daily Grind** — larger audience, higher editorial bar; better suited
-   for a follow-up story post-WoC with user data and testimonials
-
-**Pitch angle:** *"A working espresso technician built the professional AI platform
-the industry has been waiting for — and launched it at World of Coffee."*
-
-### Influencer targets (post-launch)
-
-- **James Hoffmann** (2.35M YouTube) — does not take paid placements; pitch on
-  technical merit only; approach at the 3-month mark with an established user base
-- **Morgan Eckroth** (1M+ YouTube, 2022 US Barista Champion) — most authentic
-  professional barista voice in the market; natural Ully user persona
-
-### Week-by-week plan
-
-**March 2026 — Now (6 weeks to WoC)**
-- [ ] Register for World of Coffee San Diego at usa.worldofcoffee.org
-- [ ] Email CTG at ctg@sca.coffee — introduce Ully, propose free Pro for members
-- [ ] Expedite Apple Developer Program enrollment — TestFlight critical for WoC
-- [ ] Enroll in SCA professional membership ($100/year — network access)
-- [ ] Founder begins posting expertise on r/espresso and Barista Hustle Forum
-      (no promotion — genuine knowledge sharing only)
-- [ ] Draft three media pitches: Daily Coffee News, Sprudge, Perfect Daily Grind
-- [ ] Print 100 QR code cards for Android beta + TestFlight (once live)
-- [ ] Start March 15: WoC pre-event content series on Instagram/TikTok
-
-**April 2026 — WoC San Diego (April 10–12)**
-- [ ] Attend WoC as professional attendee — target 10 live product demos on the
-      show floor with baristas and technicians
-- [ ] Collect 5 written or video testimonials from demo users
-- [ ] Post daily WoC field reports from a working technician's perspective
-- [ ] Press pitches go live the week of April 7
-- [ ] Soft public launch: Google Play Store open beta or early access
-
-**May 2026 — Post-WoC consolidation**
-- [ ] Publish post-WoC recap (blog or PDG contributed piece)
-- [ ] Activate CTG member offer: free 90-day Pro trial for verified CTG members
-- [ ] Begin collecting in-app feedback data from beta users
-- [ ] Prepare iOS App Store submission based on TestFlight feedback
-- [ ] World of Coffee Asia, Bangkok (May 7–9) — press hook, no travel required
-
-**June 2026 — iOS launch + European moment**
-- [ ] Submit to App Store — target full iOS availability
-- [ ] World of Coffee Europe, Brussels (June 25–27) — "now available globally" press story
-- [ ] Begin small paid social testing on Instagram and Reddit ($500/month,
-      performance-oriented, r/espresso and barista-adjacent communities)
-
-### Three product moves — deferred, design decisions captured
-
-High-leverage features to build post-WoC. Design decisions are resolved —
-implementation is ready to start when prioritised.
-
----
-
-**1. Shift Mode**
-
-One-tap mode that sets the AI to maximum brevity for on-shift, time-pressure,
-greasy-hand environments. Distinct from the current "short and practical" default —
-Shift Mode removes all context and explanation entirely.
-
-| Normal Mode | Shift Mode |
-|---|---|
-| Answer + brief context | Answer only |
-| "Here's why this happens..." | Removed |
-| "You might also consider..." | Removed |
-| Multi-paragraph when complex | One paragraph hard cap |
-
-**UX decision (resolved):** Gold chip in the AI screen header, always visible.
-Active state is gold-filled. Sticky across sessions — saved to AsyncStorage so a
-technician does not re-enable it every morning.
-
-**Implementation:** System prompt flag in `useUllyChat.ts`. Add a `shiftMode`
-boolean to the hook, persist to AsyncStorage under `@ully_shift_mode_{uid}`,
-inject a secondary brevity override into `buildSystemPrompt()` when active.
-
----
-
-**2. Dial-in Shot History**
-
-Save each dial-in session to AsyncStorage. Creates a longitudinal data trail
-that no competitor offers. Foundation for the future crop-to-cup data layer.
-
-**UX decision (resolved):** History lives inside the dial-in modal as a "History"
-tab — contextual, no navigation away from the dial-in flow. Scrollable list of
-previous sessions with dose, yield, time, taste, and the AI recommendation.
-
-**AsyncStorage key:** `@ully_dialin_{uid}`
-
-**Schema per session:**
-```ts
-{
-  id: string
-  createdAt: string
-  dose: number
-  yield: number
-  time: number
-  taste: 'sour' | 'balanced' | 'bitter'
-  imageUri?: string
-  aiRecommendation: string
-  notes?: string
-}
-```
-
-**Implementation:** Save on dial-in submission in `AIScreen.tsx`. Read and display
-in a new History tab in `DialInModal`.
-
----
-
-**3. Share This Fix**
-
-Share icon on every Ully AI response — not just diagnostic responses. The user
-decides what is worth sharing; do not try to detect intent.
-
-**UX decision (resolved):** Small share icon at the bottom-right of each assistant
-message bubble. Not shown on user messages. Shown only on the most recent assistant
-response in a conversation to avoid visual noise.
-
-**Share format:**
-```
-💡 Ully AI — Espresso Assistant
-
-[full response text]
-
-─────────────────
-Get Ully: [App Store / Play Store link]
-```
-
-**Implementation:** `Share.share()` from React Native core in
-`components/ai/ChatHistory.tsx`. No new dependencies.
-
-### Key dates — 2026 industry calendar
-
-| Date | Event | Action |
-|---|---|---|
-| **April 10–12** | World of Coffee San Diego | **Attend. Primary launch window.** |
-| May 7–9 | World of Coffee Asia, Bangkok | International press hook |
-| June 25–27 | World of Coffee Europe, Brussels | iOS global launch story |
-| TBD | CTG Summit 2026 | Single best event for the technician ICP |
-| October 23–25 | World Barista Championship, Panama City | 6-month story + WBC content push |
-
----
-
-## What to Build and When
-
-```
-DONE (as of March 2026)
-├── Ully Coffee v1 — mobile app (Android APK in testing, iOS pending)
-│   ├── AI chat — Claude Sonnet, coffee-only, weather-aware
-│   ├── Espresso dial-in assistant with photo analysis
-│   ├── Simplified HomeScreen — logo + greeting + "ask ully" CTA
-│   └── TestFlight readiness — all critical/high/medium issues resolved
-│
-├── Business operations — mobile (screens/business/, not yet in nav)
-│   ├── BusinessDashboardScreen — KPI overview + AI integration point
-│   ├── MaintenanceScreen — machine registry + service record log + health colours
-│   ├── TeamScreen — team roster + training sessions + XP system
-│   ├── MaintenanceService.ts — AsyncStorage CRUD for machines + records
-│   ├── TeamService.ts — AsyncStorage CRUD for team + sessions + XP calc
-│   └── components/business/ — BottomSheet, FormField
-│
-└── Ully Web — live on Railway
-    ├── Platform: Dashboard, AI Chat, Equipment, Team, Training, Schedule,
-    │            Inventory, Revenue, Settings
-    ├── Marketing: /, /products, /about, /pricing, legal pages
-    ├── SQLite + Drizzle ORM — all org data persisted on Railway
-    ├── JWT auth — org-scoped sessions
-    └── CoffeeFarmScene + FlowerIcon — consistent visual identity
-
-NOW (immediate — before WoC April 2026)
-├── Apple Developer Program enrollment → TestFlight
-├── Play Store internal testing → open beta at WoC
-├── Wire screens/business/ into AppNavigator behind org role gate
-├── Add business tab / entry point for org users in mobile nav
-└── Founder photo at ully-web /public/images/founder.jpg
-
-NEXT (3–6 months post-launch)
-├── Business operations — complete the mobile wiring
-│   ├── Push notifications for maintenance overdue
-│   ├── Photo capture on service records
-│   └── Progression chart view in TeamScreen
-├── Offline knowledge base (Phase 2a)
-│   ├── Author ~200 KB entries
-│   ├── KnowledgeService.ts (SQLite FTS5)
-│   └── Wire into useUllyChat.ts
-├── User feedback pipeline (Phase 2d)
-├── Pro subscription tier (RevenueCat integration)
-└── Ully Web — domain live + Firebase static site redirected/removed
-
-6–12 MONTHS
-├── Ully Business (Phase 3) — Firestore sync bridge
-│   ├── Mobile ↔ Web data sync (Firestore as shared layer)
-│   ├── Square POS integration
-│   ├── Machine volumetrics (manual input → native API where supported)
-│   ├── QuickBooks Online integration
-│   └── Multi-site view — technicians managing multiple café locations
-└── Business tier go-to-market — café owner channels + CTG outreach
-
-12–24 MONTHS
-├── Ully Roaster (Phase 4)
-│   ├── Roast profile development assistant
-│   ├── Green coffee lot tracking + cupping score log
-│   └── Cropster interop (import/export or API bridge)
-└── Ully Web roaster module — desktop-first, roasters need big screens
-
-24+ MONTHS
-├── Ully Agriculture (Phase 5)
-│   ├── Offline-first architecture (farms have no connectivity)
-│   ├── Multi-language (Spanish, Amharic, Indonesian, Portuguese, Swahili)
-│   └── Cooperative B2B sales motion
-└── Crop-to-cup traceability QR system
-
-PLATFORM
-├── Logistics / supply chain node
-├── Traceability data platform + API
-└── First regulated vertical (TBD based on resources)
-```
-
----
-
-## Principles That Do Not Change
-
-1. **Coffee-only** in the coffee product. Domain focus is the product.
-2. **No analytics SDK.** No Mixpanel, no Amplitude. Privacy is a feature, not a footnote.
-3. **On-device first.** User data stays on the user's device unless they explicitly choose to share it.
-4. **No preamble.** Ully answers immediately. Every product built on this platform follows the same rule.
-5. **Mobile-first.** Professionals are not at desks. Every feature must work one-handed, outdoors, in a loud environment.
-6. **The KB is proprietary.** Curated domain expertise is the moat — protect it.
-7. **Integrations are purpose-built.** Ully connects to third-party tools (POS, QuickBooks, machine APIs) on its own terms — custom-engineered for the professional's workflow, never a generic connector.
+**The moat is the format — AI-evaluated open-ended examination — not the content.**

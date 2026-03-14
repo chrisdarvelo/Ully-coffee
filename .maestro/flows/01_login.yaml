@@ -1,4 +1,4 @@
-appId: com.ullycoffee.app
+appId: com.ullyapp.app
 name: "01 - Login"
 ---
 # ── Launch ────────────────────────────────────────────────────────────────────
@@ -6,7 +6,7 @@ name: "01 - Login"
     clearState: true
 
 # ── Welcome screen ────────────────────────────────────────────────────────────
-- assertVisible: "Ully Ai"
+- assertVisible: "Ully AI"
 - assertVisible: "your coffee companion"
 - tapOn: "Sign In"
 
@@ -14,7 +14,7 @@ name: "01 - Login"
 - assertVisible: "Welcome back to Ully AI"
 - tapOn:
     text: "Email"
-- inputText: "test@ullycoffee.com"
+- inputText: "test@ullyapp.com"
 
 - tapOn:
     text: "Password"

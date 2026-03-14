@@ -309,7 +309,7 @@ export default function AIScreen() {
             const body = encodeURIComponent(
               `I'd like to report the following Ully AI response:\n\n"${text}"\n\nReason (please describe):\n`
             );
-            Linking.openURL(`mailto:support@ullycoffee.com?subject=${subject}&body=${body}`);
+            Linking.openURL(`mailto:support@ullyapp.com?subject=${subject}&body=${body}`);
           },
         },
       ]

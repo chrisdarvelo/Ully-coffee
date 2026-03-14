@@ -74,7 +74,7 @@ export async function scheduleDailyTip(): Promise<void> {
 
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: 'Ully Coffee',
+      title: 'Ully AI',
       body: 'Check out today\'s coffee news and tips.',
     },
     trigger: {
