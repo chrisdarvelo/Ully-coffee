@@ -115,8 +115,7 @@ export default function PrivacyPolicyScreen({ navigation, route }: { navigation:
           </BulletItem>
           <BulletItem>
             Profile and app data: Your username, role, recipes, saved cafes,
-            equipment list, and barista follows are stored locally on your
-            device only — not on our servers.
+            and equipment list are stored locally on your device only — not on our servers.
           </BulletItem>
           <BulletItem>
             Date of birth: Used only for the one-time age verification check
