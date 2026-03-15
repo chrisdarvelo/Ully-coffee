@@ -51,7 +51,7 @@ const COFFEE_FUN_FACTS = [
   'There are over 120 species of coffee, but we mainly drink two: Arabica (60%) and Robusta (40%).',
   'The word "espresso" means "pressed out" in Italian, referring to how coffee is brewed under pressure.',
   'Light roasts actually have slightly more caffeine than dark roasts — roasting burns off caffeine.',
-  'Water temperature for espresso should be 90–96°C (195–205°F) for optimal extraction.',
+  'Water temperature for espresso should be 195–205°F for optimal extraction.',
   'The crema on espresso is CO2 trapped in oils, released under pressure during brewing.',
   'Dial-in means adjusting grind, dose, and yield until the shot tastes balanced — not sour or bitter.',
 ];
